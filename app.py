@@ -6,41 +6,60 @@ st.set_page_config(page_title="Chib Odibeli - Portfolio", layout="wide")
 # --- CSS Styling ---
 st.markdown("""
 <style>
+    /* Gradient Background */
+    .stApp {
+        background: linear-gradient(135deg, #FFEFBA 0%, #FFFFFF 100%);
+        background-attachment: fixed;
+    }
+    
+    /* Header Styling */
+    h1, h2, h3 {
+        color: #5D2E2E !important;
+        font-family: 'Helvetica Neue', sans-serif;
+    }
+    
     .big-font {
         font-size:50px !important;
         font-weight: bold;
-        background: linear-gradient(to right, #FF4B4B, #FF9068);
+        background: linear-gradient(to right, #D35400, #800000); 
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
     }
+    
     .subheader-font {
         font-size:24px !important;
         font-weight: 500;
-        color: #555;
+        color: #8B4513; /* SaddleBrown */
     }
+    
     .card {
         padding: 20px;
         border-radius: 10px;
-        background-color: #f8f9fa;
-        border: 1px solid #e0e0e0;
+        background-color: rgba(255, 255, 255, 0.95); /* Slight transparency */
+        border-left: 5px solid #D35400; /* Orange-Red accent border */
+        box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
         margin-bottom: 20px;
         transition: transform 0.2s, box-shadow 0.2s; 
     }
+    
     .card:hover {
-        transform: scale(1.02);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        border-color: #FF4B4B;
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        border-color: #800000; /* Darker maroon on hover */
     }
+    
     .skill-tag {
         display: inline-block;
-        background-color: #FF4B4B;
+        background: linear-gradient(to right, #D35400, #E67E22);
         color: white;
-        padding: 5px 10px;
-        margin: 3px;
-        border-radius: 15px;
+        padding: 5px 12px;
+        margin: 5px;
+        border-radius: 20px;
         font-size: 14px;
         font-weight: bold;
+        box-shadow: 1px 1px 3px rgba(0,0,0,0.2);
     }
+    
 </style>
 """, unsafe_allow_html=True)
 
