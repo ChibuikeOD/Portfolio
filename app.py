@@ -13,7 +13,7 @@ if selection == "Home":
         .big-font {
             font-size:50px !important;
             font-weight: bold;
-            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+            background: linear-gradient(to right, #FF4B4B, #FF9068);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -27,6 +27,11 @@ if selection == "Home":
             border-radius: 10px;
             background-color: #f0f2f6;
             margin-bottom: 20px;
+            transition: transform 0.2s; 
+        }
+        .card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
         </style>
         """, unsafe_allow_html=True)
