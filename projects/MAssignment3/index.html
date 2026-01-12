@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Author Network - Force Layout Visualization</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { margin-bottom: 5px; }
+        .container { display: flex; gap: 20px; }
+        .controls { width: 280px; }
+        fieldset { margin-bottom: 15px; }
+        label { display: block; margin: 8px 0; }
+        svg { border: 1px solid #ccc; }
+        .tooltip { position: absolute; background: white; border: 1px solid #333; padding: 10px; display: none; max-width: 300px; font-size: 13px; }
+        .tooltip h3 { margin: 0 0 8px 0; font-size: 14px; }
+        .tooltip p { margin: 4px 0; }
+        .node { cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Author Network Visualization</h1>
+    <p><strong>Nodes:</strong> Authors | <strong>Links:</strong> Shared Publications</p>
+    <p>Total: <span id="n-nodes">0</span> authors, <span id="n-links">0</span> connections</p>
+
+    <div class="container">
+        <div class="controls">
+            <fieldset>
+                <legend><strong>Force Parameters</strong></legend>
+                <label>
+                    d3.forceManyBody() strength:
+                    <input type="range" id="charge" min="-200" max="-10" value="-50" step="5">
+                    <span id="v-charge">-50</span>
+                </label>
+                <label>
+                    d3.forceCollide() radius:
+                    <input type="range" id="collide" min="1" max="30" value="5" step="1">
+                    <span id="v-collide">5</span>
+                </label>
+                <label>
+                    Link Strength:
+                    <input type="range" id="strength" min="0.1" max="2" value="0.5" step="0.1">
+                    <span id="v-strength">0.5</span>
+                </label>
+            </fieldset>
+
+            <fieldset>
+                <legend><strong>Interactions</strong></legend>
+                <ul>
+                    <li><strong>Click:</strong> Show author info</li>
+                    <li><strong>Drag:</strong> Move nodes</li>
+                    <li><strong>Scroll:</strong> Zoom in/out</li>
+                </ul>
+            </fieldset>
+        </div>
+
+        <div>
+            <svg id="svg" width="900" height="650"></svg>
+        </div>
+    </div>
+
+    <div class="tooltip" id="tooltip">
+        <h3 id="tip-name"></h3>
+        <p><strong>Publications:</strong> <span id="tip-pubs"></span></p>
+        <p><strong>Co-authors:</strong> <span id="tip-degree"></span></p>
+    </div>
+
+    <script>
+        const svg = d3.select('#svg');
+        const width = +svg.attr('width');
+        const height = +svg.attr('height');
+        const g = svg.append('g');
+
+        // Zoom
+        svg.call(d3.zoom().scaleExtent([0.1, 5]).on('zoom', e => g.attr('transform', e.transform)));
+
+        // Node size scale: d3.scaleSqrt with range [3, 12]
+        const radiusScale = d3.scaleSqrt().range([3, 12]);
+
+        let simulation;
+
+        d3.json('author_network.json').then(data => {
+            const nodes = data.nodes;
+            const links = data.links;
+
+            document.getElementById('n-nodes').textContent = nodes.length;
+            document.getElementById('n-links').textContent = links.length;
+
+            // Set radius scale domain based on degree
+            radiusScale.domain(d3.extent(nodes, d => d.degree));
+
+            // Force simulation
+            simulation = d3.forceSimulation(nodes)
+                .force('link', d3.forceLink(links).id(d => d.id).strength(0.5))
+                .force('charge', d3.forceManyBody().strength(-50))
+                .force('center', d3.forceCenter(width / 2, height / 2))
+                .force('collision', d3.forceCollide().radius(d => radiusScale(d.degree) + 5))
+                .force('x', d3.forceX(width / 2).strength(0.05))
+                .force('y', d3.forceY(height / 2).strength(0.05));
+
+            // Draw links
+            const link = g.append('g')
+                .selectAll('line')
+                .data(links)
+                .join('line')
+                .attr('stroke', '#999')
+                .attr('stroke-opacity', 0.4)
+                .attr('stroke-width', d => Math.sqrt(d.value));
+
+            // Draw nodes
+            const node = g.append('g')
+                .selectAll('circle')
+                .data(nodes)
+                .join('circle')
+                .attr('class', 'node')
+                .attr('r', d => radiusScale(d.degree))
+                .attr('fill', '#69b3a2')
+                .attr('stroke', '#fff')
+                .attr('stroke-width', 1)
+                .call(drag(simulation))
+                .on('click', (event, d) => showTooltip(event, d));
+
+            // Hover title
+            node.append('title').text(d => d.name || d.id);
+
+            // Click on SVG background to hide tooltip
+            svg.on('click', function(event) {
+                if (event.target === this) hideTooltip();
+            });
+
+            // Tick function
+            simulation.on('tick', () => {
+                link
+                    .attr('x1', d => d.source.x)
+                    .attr('y1', d => d.source.y)
+                    .attr('x2', d => d.target.x)
+                    .attr('y2', d => d.target.y);
+                node
+                    .attr('cx', d => d.x)
+                    .attr('cy', d => d.y);
+            });
+        });
+
+        function drag(simulation) {
+            return d3.drag()
+                .on('start', (event, d) => {
+                    if (!event.active) simulation.alphaTarget(0.3).restart();
+                    d.fx = d.x;
+                    d.fy = d.y;
+                })
+                .on('drag', (event, d) => {
+                    d.fx = event.x;
+                    d.fy = event.y;
+                })
+                .on('end', (event, d) => {
+                    if (!event.active) simulation.alphaTarget(0);
+                    d.fx = null;
+                    d.fy = null;
+                });
+        }
+
+        // Click: show tooltip with author info
+        function showTooltip(event, d) {
+            const tooltip = document.getElementById('tooltip');
+            document.getElementById('tip-name').textContent = d.name || d.id;
+            document.getElementById('tip-pubs').textContent = d.publications;
+            document.getElementById('tip-degree').textContent = d.degree;
+            
+            tooltip.style.left = (event.pageX + 15) + 'px';
+            tooltip.style.top = (event.pageY - 10) + 'px';
+            tooltip.style.display = 'block';
+            event.stopPropagation();
+        }
+
+        function hideTooltip() {
+            document.getElementById('tooltip').style.display = 'none';
+        }
+
+        // UI Controls
+        document.getElementById('charge').oninput = function() {
+            document.getElementById('v-charge').textContent = this.value;
+            simulation.force('charge').strength(+this.value);
+            simulation.alpha(0.5).restart();
+        };
+
+        document.getElementById('collide').oninput = function() {
+            const val = +this.value;
+            document.getElementById('v-collide').textContent = val;
+            simulation.force('collision').radius(d => radiusScale(d.degree) + val);
+            simulation.alpha(0.5).restart();
+        };
+
+        document.getElementById('strength').oninput = function() {
+            document.getElementById('v-strength').textContent = this.value;
+            simulation.force('link').strength(+this.value);
+            simulation.alpha(0.5).restart();
+        };
+    </script>
+</body>
+</html>
