@@ -4,7 +4,7 @@ from projects import car_analysis, network_analysis, contour_analysis, price_pre
 st.set_page_config(page_title="Data Science Portfolio", layout="wide")
 
 st.sidebar.title("Navigation")
-selection = st.sidebar.radio("Go to", ["Home", "Data Visualization", "Price Prediction"])
+selection = st.sidebar.radio("Go to", ["Home", "Data Visualization", "Machine Learning"])
 
 if selection == "Home":
     st.title("My Data Science Portfolio")
@@ -27,5 +27,8 @@ elif selection == "Data Visualization":
     elif viz_selection == "Contour Analysis":
         contour_analysis.app()
 
-elif selection == "Price Prediction":
-    price_prediction.app()
+elif selection == "Machine Learning":
+    ml_selection = st.sidebar.radio("Select Project", ["Used Car Price Prediction"])
+    
+    if ml_selection == "Used Car Price Prediction":
+        price_prediction.app()
