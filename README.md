@@ -1,18 +1,14 @@
 # Data Science Portfolio
 
-This is a Streamlit-based portfolio application designed to showcase data science projects. 
-It currently includes:
-- **Car Data Analysis**: An interactive exploration of vehicle performance metrics.
+Welcome to my Data Science Portfolio! This application is built with Streamlit and serves as a centralized hub to showcase my skills in data visualization, machine learning, and interactive web application development.
 
-## How to Run
-1. Ensure you have the required dependencies:
-   ```bash
-   pip install streamlit pandas altair
-   ```
-2. Run the application:
-   ```bash
-   streamlit run app.py
-   ```
+It currently features the following projects:
+
+- **Car Data Analysis**: An interactive dashboard exploring vehicle performance metrics using Altair.
+- **Co-Authorship Network**: A force-directed graph visualization of academic co-authorship using D3.js.
+- **Contour Analysis**: A medical imaging tool for visualizing CT scan density contours.
+- **Used Car Price Prediction**: A machine learning application that predicts car prices based on user inputs.
+
 
 ## How to Add a New Project
 To add a new project to this portfolio, follow these 3 simple steps:
