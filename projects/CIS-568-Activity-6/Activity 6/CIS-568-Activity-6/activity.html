@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>CT Scan Contours</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+
+    <style>
+        body { font-family: Arial, sans-serif; margin: 16px; background:#f6f8fb; color:#111; }
+        .container { max-width: 980px; margin: 0 auto; }
+        .slider { display:flex; flex-wrap:wrap; align-items:center; gap:12px; margin-bottom:12px; }
+        .slider label { font-size:13px; }
+        .slider input[type=range] { width:180px; }
+        .main { display:flex; gap:18px; }
+        #files_container { width:220px; }
+        #files { width:100%; }
+        .canvas { flex:1; background:white; border-radius:8px; padding:12px; box-shadow:0 6px 18px rgba(0,0,0,0.06); }
+        svg { width:100%; height:512px; display:block; }
+        .contours path { stroke:black; stroke-width:0.1px; stroke-linejoin:round; }
+        #loading { display:none; margin-bottom:6px; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>CT Scan Images — Contour Visualization</h1>
+
+    <div class="slider">
+        <label for="binCount">Bin Count</label>
+        <input type="range" id="binCount" min="2" max="80" value="10" step="1"/>
+
+        <label for="minThreshold">Min Threshold</label>
+        <input type="range" id="minThreshold" />
+
+        <label for="maxThreshold">Max Threshold</label>
+        <input type="range" id="maxThreshold" />
+    </div>
+
+    <div id="loading">Loading...</div>
+
+    <div class="main">
+        <div id="files_container">
+            <select id="files" size="12" multiple></select>
+        </div>
+
+        <div class="canvas">
+            <svg viewBox="0 0 256 256"></svg>
+        </div>
+    </div>
+</div>
+
+<script>
+const svg = d3.select("svg");
+const path = d3.geoPath();
+const selectFiles = d3.select("#files");
+const loadingEl = document.getElementById("loading");
+
+let m = 256, n = 256;
+let values_density = [];
+let dataMin = 0, dataMax = 1;
+
+const files_data = [
+  "brain_001.dcm.json","brain_002.dcm.json","brain_003.dcm.json","brain_004.dcm.json",
+  "brain_005.dcm.json","brain_006.dcm.json","brain_007.dcm.json","brain_008.dcm.json",
+  "brain_009.dcm.json","brain_010.dcm.json","brain_011.dcm.json","brain_012.dcm.json",
+  "brain_013.dcm.json","brain_014.dcm.json","brain_015.dcm.json","brain_016.dcm.json",
+  "brain_017.dcm.json","brain_018.dcm.json","brain_019.dcm.json","brain_020.dcm.json"
+];
+
+selectFiles.selectAll("option")
+    .data(files_data)
+    .enter()
+    .append("option")
+    .text(d => d);
+
+selectFiles.on("change", () => {
+    const selected = selectFiles.property("value");
+    if (selected) plotContour(selected);
+});
+
+function plotContour(filename) {
+    loadingEl.style.display = "block";
+
+    d3.json("dicomData/" + filename).then(data => {
+        loadingEl.style.display = "none";
+        svg.selectAll("*").remove();
+
+        values_density = [];
+        data.forEach(row => row.forEach(v => values_density.push(+v)));
+
+        const ext = d3.extent(values_density);
+        dataMin = ext[0];
+        dataMax = ext[1];
+
+        const minSlider = document.getElementById("minThreshold");
+        const maxSlider = document.getElementById("maxThreshold");
+
+        minSlider.min = Math.floor(dataMin);
+        minSlider.max = Math.ceil(dataMax);
+        maxSlider.min = Math.floor(dataMin);
+        maxSlider.max = Math.ceil(dataMax);
+
+        if (!minSlider.value) minSlider.value = dataMin;
+        if (!maxSlider.value) maxSlider.value = dataMax;
+
+        drawContours();
+    });
+}
+
+function drawContours() {
+    if (!values_density.length) return;
+
+    const binCount = +document.getElementById("binCount").value;
+    const minT = +document.getElementById("minThreshold").value;
+    const maxT = +document.getElementById("maxThreshold").value;
+
+    const lo = Math.min(minT, maxT);
+    const hi = Math.max(minT, maxT);
+
+    const step = (hi - lo) / Math.max(1, binCount);
+    const thresholds = d3.range(lo + step, hi, step);
+
+    const colorRamp = ["#0d1a50","#3e5eba","#2b83ba","#abdda4","#ffffbf","#fdae61","#d7191c"];
+
+    const colorScale = d3.scaleLinear()
+        .domain(d3.range(colorRamp.length).map(i => lo + i * (hi - lo) / (colorRamp.length - 1)))
+        .range(colorRamp)
+        .interpolate(d3.interpolateHcl);
+
+    const contours = d3.contours()
+        .size([m, n])
+        .thresholds(thresholds)(values_density);
+
+    svg.append("g")
+        .attr("class", "contours")
+        .selectAll("path")
+        .data(contours)
+        .join("path")
+        .attr("d", d => path(d))
+        .attr("fill", d => colorScale(d.value));
+}
+
+["binCount","minThreshold","maxThreshold"].forEach(id => {
+    document.getElementById(id).addEventListener("input", drawContours);
+});
+
+plotContour(files_data[0]);
+</script>
+</body>
+</html>
