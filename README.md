@@ -11,5 +11,8 @@ It currently features the following projects:
 
 ### Machine Learning
 - **Used Car Price Prediction**: A machine learning application that predicts car prices based on user inputs.
+- **Audio Deepfake Detection**: A multimodal system for detecting AI-generated audio artifacts.
+- **Edge-Deployed Neural Networks**: Research on deploying quantized neural networks to FPGAs.
+- **Voice-Automated AI Chatbot**: A VR-integrated AI assistant powered by fine-tuned LLMs.
 
 
