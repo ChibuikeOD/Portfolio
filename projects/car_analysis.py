@@ -15,11 +15,15 @@ def app():
     with tab1:
         st.write("""
         ### Project Overview
-        This interactive visualization explores a dataset of various car models to uncover relationships between performance metrics and pricing. 
+        This interactive dashboard provides a comprehensive analysis of automobile data, designed to uncover hidden trends between performance metrics and market value.
         
-        **Analysis:**
-        Use the interactive charts below to explore these relationships. 
-        - **Brush Logic**: Select a rectangular region in either chart to filter the other chart and highlighting specific data points.
+        **Targeted Analysis Feature:**
+        The core functionality of this project is the **Rectangular Region Selection** tool. This feature allows for precise subset analysis:
+        - **Click and Drag** to create a rectangular selection box on either scatter plot.
+        - **Highlight & Isolate**: Points inside the box remain colored, instantly isolating that specific group of cars.
+        - **Linked Filtering**: The selection automatically propagates to the connected chart, revealing how vehicles in that specific performance range behave across other metrics.
+        
+        Use this tool to investigate outliers, identify clusters, and answer specific questions like "Do heavy cars always have low MPG?" or "Are expensive cars always high-Horsepower?"
         """)
 
         try:
@@ -83,21 +87,24 @@ def app():
         
         #### 1. Data Source
         - **File**: `car_sample_data.csv`
-        - **Description**: This dataset contains specifications for various automobile models, including performance metrics (Horsepower, MPG) and economic factors (Price, Origin).
+        - **Context**: This dataset aggregates specifications for a wide range of automobile models. It serves as a rich source for analyzing the trade-offs between engineering constraints (weight, fuel efficiency) and market positioning (price, horsepower).
         
         #### 2. Data Cleaning & Preparation
-        - **Type Conversion**: Key columns (`Price`, `MPG`, `Weight`, `HP`) were converted to numeric types to ensure analysis validity, coercing errors to NaN.
-        - **Handling Missing Values**: Rows with missing values in the key metric columns were dropped (`dropna`) to prevent visualization errors.
+        - **Type Safety**: Crucial columns (`Price`, `MPG`, `Weight`, `HP`) were explicitly cast to numeric types to prevent string-based sorting errors in visualization. Non-numeric values were coerced to `NaN`.
+        - **Integrity Check**: Rows lacking essential metric data were removed (`dropna`) to ensure every point on the scatter plot represents a complete and valid vehicle record.
         
-        #### 3. Visualization Technique
-        - **Library**: `Altair` (Python wrapper for Vega-Lite).
-        - **Interaction**: Implemented **Brushing and Linking**. 
-            - A selection interval (`alt.selection_interval`) allows users to highlight a region in one scatter plot.
-            - The selection is propagated to the second plot, graying out unselected points (`alt.condition`).
+        #### 3. Core Interaction: Rectangular Region Selection (Brushing)
+        **The primary goal of this visualization is to demonstrate Linked Brushing.**
+        - **Technique**: We implemented an interval selection mechanism using `alt.selection_interval()`.
+        - **Rectangular Selection**: This allows users to "paint" a rectangle over a cluster of points. This shape is intuitive for defining ranges on two axes simultaneously (e.g., "Price between $20k-$30k" AND "HP between 100-150").
+        - **Visual Feedback**:
+            - **Selected Points**: Retain their color coding (by Country of Origin).
+            - **Unselected Points**: Fade to neutral gray (`lightgray`). This contrast draws the eye immediately to the analysis target.
+        - **Linked Views**: The selection is a shared global state. A rectangle drawn on the "Horsepower vs. Price" chart instantly filters the "Weight vs. MPG" chart, allowing for multi-dimensional cross-examination.
         
-        #### 4. Key Insights Supported
-        - **Efficiency vs. Weight**: Allows users to observe the inverse correlation between vehicle weight and fuel efficiency (MPG).
-        - **Performance vs. Price**: Users can analyze if higher horsepower consistently correlates with higher prices across different manufacturing countries.
+        #### 4. Key Insights & Exploration
+        - **The Efficiency Trade-off**: By selecting the heaviest cars (right side of Weight chart), users can instantly see they cluster at the bottom of the MPG chart, visually confirming the physics of mass and energy.
+        - **Premium Performance**: Selecting the highest price bracket reveals a strong correlation with high Horsepower, but outliers exist—users can spot expensive cars with modest specs, pointing to luxury branding over raw performance.
         """)
 
 
