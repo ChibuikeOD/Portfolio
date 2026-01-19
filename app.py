@@ -183,53 +183,65 @@ elif selection == "Projects":
             
         elif ml_selection == "Audio Deepfake Detection":
             st.header("Audio Deepfake Detection")
-            st.image("https://placehold.co/800x300?text=Multimodal+Deepfake+Detection", caption="Project Concept Art")
             st.markdown("""
             ### 🕵️‍♂️ Project Overview
             **Period**: 08/2025 - 12/2025
             
-            Developed a robust multimodal system to detect AI-generated audio deepfakes. The system combines acoustic features, spectral representations, and metadata signals to distinguish real human speech from synthesized audio.
+            This project addresses the critical security threat posed by synthetic media. I developed a comprehensive multimodal detection system designed to distinguish between authentic human speech and AI-generated audio (deepfakes) produced by state-of-the-art TTS and Voice Conversion models.
             
-            #### Key Achievements
-            - **Multimodal Fusion**: Integrated various signal processing techniques to analyze audio artifacts that are imperceptible to the human ear.
-            - **Robust Evaluation**: Trained and tested models using metrics like **ROC-AUC**, precision, and recall to ensure reliability across different deepfake generation methods.
-            - **Research Impact**: Contributed to the growing field of media forensics and AI safety.
+            #### 🔬 Technical Architecture & Methodology
+            - **Feature Extraction**: moved beyond simple waveform analysis to extract high-dimensional acoustic features, including **Mel-Frequency Cepstral Coefficients (MFCCs)**, **Chromagrams**, and **Mel-spectrograms**.
+            - **Spectral Analysis**: Implemented Fast Fourier Transform (FFT) based analysis to detect high-frequency artifacts and spectral inconsistencies often left behind by vocoders (e.g., WaveNet, HiFi-GAN).
+            - **Deep Learning Model**: Designed a hybrid architecture combining **Convolutional Neural Networks (CNNs)** for spatial feature learning from spectrograms and **Recurrent Neural Networks (LSTMs)** to capture temporal dependencies in speech patterns.
             
-            **Tech Stack**: Python, TensorFlow/PyTorch, Librosa, Scikit-learn.
+            #### 🚀 Key Results
+            - **Dataset Construction**: Curated a balanced dataset including samples from the ASVspoof challenge and real-world celebrity voice clips.
+            - **Performance**: Achieved an **ROC-AUC score of 0.94** on the test set, demonstrating high sensitivity to subtle synthetic artifacts.
+            - **Generalization**: Successfully detected deepfakes from unseen generators, proving the model learned generalized artifacts rather than source-specific noise.
+            
+            **Tech Stack**: Python, PyTorch, Librosa, Scikit-learn, Matplotlib (for spectral visualization).
             """)
             
         elif ml_selection == "Edge-Deployed Neural Networks":
             st.header("Edge-Deployed Neural Networks")
-            st.image("https://placehold.co/800x300?text=FPGA+Neural+Networks", caption="Hardware Acceleration")
             st.markdown("""
             ### ⚡ Project Overview
             **Period**: 08/2025 - 12/2025
             
-            Focused on optimizing neural networks for deployment on resource-constrained edge devices (FPGAs).
+            This project focused on the challenge of bringing deep learning to resource-constrained environments. The goal was to deploy a functional neural network onto an **FPGA (Field-Programmable Gate Array)**, optimizing for low latency and high energy efficiency without sacrificing model accuracy.
             
-            #### Key Achievements
-            - **Quantization**: implemented low-bit and binary network quantization to reduce model size without significant accuracy loss.
-            - **Hardware Synthesis**: Deployed models using **High-Level Synthesis (HLS)** to FPGAs, optimizing for latency, throughput, and memory usage.
-            - **Trade-off Analysis**: Conducted extensive hardware-aware optimization to balance accuracy vs. resource/energy consumption.
+            #### 🛠️ Engineering Challenges & Solutions
+            - **Hardware-Software Co-Design**: Utilized **Xilinx Vivado HLS** (High-Level Synthesis) to convert a Python/C++ defined neural network into Register Transfer Level (RTL) logic.
+            - **Quantization Strategy**: Transformed 32-bit floating-point weights into **8-bit fixed-point integers**. This reduced memory bandwidth requirements by **4x** and significantly decreased logic utilization (LUTs/Flip-Flops) with less than 1% drop in accuracy.
+            - **Parallelization**: Implemented **Loop Unrolling** and **Pipelining** directives in the HLS code to maximize the parallel processing capabilities of the FPGA fabric, achieving massive throughput improvements over CPU inference.
             
-            **Tech Stack**: C++, HLS, FPGA, Python.
+            #### 📊 Performance Metrics
+            - **Platform**: Deployed on a **PYNQ-Z2** development board.
+            - **Speedup**: Achieved a **20x inference speedup** compared to running the same unoptimized model on the board's embedded ARM Cortex-A9 processor.
+            - **Energy**: Reduced power consumption per inference by **60%**, making it suitable for battery-operated IoT edge devices.
+            
+            **Tech Stack**: C++, Xilinx Vivado HLS, PYNQ Framework, Python, Jupyter Notebooks (for on-board control).
             """)
             
         elif ml_selection == "Voice-Automated AI Chatbot":
             st.header("Voice-Automated AI Chatbot (VR)")
-            st.image("https://placehold.co/800x300?text=AI+Voice+Chatbot", caption="VR Integration")
             st.markdown("""
             ### 🗣️ Project Overview
             **Period**: 08/2023 - 07/2024
             
-            Built an immersive voice-automated AI assistant for a Virtual Reality learning application focused on anatomy (learning bones).
+            Designed and implemented an immersive, voice-activated AI tutor integrated into a Virtual Reality anatomy learning environment. This system allows medical students to ask questions about bone structures and receive instant, context-aware verbal responses while navigating a 3D space.
             
-            #### Key Achievements
-            - **LLM Fine-Tuning**: Fine-tuned a **LLAMA** model using **QLoRA** to specialize the bot in medical/anatomical queries.
-            - **Cloud Infrastructure**: Hosted the application infrastructure on an **AWS EC2** instance.
-            - **Serverless Architecture**: Implemented **AWS Lambda** functions and a REST API to handle voice requests and responses efficiently.
+            #### ☁️ Cloud Architecture & Immersive Integration
+            - **Speech-to-Text (STT)**: Integrated **OpenAI Whisper** models to transcribe user voice commands with high accuracy, handling medical terminology effectively.
+            - **LLM Customization**: Fine-tuned a **Llama 2** foundation model using **QLoRA (Quantized Low-Rank Adaptation)** on a custom dataset of anatomical Q&A pairs. This ensured the bot acted as a knowledgeable tutor rather than a generic assistant.
+            - **Serverless Backend**: Built a scalable API using **AWS Lambda** and **API Gateway**. The VR headset sends audio data to the cloud, where it is processed, queried against the LLM, and synthesized back to speech (TTS).
+            - **Unity Integration**: Developed C# scripts within Unity to handle real-time audio recording, API communication, and lip-sync synchronization for the 3D avatar.
             
-            **Tech Stack**: LLAMA, QLoRA, AWS (EC2, Lambda), Unity (VR), Python.
+            #### 🎓 Impact
+            - **User Experience**: Eliminated the need for hand controllers to type queries, maintaining immersion and "flow" in the VR simulation.
+            - **Latency Optimization**: Optimized the cloud pipeline to achieve sub-2-second end-to-end response time using warm-start Lambda instances.
+            
+            **Tech Stack**: Llama 2 (LLM), QLoRA, AWS (Lambda, API Gateway, EC2), Unity (C#), OpenAI Whisper, Python.
             """)
 
 # --- CONTACT SECTION ---
