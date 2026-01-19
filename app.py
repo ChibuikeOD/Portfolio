@@ -63,8 +63,14 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+# --- Session State Initialization ---
+if "nav_selection" not in st.session_state:
+    st.session_state.nav_selection = "Home"
+if "proj_selection" not in st.session_state:
+    st.session_state.proj_selection = "Data Visualization"
+
 st.sidebar.title("Navigation")
-selection = st.sidebar.radio("Go to", ["Home", "About Me", "Projects", "Contact"])
+selection = st.sidebar.radio("Go to", ["Home", "About Me", "Projects", "Contact"], key="nav_selection")
 
 # --- HOME SECTION ---
 if selection == "Home":
@@ -83,19 +89,27 @@ if selection == "Home":
             <p>From predicting car prices to detecting audio deepfakes and deploying neural networks on edge devices.</p>
         </div>
         """, unsafe_allow_html=True)
-    with c2:
+        if st.button("Explore Machine Learning ➔"):
+            st.session_state.nav_selection = "Projects"
+            st.session_state.proj_selection = "Machine Learning"
+            st.rerun()
+            
         st.markdown("""
         <div class="card">
             <h3>📊 Data Visualization</h3>
             <p>Interactive dashboards using Altair and D3.js to explore complex datasets like academic networks and medical imaging.</p>
         </div>
         """, unsafe_allow_html=True)
+        if st.button("Explore Data Visualization ➔"):
+            st.session_state.nav_selection = "Projects"
+            st.session_state.proj_selection = "Data Visualization"
+            st.rerun()
 
 # --- ABOUT ME SECTION ---
 elif selection == "About Me":
     st.header("About Me")
     
-    tab1, tab2, tab3 = st.tabs(["Education", "Experience", "Skills"])
+    tab1, tab2, tab3, tab4, tab5 = st.tabs(["Education", "Experience", "Skills", "Community Involvement", "Awards"])
     
     with tab1:
         st.subheader("🎓 Education")
@@ -110,6 +124,16 @@ elif selection == "About Me":
         
     with tab2:
         st.subheader("💼 Work Experience")
+        
+        st.markdown("### Linux Server Administrator | **University of Massachusetts, Dartmouth**")
+        st.caption("06/2025 - Present")
+        st.markdown("""
+        - **System Administration**: Managed and maintained Linux-based web servers supporting PHP and MySQL databases for web applications.
+        - **Disaster Recovery**: Designed and implemented automated backup systems using cron jobs, ensuring consistent database snapshots and secure off-site storage.
+        - **Optimization**: Performed routine server monitoring, log analysis, and performance optimization to improve uptime and reliability.
+        """)
+        
+        st.divider()
         
         st.markdown("### Data-Driven Software Engineer | **Jordan Brooke Estates**")
         st.caption("05/2024 - 12/2025")
@@ -145,21 +169,62 @@ elif selection == "About Me":
         col1, col2 = st.columns(2)
         with col1:
             st.markdown("**Languages**")
-            st.markdown("`Python` `Java` `SQL` `R` `C#` `JavaScript` `HTML/CSS`")
+            st.markdown("`Python` `Java` `C#` `C++` `JavaScript` `HTML/CSS` `SQL` `R`")
             
-            st.markdown("**Frameworks**")
-            st.markdown("`Tensorflow` `Spring` `React` `MongoDB`")
+            st.markdown("**Frameworks & Libraries**")
+            st.markdown("`Spring` `React` `Tensorflow` `Unity`")
+            
+            st.markdown("**Databases**")
+            st.markdown("`Microsoft SQL Server` `MySQL` `MariaDB` `MongoDB`")
             
         with col2:
-            st.markdown("**Technologies & Tools**")
+            st.markdown("**Cloud & DevOps**")
             st.markdown("`AWS` `Azure` `Docker` `Git` `Hadoop` `Spark`")
             
-            st.markdown("**Visualization**")
-            st.markdown("`Power BI` `Tableau` `Matplotlib` `Altair` `D3.js`")
+            st.markdown("**Visualization & Analytics**")
+            st.markdown("`Power BI` `Tableau` `Microsoft Excel` `Altair` `D3.js` `Matplotlib`")
+            
+            st.markdown("**Tools**")
+            st.markdown("`Jira`")
+
+    with tab4:
+        st.subheader("🤝 Community Involvement")
+        
+        st.markdown("### President | **National Society of Black Engineers (NSBE)**")
+        st.caption("08/2019 - 05/2021")
+        st.markdown("""
+        - Organized events to encourage students of color to pursue careers in STEM.
+        - Set up internship opportunities in STEM for minority students.
+        - Hosted workshops to teach members good study techniques, resume writing skills, and other good habits to have in the workplace.
+        """)
+        
+        st.divider()
+        
+        st.markdown("### Vice President | **Association of Black Collegians**")
+        st.caption("08/2020 - 05/2021")
+        st.markdown("""
+        - Regularly facilitated discussions about the experiences of minorities in the United States.
+        - Organized a fashion show to display the creations of black fashion designers.
+        - Organized events that to uplift the voices of minority students on campus.
+        """)
+
+    with tab5:
+        st.subheader("🏆 Awards")
+        
+        st.markdown("### Emerging Leader Award | **Excellence in Leadership and Service Ceremony**")
+        st.caption("04/2024")
+        st.markdown("""
+        **Recognized for exceptional leadership and community impact through roles as President of the National Society of Black Engineers (NSBE) and Vice President of the Association of Black Collegians.**
+        
+        - **Strategic Leadership**: Led NSBE chapter to new heights by organizing events that promoted STEM careers for students of color and creating internship opportunities for minority students in STEM fields.
+        - **Mentorship & Development**: Spearheaded workshops focused on professional development, teaching members essential skills such as effective study techniques, resume writing, and workplace etiquette.
+        - **Cultural Advocacy**: Facilitated discussions and events with the Association of Black Collegians, including hosting a fashion show to celebrate Black designers and provide a platform for minority voices and perspectives.
+        - **Community Building**: Contributed to campus life as an RA, fostering a welcoming and inclusive environment and supporting the growth and success of fellow students.
+        """)
 
 # --- PROJECTS SECTION ---
 elif selection == "Projects":
-    cat_selection = st.sidebar.radio("Category", ["Data Visualization", "Machine Learning"])
+    cat_selection = st.sidebar.radio("Category", ["Data Visualization", "Machine Learning"], key="proj_selection")
     
     if cat_selection == "Data Visualization":
         viz_selection = st.sidebar.radio("Project", ["Car Analysis", "Co-Authorship Network", "Contour Analysis", "Nigeria Economic Timeline"])
