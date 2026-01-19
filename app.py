@@ -94,6 +94,7 @@ if selection == "Home":
             st.session_state.proj_selection = "Machine Learning"
             st.rerun()
             
+    with c2:
         st.markdown("""
         <div class="card">
             <h3>📊 Data Visualization</h3>
