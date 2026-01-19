@@ -1,5 +1,5 @@
 import streamlit as st
-from projects import car_analysis, network_analysis, contour_analysis, price_prediction
+from projects import car_analysis, network_analysis, contour_analysis, price_prediction, nigeria_timeline
 
 st.set_page_config(page_title="Chib Odibeli - Portfolio", layout="wide")
 
@@ -162,13 +162,15 @@ elif selection == "Projects":
     cat_selection = st.sidebar.radio("Category", ["Data Visualization", "Machine Learning"])
     
     if cat_selection == "Data Visualization":
-        viz_selection = st.sidebar.radio("Project", ["Car Analysis", "Co-Authorship Network", "Contour Analysis"])
+        viz_selection = st.sidebar.radio("Project", ["Car Analysis", "Co-Authorship Network", "Contour Analysis", "Nigeria Economic Timeline"])
         if viz_selection == "Car Analysis":
             car_analysis.app()
         elif viz_selection == "Co-Authorship Network":
             network_analysis.app()
         elif viz_selection == "Contour Analysis":
             contour_analysis.app()
+        elif viz_selection == "Nigeria Economic Timeline":
+            nigeria_timeline.app()
             
     elif cat_selection == "Machine Learning":
         ml_selection = st.sidebar.radio("Project", [

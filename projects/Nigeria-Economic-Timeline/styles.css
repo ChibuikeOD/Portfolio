@@ -1,0 +1,534 @@
+/* === CSS Variables === */
+:root {
+    --bg-primary: #f8fdf9;
+    --bg-secondary: #f0fdf4;
+    --bg-card: #ffffff;
+    --bg-card-hover: #ecfdf5;
+    
+    --text-primary: #1a2e1a;
+    --text-secondary: #4a6349;
+    --text-muted: #7d9a7c;
+    
+    --accent-1: #10b981;
+    --accent-2: #34d399;
+    --accent-3: #059669;
+    --accent-4: #047857;
+    --accent-5: #6ee7b7;
+    --accent-6: #a7f3d0;
+    
+    --border-color: rgba(16, 185, 129, 0.15);
+    --glow-color: rgba(16, 185, 129, 0.25);
+    
+    --chart-height: 200px;
+    --font-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
+}
+
+/* === Reset & Base === */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-sans);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* === Background Grid === */
+.background-grid {
+    position: fixed;
+    inset: 0;
+    background-image: 
+        linear-gradient(rgba(16, 185, 129, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(16, 185, 129, 0.04) 1px, transparent 1px);
+    background-size: 50px 50px;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.background-grid::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(16, 185, 129, 0.06) 0%, transparent 60%);
+}
+
+/* === Header === */
+header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: linear-gradient(180deg, var(--bg-primary) 0%, rgba(248, 253, 249, 0.95) 100%);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border-color);
+    padding: 1.5rem 2rem;
+}
+
+.header-content {
+    max-width: 1400px;
+    margin: 0 auto 1rem;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.logo-icon {
+    font-size: 1.75rem;
+    color: var(--accent-1);
+    text-shadow: 0 0 20px var(--glow-color);
+    animation: pulse-glow 3s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+h1 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-1) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.subtitle {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.controls {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.control-group label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+select {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    padding: 0.6rem 2.5rem 0.6rem 1rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-primary);
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2310b981' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    transition: all 0.2s ease;
+    min-width: 200px;
+}
+
+select:hover {
+    border-color: var(--accent-1);
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+select:focus {
+    outline: none;
+    border-color: var(--accent-1);
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+}
+
+.time-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6rem 1.25rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+}
+
+.time-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.year-display {
+    font-family: var(--font-mono);
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--accent-1);
+    min-width: 60px;
+    text-align: center;
+}
+
+/* === Pin Controls === */
+.pin-controls {
+    display: flex;
+    gap: 0.5rem;
+    margin-left: auto;
+}
+
+.pin-btn {
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    padding: 0.5rem 1rem;
+    background: var(--accent-1);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+}
+
+.pin-btn:hover {
+    background: var(--accent-3);
+    transform: translateY(-1px);
+}
+
+.pin-btn-secondary {
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+}
+
+.pin-btn-secondary:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--accent-1);
+}
+
+.pin-btn-active {
+    background: #8b5cf6;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.4); }
+    50% { box-shadow: 0 0 0 8px rgba(139, 92, 246, 0); }
+}
+
+.pin-icon {
+    font-size: 1rem;
+}
+
+/* === Main Content === */
+main {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.charts-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* === Loading State === */
+.loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 4rem;
+    color: var(--text-secondary);
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--border-color);
+    border-top-color: var(--accent-1);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* === Chart Cards === */
+.chart-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.chart-card:hover {
+    background: var(--bg-card-hover);
+    border-color: rgba(16, 185, 129, 0.2);
+    box-shadow: 0 8px 32px rgba(16, 185, 129, 0.1);
+}
+
+/* === Highlighted Chart (Exchange Rate) === */
+.chart-highlight {
+    background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+    border: 2px solid #f59e0b;
+    box-shadow: 0 4px 20px rgba(245, 158, 11, 0.15);
+}
+
+.chart-highlight:hover {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    border-color: #d97706;
+    box-shadow: 0 8px 32px rgba(245, 158, 11, 0.25);
+}
+
+.chart-highlight .chart-title {
+    color: #b45309;
+}
+
+.chart-highlight .chart-indicator {
+    box-shadow: 0 0 12px rgba(245, 158, 11, 0.5);
+}
+
+.chart-header {
+    display: flex;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.chart-title-group {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.chart-indicator {
+    width: 4px;
+    height: 28px;
+    border-radius: 2px;
+}
+
+.chart-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.chart-subtitle {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 0.15rem;
+}
+
+.chart-body {
+    padding: 1rem 0.5rem 0.5rem 0;
+    height: var(--chart-height);
+}
+
+/* === Chart SVG Styles === */
+.chart-svg {
+    width: 100%;
+    height: 100%;
+}
+
+.axis-x, .axis-y {
+    font-family: var(--font-mono);
+    font-size: 10px;
+}
+
+.axis-x line,
+.axis-x path,
+.axis-y line,
+.axis-y path {
+    stroke: var(--border-color);
+}
+
+.axis-x text,
+.axis-y text {
+    fill: var(--text-muted);
+}
+
+.grid-line {
+    stroke: var(--border-color);
+    stroke-dasharray: 2 4;
+    stroke-opacity: 0.5;
+}
+
+.data-line {
+    fill: none;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.area-gradient {
+    opacity: 0.15;
+}
+
+.data-point {
+    fill: var(--bg-card);
+    stroke-width: 2.5;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.data-point.active {
+    opacity: 1;
+}
+
+/* === Key Event Markers === */
+.event-line {
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.event-label-bg {
+    pointer-events: none;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.event-label {
+    pointer-events: none;
+    font-family: var(--font-sans);
+    letter-spacing: 0.02em;
+}
+
+.event-point {
+    pointer-events: none;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+/* === User Pin Markers === */
+.user-pin-line {
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+.user-pin-label-bg {
+    pointer-events: none;
+    filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.2));
+}
+
+.user-pin-label {
+    pointer-events: none;
+    font-family: var(--font-sans);
+}
+
+.user-pin-point {
+    pointer-events: none;
+    filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.2));
+}
+
+/* === Crosshair === */
+.crosshair-line {
+    stroke: var(--text-muted);
+    stroke-width: 1;
+    stroke-dasharray: 4 4;
+    pointer-events: none;
+}
+
+/* === Tooltip === */
+.chart-tooltip {
+    pointer-events: none;
+    transition: opacity 0.15s ease;
+}
+
+.chart-tooltip-bg {
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.chart-tooltip-text {
+    font-family: var(--font-mono);
+    letter-spacing: -0.02em;
+}
+
+/* === Footer === */
+footer {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    border-top: 1px solid var(--border-color);
+}
+
+/* === Responsive === */
+@media (max-width: 768px) {
+    header {
+        padding: 1rem;
+    }
+    
+    h1 {
+        font-size: 1.35rem;
+    }
+    
+    .controls {
+        gap: 1rem;
+    }
+    
+    main {
+        padding: 1rem;
+    }
+    
+    .chart-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+    
+    .chart-value {
+        text-align: left;
+    }
+    
+    :root {
+        --chart-height: 160px;
+    }
+}
+
+/* === Scrollbar === */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
+}
+
+/* === Selection === */
+::selection {
+    background: rgba(16, 185, 129, 0.2);
+    color: var(--text-primary);
+}
