@@ -69,6 +69,14 @@ if "nav_selection" not in st.session_state:
 if "proj_selection" not in st.session_state:
     st.session_state.proj_selection = "Data Visualization"
 
+# Apply pending navigation (set by Explore buttons) before widgets render
+if "_pending_nav" in st.session_state:
+    st.session_state.nav_selection = st.session_state._pending_nav
+    del st.session_state._pending_nav
+if "_pending_proj" in st.session_state:
+    st.session_state.proj_selection = st.session_state._pending_proj
+    del st.session_state._pending_proj
+
 st.sidebar.title("Navigation")
 selection = st.sidebar.radio("Go to", ["Home", "About Me", "Projects", "Contact"], key="nav_selection")
 
@@ -90,8 +98,8 @@ if selection == "Home":
         </div>
         """, unsafe_allow_html=True)
         if st.button("Explore Machine Learning ➔"):
-            st.session_state.nav_selection = "Projects"
-            st.session_state.proj_selection = "Machine Learning"
+            st.session_state._pending_nav = "Projects"
+            st.session_state._pending_proj = "Machine Learning"
             st.rerun()
             
     with c2:
@@ -102,8 +110,8 @@ if selection == "Home":
         </div>
         """, unsafe_allow_html=True)
         if st.button("Explore Data Visualization ➔"):
-            st.session_state.nav_selection = "Projects"
-            st.session_state.proj_selection = "Data Visualization"
+            st.session_state._pending_nav = "Projects"
+            st.session_state._pending_proj = "Data Visualization"
             st.rerun()
 
 # --- ABOUT ME SECTION ---
@@ -241,6 +249,7 @@ elif selection == "Projects":
     elif cat_selection == "Machine Learning":
         ml_selection = st.sidebar.radio("Project", [
             "Used Car Price Prediction", 
+            "Stock Market Forecasting",
             "Audio Deepfake Detection", 
             "Edge-Deployed Neural Networks",
             "Voice-Automated AI Chatbot"
@@ -248,6 +257,27 @@ elif selection == "Projects":
         
         if ml_selection == "Used Car Price Prediction":
             price_prediction.app()
+            
+        elif ml_selection == "Stock Market Forecasting":
+            st.header("Stock Market Forecasting with Azure and Power BI")
+            st.markdown("""
+            ### 📈 Project Overview
+            **Period**: 10/2024
+            
+            Built an end-to-end stock market forecasting pipeline using Azure, Python, and Prophet.
+            
+            #### 🔧 Pipeline & Methodology
+            - **Data Collection**: Collected and processed OHLCV data from **Yahoo Finance** for 7-day time series predictions.
+            - **Cloud Storage**: Stored raw and forecasted datasets in **Azure Blob Storage** for scalable cloud management.
+            - **Forecasting Model**: Leveraged **Facebook Prophet** for time series forecasting, generating predictions with confidence intervals.
+            - **Visualization**: Designed a **Power BI** dashboard to visualize forecasts, trends, and confidence intervals.
+            
+            **Tech Stack**: Python, Facebook Prophet, Azure Blob Storage, Power BI, Yahoo Finance API.
+            """)
+            st.markdown("""            
+            #### 🔗 Interactive Dashboard
+            """)
+            st.link_button("View Power BI Dashboard ➔", "https://app.powerbi.com/links/DS54-3Zmjn?ctid=328d6c0d-0f2f-4b76-9310-9762ba1c3e2d&pbi_source=linkShare&bookmarkGuid=b7a06065-d696-442f-8e4f-52b489fc6a0d")
             
         elif ml_selection == "Audio Deepfake Detection":
             st.header("Audio Deepfake Detection")
