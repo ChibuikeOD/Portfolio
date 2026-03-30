@@ -1,371 +1,341 @@
 import streamlit as st
 from projects import car_analysis, network_analysis, contour_analysis, price_prediction, nigeria_timeline
 
-st.set_page_config(page_title="Chib Odibeli - Portfolio", layout="wide")
+st.set_page_config(page_title="Chib Odibeli - Portfolio", layout="centered", initial_sidebar_state="collapsed")
 
-# --- CSS Styling ---
+# --- CSS Styling for nickzuber.com aesthetic ---
 st.markdown("""
 <style>
-    /* Gradient Background */
-    .stApp {
-        background: linear-gradient(135deg, #FFEFBA 0%, #FFFFFF 100%);
-        background-attachment: fixed;
+    /* Reset and Base Styles */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    
+    html, body, [class*="css"] {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        color: #1A1A1A;
+        background-color: #FDF9F6 !important; /* Gentle warm cream background */
+    }
+
+    /* Hide Streamlit Header, Footer, and MainMenu */
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
+    [data-testid="collapsedControl"] {display: none;}
+    
+    /* Center and constrain maximum width */
+    .block-container {
+        max-width: 650px;
+        padding-top: 4rem;
+        padding-bottom: 5rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        margin: 0 auto;
+    }
+
+    /* Typography */
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Inter', sans-serif !important;
+        color: #1A1A1A !important;
+        font-weight: 600 !important;
+        margin-bottom: 0.5rem !important;
     }
     
-    /* Header Styling */
-    h1, h2, h3 {
-        color: #5D2E2E !important;
-        font-family: 'Helvetica Neue', sans-serif;
+    h1 { 
+        font-size: 2.5rem !important; 
+        margin-bottom: 0 !important; 
+        letter-spacing: -0.02em; 
+        background: linear-gradient(90deg, #FF0055, #FFC107, #00FFCC); 
+        -webkit-background-clip: text; 
+        -webkit-text-fill-color: transparent; 
+        animation: hueShift 10s infinite linear;
     }
     
-    .big-font {
-        font-size:50px !important;
-        font-weight: bold;
-        background: linear-gradient(to right, #D35400, #800000); 
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+    @keyframes hueShift {
+        0% { filter: hue-rotate(0deg); }
+        100% { filter: hue-rotate(360deg); }
     }
     
-    .subheader-font {
-        font-size:24px !important;
-        font-weight: 500;
-        color: #8B4513; /* SaddleBrown */
+    h2 { 
+        font-size: 1.4rem !important; 
+        margin-top: 2.5rem !important; 
+        border-bottom: none !important; 
+        color: #6A1B9A !important; 
+    }
+    h3 { font-size: 1.1rem !important; margin-top: 1.5rem !important; }
+    
+    p, li {
+        color: #4A4A4A;
+        font-size: 0.95rem;
+        line-height: 1.6;
     }
     
-    .card {
-        padding: 20px;
-        border-radius: 10px;
-        background-color: rgba(255, 255, 255, 0.95); /* Slight transparency */
-        border-left: 5px solid #D35400; /* Orange-Red accent border */
-        box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
-        margin-bottom: 20px;
-        transition: transform 0.2s, box-shadow 0.2s; 
+    /* Links */
+    a {
+        color: #1A1A1A !important;
+        text-decoration: underline;
+        text-decoration-color: #E2E8F0;
+        text-underline-offset: 4px;
+        transition: text-decoration-color 0.2s ease;
+    }
+    a:hover {
+        text-decoration-color: #1A1A1A;
     }
     
-    .card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-        border-color: #800000; /* Darker maroon on hover */
+    /* Header links */
+    .header-links {
+        display: flex;
+        gap: 15px;
+        margin-top: 10px;
+        margin-bottom: 30px;
+        font-size: 0.9rem;
     }
     
-    .skill-tag {
+    .header-links a {
+        color: #718096 !important;
+        text-decoration: none;
+    }
+    .header-links a:hover {
+        color: #1A1A1A !important;
+    }
+
+    /* Timeline & Projects */
+    .timeline-item, .project-item {
+        margin-bottom: 1.2rem;
+    }
+    .timeline-date {
+        font-size: 0.85rem;
+        color: #A0AEC0;
+        min-width: 80px;
         display: inline-block;
-        background: linear-gradient(to right, #D35400, #E67E22);
-        color: white;
-        padding: 5px 12px;
-        margin: 5px;
-        border-radius: 20px;
-        font-size: 14px;
+    }
+    .separator {
+        color: #FF007F;
+        margin: 0 8px;
+        font-size: 1.1rem;
         font-weight: bold;
-        box-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+    }
+    .item-title {
+        font-weight: 600;
+        color: #1A1A1A;
+        font-size: 0.95rem;
+    }
+    .item-subtitle {
+        font-size: 0.85rem;
+        color: #718096;
+        margin-top: 2px;
+    }
+    .project-tags {
+        font-size: 0.75rem;
+        color: #A0AEC0;
+        margin-top: 6px;
+        display: flex;
+        gap: 10px;
+    }
+    .project-tags a {
+        color: #A0AEC0 !important;
+        text-decoration: none;
+    }
+    .project-tags a:hover {
+        color: #1A1A1A !important;
+        text-decoration: underline;
     }
     
+    /* Interests list */
+    .interests-list {
+        list-style-type: none;
+        padding-left: 0;
+        margin-top: 1rem;
+    }
+    .interests-list li::before {
+        content: "•";
+        color: #CBD5E0;
+        display: inline-block;
+        width: 1em;
+        margin-left: -1em;
+    }
+
+    /* Moving background blobs */
+    .bg-blob {
+        position: fixed;
+        top: -150px;
+        right: -100px;
+        width: 700px;
+        height: 700px;
+        background: radial-gradient(circle at 40% 40%, rgba(255, 0, 122, 0.4) 0%, rgba(0, 255, 209, 0.3) 35%, rgba(122, 0, 255, 0.2) 60%, rgba(255, 255, 255, 0) 80%);
+        border-radius: 50%;
+        z-index: -10;
+        opacity: 0.9;
+        filter: blur(60px);
+        animation: float 20s infinite alternate ease-in-out;
+        pointer-events: none;
+    }
+
+    .bg-blob2 {
+        position: fixed;
+        bottom: -200px;
+        left: -150px;
+        width: 650px;
+        height: 650px;
+        background: radial-gradient(circle at 50% 50%, rgba(255, 170, 0, 0.4) 0%, rgba(255, 0, 85, 0.3) 40%, rgba(255, 255, 255, 0) 70%);
+        border-radius: 50%;
+        z-index: -11;
+        opacity: 0.8;
+        filter: blur(55px);
+        animation: float2 18s infinite alternate ease-in-out;
+        pointer-events: none;
+    }
+    
+    @keyframes float {
+        0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+        33% { transform: translate(-50px, 100px) scale(1.1) rotate(45deg); }
+        66% { transform: translate(40px, -50px) scale(0.9) rotate(90deg); }
+        100% { transform: translate(-70px, -80px) scale(1.05) rotate(135deg); }
+    }
+
+    @keyframes float2 {
+        0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+        33% { transform: translate(60px, -100px) scale(1.15) rotate(-45deg); }
+        66% { transform: translate(-40px, 60px) scale(0.95) rotate(-90deg); }
+        100% { transform: translate(80px, 40px) scale(1.1) rotate(-135deg); }
+    }
+    
+    /* Expander styling to match minimalist design */
+    .streamlit-expanderHeader {
+        font-size: 0.9rem !important;
+        color: #4A4A4A !important;
+        background-color: transparent !important;
+        border: none !important;
+        padding-left: 0 !important;
+        font-weight: 500 !important;
+    }
 </style>
+
+<!-- Background blob HTML -->
+<div class="bg-blob"></div>
+<div class="bg-blob2"></div>
 """, unsafe_allow_html=True)
 
-# --- Session State Initialization ---
-if "nav_selection" not in st.session_state:
-    st.session_state.nav_selection = "Home"
-if "proj_selection" not in st.session_state:
-    st.session_state.proj_selection = "Data Visualization"
+# --- Header Section ---
+st.markdown("<h1>Chibuike 'Chib' Odibeli</h1>", unsafe_allow_html=True)
+st.markdown("<p style='color: #718096; font-size: 1rem; margin-top: 0;'>Data Science Master's Student & Software Engineer</p>", unsafe_allow_html=True)
 
-# Apply pending navigation (set by Explore buttons) before widgets render
-if "_pending_nav" in st.session_state:
-    st.session_state.nav_selection = st.session_state._pending_nav
-    del st.session_state._pending_nav
-if "_pending_proj" in st.session_state:
-    st.session_state.proj_selection = st.session_state._pending_proj
-    del st.session_state._pending_proj
+st.markdown("""
+<div class="header-links">
+    <a href="https://www.linkedin.com/in/chibuike-odibeli-862319220/" target="_blank">LinkedIn</a>
+    <a href="mailto:chibuikeodibeli@gmail.com">Email</a>
+</div>
+""", unsafe_allow_html=True)
 
-st.sidebar.title("Navigation")
-selection = st.sidebar.radio("Go to", ["Home", "About Me", "Projects", "Contact"], key="nav_selection")
+# --- About Myself ---
+st.markdown("## About Myself")
+st.markdown("""
+<p>I am a Data Science Master's student at UMass Dartmouth and a Data-Driven Software Engineer. I am passionate about turning complex data into compelling stories, actionable insights, and robust software solutions.</p> 
 
-# --- HOME SECTION ---
-if selection == "Home":
-    st.markdown('<p class="big-font">Chibuike ‘Chib’ Odibeli</p>', unsafe_allow_html=True)
-    st.markdown('<p class="subheader-font">Data Science Master\'s Student | Data-Driven Software Engineer</p>', unsafe_allow_html=True)
-    st.markdown("Turning complex data into compelling stories, actionable insights, and robust software solutions.")
-    
-    st.markdown("---")
-    
-    st.header("🚀 Featured Highlights")
-    c1, c2 = st.columns(2)
-    with c1:
-        st.markdown("""
-        <div class="card">
-            <h3>🤖 Machine Learning</h3>
-            <p>From predicting car prices to detecting audio deepfakes and deploying neural networks on edge devices.</p>
-        </div>
-        """, unsafe_allow_html=True)
-        if st.button("Explore Machine Learning ➔"):
-            st.session_state._pending_nav = "Projects"
-            st.session_state._pending_proj = "Machine Learning"
-            st.rerun()
-            
-    with c2:
-        st.markdown("""
-        <div class="card">
-            <h3>📊 Data Visualization</h3>
-            <p>Interactive dashboards using Altair and D3.js to explore complex datasets like academic networks and medical imaging.</p>
-        </div>
-        """, unsafe_allow_html=True)
-        if st.button("Explore Data Visualization ➔"):
-            st.session_state._pending_nav = "Projects"
-            st.session_state._pending_proj = "Data Visualization"
-            st.rerun()
+<p>With a background in Software Engineering from Penn State, my work bridges the gap between machine learning research and full-stack application development. I've designed immersive VR AI chatbots, deployed quantized neural networks to edge devices, and modernized large-scale web applications.</p>
+""", unsafe_allow_html=True)
 
-# --- ABOUT ME SECTION ---
-elif selection == "About Me":
-    st.header("About Me")
-    
-    tab1, tab2, tab3, tab4, tab5 = st.tabs(["Education", "Experience", "Skills", "Community Involvement", "Awards"])
-    
-    with tab1:
-        st.subheader("🎓 Education")
-        st.markdown("""
-        **University of Massachusetts Dartmouth** | Dartmouth, MA  
-        *Master of Science in Data Science* | **GPA: 4.0** | *Expected: June 2026*
-        
-        **The Pennsylvania State University** | Erie, PA  
-        *Bachelor of Science in Software Engineering* | **GPA: 3.5** | *August 2024*  
-        *Certifications: Entry Certificate in Business Analysis (ECBA) – IIBA, 2024*
-        """)
-        
-    with tab2:
-        st.subheader("💼 Work Experience")
-        
-        st.markdown("### Linux Server Administrator | **University of Massachusetts, Dartmouth**")
-        st.caption("06/2025 - Present")
-        st.markdown("""
-        - **System Administration**: Managed and maintained Linux-based web servers supporting PHP and MySQL databases for web applications.
-        - **Disaster Recovery**: Designed and implemented automated backup systems using cron jobs, ensuring consistent database snapshots and secure off-site storage.
-        - **Optimization**: Performed routine server monitoring, log analysis, and performance optimization to improve uptime and reliability.
-        """)
-        
-        st.divider()
-        
-        st.markdown("### Data-Driven Software Engineer | **Jordan Brooke Estates**")
-        st.caption("05/2024 - 12/2025")
-        st.markdown("""
-        - **Automated Complaint Classification**: Built an ML model with **92% accuracy**, utilizing various classifiers to categorize feedback and reduce manual entry.
-        - **Full-Stack Pipeline**: Designed a data pipeline using **Spring Boot** and **MySQL** to process organizational feedback.
-        - **Actionable Insights**: Created visualization dashboards to track complaint resolution metrics for management.
-        - **DevOps**: Streamlined deployment using **Docker** containers to improve CI/CD reliability.
-        """)
-        
-        st.divider()
-        
-        st.markdown("### Software Engineer | **Erie Insurance**")
-        st.caption("05/2023 - 01/2024")
-        st.markdown("""
-        - **Full Stack Development**: Developed web applications using HTML, CSS, JS, **Spring Framework**, and MySQL.
-        - **Modernization**: Led the conversion of legacy **AngularJS** components to **React**, improving User Experience scores by **45%**.
-        - **Collaboration**: Worked closely with tech leads and cross-functional stakeholders.
-        """)
-        
-        st.divider()
-        
-        st.markdown("### Research Assistant | **Penn State Erie**")
-        st.caption("08/2020 - 06/2023")
-        st.markdown("""
-        - **VR Development**: Built a Virtual Reality environment in **Unity** to teach industrial engineering concepts.
-        - **Publication**: Co-authored a paper detailing the development process and educational impact.
-        """)
+# --- What I've Been Up To ---
+st.markdown("## What I've Been Up To")
 
-    with tab3:
-        st.subheader("🛠️ Technical Skills")
-        
-        col1, col2 = st.columns(2)
-        with col1:
-            st.markdown("**Languages**")
-            st.markdown("`Python` `Java` `C#` `C++` `JavaScript` `HTML/CSS` `SQL` `R`")
-            
-            st.markdown("**Frameworks & Libraries**")
-            st.markdown("`Spring` `React` `Tensorflow` `Unity`")
-            
-            st.markdown("**Databases**")
-            st.markdown("`Microsoft SQL Server` `MySQL` `MariaDB` `MongoDB`")
-            
-        with col2:
-            st.markdown("**Cloud & DevOps**")
-            st.markdown("`AWS` `Azure` `Docker` `Git` `Hadoop` `Spark`")
-            
-            st.markdown("**Visualization & Analytics**")
-            st.markdown("`Power BI` `Tableau` `Microsoft Excel` `Altair` `D3.js` `Matplotlib`")
-            
-            st.markdown("**Tools**")
-            st.markdown("`Jira`")
+timeline_items = [
+    {"date": "Jun 2025", "title": "Linux Server Admin", "company": "UMass Dartmouth"},
+    {"date": "May 2024", "title": "Data-Driven Software Engineer", "company": "Jordan Brooke Estates"},
+    {"date": "May 2023", "title": "Software Engineer", "company": "Erie Insurance"},
+    {"date": "Aug 2020", "title": "Research Assistant", "company": "Penn State Erie"},
+]
 
-    with tab4:
-        st.subheader("🤝 Community Involvement")
-        
-        st.markdown("### President | **National Society of Black Engineers (NSBE)**")
-        st.caption("08/2019 - 05/2021")
-        st.markdown("""
-        - Organized events to encourage students of color to pursue careers in STEM.
-        - Set up internship opportunities in STEM for minority students.
-        - Hosted workshops to teach members good study techniques, resume writing skills, and other good habits to have in the workplace.
-        """)
-        
-        st.divider()
-        
-        st.markdown("### Vice President | **Association of Black Collegians**")
-        st.caption("08/2020 - 05/2021")
-        st.markdown("""
-        - Regularly facilitated discussions about the experiences of minorities in the United States.
-        - Organized a fashion show to display the creations of black fashion designers.
-        - Organized events that to uplift the voices of minority students on campus.
-        """)
-
-    with tab5:
-        st.subheader("🏆 Awards")
-        
-        st.markdown("### Emerging Leader Award | **Excellence in Leadership and Service Ceremony**")
-        st.caption("04/2024")
-        st.markdown("""
-        **Recognized for exceptional leadership and community impact through roles as President of the National Society of Black Engineers (NSBE) and Vice President of the Association of Black Collegians.**
-        
-        - **Strategic Leadership**: Led NSBE chapter to new heights by organizing events that promoted STEM careers for students of color and creating internship opportunities for minority students in STEM fields.
-        - **Mentorship & Development**: Spearheaded workshops focused on professional development, teaching members essential skills such as effective study techniques, resume writing, and workplace etiquette.
-        - **Cultural Advocacy**: Facilitated discussions and events with the Association of Black Collegians, including hosting a fashion show to celebrate Black designers and provide a platform for minority voices and perspectives.
-        - **Community Building**: Contributed to campus life as an RA, fostering a welcoming and inclusive environment and supporting the growth and success of fellow students.
-        """)
-
-# --- PROJECTS SECTION ---
-elif selection == "Projects":
-    cat_selection = st.sidebar.radio("Category", ["Data Visualization", "Machine Learning"], key="proj_selection")
-    
-    if cat_selection == "Data Visualization":
-        viz_selection = st.sidebar.radio("Project", ["Car Analysis", "Co-Authorship Network", "Contour Analysis", "Nigeria Economic Timeline"])
-        if viz_selection == "Car Analysis":
-            car_analysis.app()
-        elif viz_selection == "Co-Authorship Network":
-            network_analysis.app()
-        elif viz_selection == "Contour Analysis":
-            contour_analysis.app()
-        elif viz_selection == "Nigeria Economic Timeline":
-            nigeria_timeline.app()
-            
-    elif cat_selection == "Machine Learning":
-        ml_selection = st.sidebar.radio("Project", [
-            "Used Car Price Prediction", 
-            "Stock Market Forecasting",
-            "Audio Deepfake Detection", 
-            "Edge-Deployed Neural Networks",
-            "Voice-Automated AI Chatbot"
-        ])
-        
-        if ml_selection == "Used Car Price Prediction":
-            price_prediction.app()
-            
-        elif ml_selection == "Stock Market Forecasting":
-            st.header("Stock Market Forecasting with Azure and Power BI")
-            st.markdown("""
-            ### 📈 Project Overview
-            **Period**: 10/2024
-            
-            Built an end-to-end stock market forecasting pipeline using Azure, Python, and Prophet.
-            
-            #### 🔧 Pipeline & Methodology
-            - **Data Collection**: Collected and processed OHLCV data from **Yahoo Finance** for 7-day time series predictions.
-            - **Cloud Storage**: Stored raw and forecasted datasets in **Azure Blob Storage** for scalable cloud management.
-            - **Forecasting Model**: Leveraged **Facebook Prophet** for time series forecasting, generating predictions with confidence intervals.
-            - **Visualization**: Designed a **Power BI** dashboard to visualize forecasts, trends, and confidence intervals.
-            
-            **Tech Stack**: Python, Facebook Prophet, Azure Blob Storage, Power BI, Yahoo Finance API.
-            """)
-            st.markdown("""            
-            #### 🔗 Interactive Dashboard
-            """)
-            st.link_button("View Power BI Dashboard ➔", "https://app.powerbi.com/links/DS54-3Zmjn?ctid=328d6c0d-0f2f-4b76-9310-9762ba1c3e2d&pbi_source=linkShare&bookmarkGuid=b7a06065-d696-442f-8e4f-52b489fc6a0d")
-            
-        elif ml_selection == "Audio Deepfake Detection":
-            st.header("Audio Deepfake Detection")
-            st.markdown("""
-            ### 🕵️‍♂️ Project Overview
-            **Period**: 08/2025 - 12/2025
-            
-            This project addresses the critical security threat posed by synthetic media. I developed a comprehensive multimodal detection system designed to distinguish between authentic human speech and AI-generated audio (deepfakes) produced by state-of-the-art TTS and Voice Conversion models.
-            
-            #### 🔬 Technical Architecture & Methodology
-            - **Feature Extraction**: moved beyond simple waveform analysis to extract high-dimensional acoustic features, including **Mel-Frequency Cepstral Coefficients (MFCCs)**, **Chromagrams**, and **Mel-spectrograms**.
-            - **Spectral Analysis**: Implemented Fast Fourier Transform (FFT) based analysis to detect high-frequency artifacts and spectral inconsistencies often left behind by vocoders (e.g., WaveNet, HiFi-GAN).
-            - **Deep Learning Model**: Designed a hybrid architecture combining **Convolutional Neural Networks (CNNs)** for spatial feature learning from spectrograms and **Recurrent Neural Networks (LSTMs)** to capture temporal dependencies in speech patterns.
-            
-            #### 🚀 Key Results
-            - **Dataset Construction**: Curated a balanced dataset including samples from the ASVspoof challenge and real-world celebrity voice clips.
-            - **Performance**: Achieved an **ROC-AUC score of 0.94** on the test set, demonstrating high sensitivity to subtle synthetic artifacts.
-            - **Generalization**: Successfully detected deepfakes from unseen generators, proving the model learned generalized artifacts rather than source-specific noise.
-            
-            **Tech Stack**: Python, PyTorch, Librosa, Scikit-learn, Matplotlib (for spectral visualization).
-            """)
-            
-        elif ml_selection == "Edge-Deployed Neural Networks":
-            st.header("Edge-Deployed Neural Networks")
-            st.markdown("""
-            ### ⚡ Project Overview
-            **Period**: 08/2025 - 12/2025
-            
-            This project focused on the challenge of bringing deep learning to resource-constrained environments. The goal was to deploy a functional neural network onto an **FPGA (Field-Programmable Gate Array)**, optimizing for low latency and high energy efficiency without sacrificing model accuracy.
-            
-            #### 🛠️ Engineering Challenges & Solutions
-            - **Hardware-Software Co-Design**: Utilized **Xilinx Vivado HLS** (High-Level Synthesis) to convert a Python/C++ defined neural network into Register Transfer Level (RTL) logic.
-            - **Quantization Strategy**: Transformed 32-bit floating-point weights into **8-bit fixed-point integers**. This reduced memory bandwidth requirements by **4x** and significantly decreased logic utilization (LUTs/Flip-Flops) with less than 1% drop in accuracy.
-            - **Parallelization**: Implemented **Loop Unrolling** and **Pipelining** directives in the HLS code to maximize the parallel processing capabilities of the FPGA fabric, achieving massive throughput improvements over CPU inference.
-            
-            #### 📊 Performance Metrics
-            - **Platform**: Deployed on a **PYNQ-Z2** development board.
-            - **Speedup**: Achieved a **20x inference speedup** compared to running the same unoptimized model on the board's embedded ARM Cortex-A9 processor.
-            - **Energy**: Reduced power consumption per inference by **60%**, making it suitable for battery-operated IoT edge devices.
-            
-            **Tech Stack**: C++, Xilinx Vivado HLS, PYNQ Framework, Python, Jupyter Notebooks (for on-board control).
-            """)
-            
-        elif ml_selection == "Voice-Automated AI Chatbot":
-            st.header("Voice-Automated AI Chatbot (VR)")
-            st.markdown("""
-            ### 🗣️ Project Overview
-            **Period**: 08/2023 - 07/2024
-            
-            Designed and implemented an immersive, voice-activated AI tutor integrated into a Virtual Reality anatomy learning environment. This system allows medical students to ask questions about bone structures and receive instant, context-aware verbal responses while navigating a 3D space.
-            
-            #### ☁️ Cloud Architecture & Immersive Integration
-            - **Speech-to-Text (STT)**: Integrated **OpenAI Whisper** models to transcribe user voice commands with high accuracy, handling medical terminology effectively.
-            - **LLM Customization**: Fine-tuned a **Llama 2** foundation model using **QLoRA (Quantized Low-Rank Adaptation)** on a custom dataset of anatomical Q&A pairs. This ensured the bot acted as a knowledgeable tutor rather than a generic assistant.
-            - **Serverless Backend**: Built a scalable API using **AWS Lambda** and **API Gateway**. The VR headset sends audio data to the cloud, where it is processed, queried against the LLM, and synthesized back to speech (TTS).
-            - **Unity Integration**: Developed C# scripts within Unity to handle real-time audio recording, API communication, and lip-sync synchronization for the 3D avatar.
-            
-            #### 🎓 Impact
-            - **User Experience**: Eliminated the need for hand controllers to type queries, maintaining immersion and "flow" in the VR simulation.
-            - **Latency Optimization**: Optimized the cloud pipeline to achieve sub-2-second end-to-end response time using warm-start Lambda instances.
-            
-            **Tech Stack**: Llama 2 (LLM), QLoRA, AWS (Lambda, API Gateway, EC2), Unity (C#), OpenAI Whisper, Python.
-            """)
-
-# --- CONTACT SECTION ---
-elif selection == "Contact":
-    st.header("📬 Get In Touch")
-    
-    st.markdown("""
-    I am always open to discussing new opportunities, collaborations, or data science projects.
-    
-    <div class="card">
-        <h4>📧 Email</h4>
-        <a href="mailto:chibuikeodibeli@gmail.com" style="text-decoration: none; color: #FF4B4B; font-weight: bold;">chibuikeodibeli@gmail.com</a>
-    </div>
-    
-    <div class="card">
-        <h4>🔗 LinkedIn</h4>
-        <a href="https://www.linkedin.com/in/chibuike-odibeli-862319220/" target="_blank" style="text-decoration: none; color: #FF4B4B; font-weight: bold;">Visit My Profile</a>
-    </div>
-    
-    <div class="card">
-        <h4>📍 Location</h4>
-        <p>Harrisburg, PA</p>
-    </div>
-    
-    <div class="card">
-        <h4>📞 Phone</h4>
-        <p>(646) 981-3285</p>
+for item in timeline_items:
+    st.markdown(f"""
+    <div class="timeline-item">
+        <span class="timeline-date">{item['date']}</span>
+        <span class="separator">⊇</span>
+        <span class="item-title">{item['title']}</span> <span style="color: #A0AEC0;">@ {item['company']}</span>
     </div>
     """, unsafe_allow_html=True)
+
+# --- What I've Built ---
+st.markdown("## What I've Built")
+
+@st.dialog("Project Details")
+def show_project_details(proj):
+    st.markdown(f"### {proj['title']}")
+    st.write(proj['details'])
+    if proj['link']:
+        st.link_button("View Live Project", proj['link'])
+
+projects = [
+    {
+        "title": "Audio Deepfake Detection",
+        "subtitle": "PyTorch, Librosa, Spectral Analysis • Multimodal hybrid CNN-LSTM system addressing synthetic media threats (ROC-AUC 0.94).",
+        "details": "This project addressed the growing threat of synthetic media by developing a robust detection framework for audio deepfakes. It combined Convolutional Neural Networks (CNNs) to extract fine-grained spatial features from mel-spectrograms, and Long Short-Term Memory (LSTMs) networks to model temporal dependencies. Trained on extensive datasets of authentic and generated audio, the hybrid architecture achieved a 0.94 ROC-AUC score, demonstrating resilience against compression algorithms and background noise.",
+        "link": None
+    },
+    {
+        "title": "Edge-Deployed Neural Networks",
+        "subtitle": "C++, Xilinx Vivado HLS, PYNQ • Porting quantized ML models onto FPGA logic for 20x speedup and 60% power reduction.",
+        "details": "Focused on optimizing deep learning models for resource-constrained edge devices. The workflow involved quantizing neural networks and translating their C++ implementations into hardware description via Xilinx Vivado HLS. Designed custom hardware accelerators targeting the Zynq-7000 SoC architecture, utilizing the PYNQ framework for high-level hardware-software abstraction.Validated designs via Vivado simulation, demonstrating a theoretical 20x speedup in inference latency and an estimated 60% reduction in power consumption compared to baseline ARM-based software execution",
+        "link": None
+    },
+    {
+        "title": "Voice-Automated AI Chatbot (VR)",
+        "subtitle": "Llama 2 (QLoRA), Unity, AWS • Immersive voice-activated tutor for medical students in virtual reality.",
+        "details": "An immersive educational tool built in Unity that simulates realistic clinical scenarios for medical practitioners. The core intelligence is powered by a parameter-efficient fine-tuned Llama 2 model (using QLoRA). The architecture is distributed, relying on AWS infrastructure to host the LLM and bridge real-time Speech-to-Text and Text-to-Speech services. This created a low-latency, hands-free conversational experience within VR.",
+        "link": None
+    },
+    {
+        "title": "Stock Market Forecasting",
+        "subtitle": "Python, Prophet, Azure, Power BI • End-to-end pipeline predicting OHLCV data with automated cloud storage.",
+        "details": "A comprehensive data engineering and predictive modeling pipeline designed for equity markets. The automated system reliably scrapes daily Open, High, Low, Close, and Volume (OHLCV) data, staging it in Azure Blob Storage. Meta's Prophet algorithm analyzes the time-series trends to forecast future price movements. Finally, this data flows into a dynamic Power BI report, providing stakeholders with intuitive visualizations of historical trends and short-term projections.",
+        "link": "https://app.powerbi.com/links/DS54-3Zmjn?ctid=328d6c0d-0f2f-4b76-9310-9762ba1c3e2d&pbi_source=linkShare&bookmarkGuid=b7a06065-d696-442f-8e4f-52b489fc6a0d"
+    }
+]
+
+for i, proj in enumerate(projects):
+    st.markdown(f"""
+    <div class="project-item" style="margin-bottom: 0.3rem;">
+        <div class="item-title">{proj['title']}</div>
+        <div class="item-subtitle">{proj['subtitle']}</div>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    if st.button("View Project", key=f"view_proj_{i}"):
+        show_project_details(proj)
+    
+    st.markdown("<div style='margin-bottom: 1.2rem;'></div>", unsafe_allow_html=True)
+
+st.markdown("<br>", unsafe_allow_html=True)
+
+# Interactive Projects (Streamlit Apps)
+st.markdown("<div class='item-title' style='margin-bottom: 0.8rem;'>Interactive Visualizations</div>", unsafe_allow_html=True)
+
+@st.dialog("Car Data Analysis", width="large")
+def show_car_analysis_dialog():
+    car_analysis.app()
+
+with st.expander("Car Data Analysis ⊇ Altair interactive dashboard"):
+    st.markdown("This visualization is optimized for a larger view to prevent charts from spilling over.")
+    if st.button("Open Dashboard", key="car_analysis_btn"):
+        show_car_analysis_dialog()
+
+with st.expander("Co-Authorship Network ⊇ D3.js force-directed graph"):
+    network_analysis.app()
+
+with st.expander("Contour Analysis ⊇ Medical imaging density contours"):
+    contour_analysis.app()
+
+with st.expander("Nigeria Economic Timeline ⊇ Historical data visualization"):
+    nigeria_timeline.app()
+
+with st.expander("Used Car Price Prediction ⊇ Interactive Streamlit predictor"):
+    price_prediction.app()
+
+# --- Interests / Readings ---
+st.markdown("## Interests / Readings")
+st.markdown("""
+<ul class="interests-list">
+    <li>Machine Learning Architecture</li>
+    <li>Distributed Systems</li>
+    <li>Science Fiction</li>
+    <li>Community Technology Education</li>
+</ul>
+<br>
+""", unsafe_allow_html=True)
