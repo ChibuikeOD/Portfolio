@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nigeria Economic Timeline | Data Visualization</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <div class="background-grid"></div>
+    
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <span class="logo-icon">◈</span>
+                <h1>Nigeria Economic Timeline</h1>
+            </div>
+            <p class="subtitle"></p>
+        </div>
+        <div class="controls">
+            <div class="time-indicator">
+                <span class="time-label">Hovering:</span>
+                <span id="current-year" class="year-display">—</span>
+            </div>
+            <div class="pin-controls">
+                <button id="toggle-pin-mode" class="pin-btn">
+                    <span class="pin-icon">📍</span>
+                    <span id="pin-mode-text">Add Pin</span>
+                </button>
+                <button id="clear-pins" class="pin-btn pin-btn-secondary">Clear All Pins</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="charts-container" id="charts-container">
+            <div class="loading">
+                <div class="spinner"></div>
+                <span>Loading economic data...</span>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>Data source: World Bank Development Indicators</p>
+    </footer>
+
+
+    <script>
+        const CONFIG = {
+            datasets: [
+                {
+                    file: 'Datasets/API_PA.NUS.FCRF_DS2_en_csv_v2_2844.csv',
+                    name: 'Exchange Rate',
+                    title: 'USD/NGN Exchange Rate',
+                    subtitle: 'Nigerian Naira per US Dollar',
+                    color: '#f59e0b',
+                    format: d => '₦' + d?.toFixed(2),
+                    unit: '₦',
+                    highlight: true
+                },
+                {
+                    file: 'Datasets/API_NY.GDP.MKTP.CD_DS2_en_csv_v2_322200.csv',
+                    name: 'GDP',
+                    title: 'Gross Domestic Product',
+                    subtitle: 'Current US$',
+                    color: '#10b981',
+                    format: d => formatLargeNumber(d),
+                    unit: ''
+                },
+                {
+                    file: 'Datasets/API_NY.GDP.MKTP.KD.ZG_DS2_en_csv_v2_322193.csv',
+                    name: 'GDP Growth',
+                    title: 'GDP Growth Rate',
+                    subtitle: 'Annual %',
+                    color: '#34d399',
+                    format: d => d?.toFixed(2) + '%',
+                    unit: '%'
+                },
+                {
+                    file: 'Datasets/API_FP.CPI.TOTL.ZG_DS2_en_csv_v2_322058.csv',
+                    name: 'Inflation',
+                    title: 'Inflation Rate',
+                    subtitle: 'Consumer prices, annual %',
+                    color: '#059669',
+                    format: d => d?.toFixed(2) + '%',
+                    unit: '%'
+                },
+                {
+                    file: 'Datasets/API_SL.UEM.TOTL.ZS_DS2_en_csv_v2_322167.csv',
+                    name: 'Unemployment',
+                    title: 'Unemployment Rate',
+                    subtitle: '% of total labor force',
+                    color: '#047857',
+                    format: d => d?.toFixed(2) + '%',
+                    unit: '%'
+                },
+                {
+                    file: 'Datasets/API_SP.DYN.LE00.IN_DS2_en_csv_v2_321761.csv',
+                    name: 'Life Expectancy',
+                    title: 'Life Expectancy at Birth',
+                    subtitle: 'Years',
+                    color: '#6ee7b7',
+                    format: d => d?.toFixed(1) + ' years',
+                    unit: 'years'
+                },
+                {
+                    file: 'Datasets/API_SP.POP.TOTL_DS2_en_csv_v2_322199.csv',
+                    name: 'Population',
+                    title: 'Total Population',
+                    subtitle: 'Number of people',
+                    color: '#a7f3d0',
+                    format: d => formatLargeNumber(d),
+                    unit: ''
+                }
+            ],
+            margin: { top: 20, right: 30, bottom: 30, left: 70 },
+            yearRange: { start: 1960, end: 2024 },
+            keyEvents: [
+                { year: 1960, label: 'Independence', color: '#3b82f6' },
+                { year: 2016, label: '2016 Recession', color: '#ef4444' }
+            ]
+        };
+
+        let allData = {};
+        let charts = [];
+        let userPins = [];
+        let pinMode = false;
+        const PIN_COLORS = ['#8b5cf6', '#06b6d4', '#f97316', '#84cc16', '#ec4899', '#14b8a6'];
+
+        function formatLargeNumber(num) {
+            if (num === null || num === undefined || isNaN(num)) return '—';
+            if (num >= 1e12) return (num / 1e12).toFixed(2) + 'T';
+            if (num >= 1e9) return (num / 1e9).toFixed(2) + 'B';
+            if (num >= 1e6) return (num / 1e6).toFixed(2) + 'M';
+            if (num >= 1e3) return (num / 1e3).toFixed(2) + 'K';
+            return num.toFixed(2);
+        }
+
+        function parseWorldBankCSV(text) {
+            const lines = text.split('\n');
+            const headerLine = lines[4];
+            if (!headerLine) return { headers: [], data: [] };
+            
+            const headers = parseCSVLine(headerLine);
+            
+            const yearIndices = {};
+            headers.forEach((header, index) => {
+                const year = parseInt(header);
+                if (year >= 1960 && year <= 2024) {
+                    yearIndices[year] = index;
+                }
+            });
+            
+            const data = [];
+            for (let i = 5; i < lines.length; i++) {
+                const line = lines[i].trim();
+                if (!line) continue;
+                
+                const values = parseCSVLine(line);
+                if (values.length < 5) continue;
+                
+                const countryCode = values[1];
+                
+                const yearData = {};
+                for (const [year, index] of Object.entries(yearIndices)) {
+                    const value = parseFloat(values[index]);
+                    yearData[year] = isNaN(value) ? null : value;
+                }
+                
+                data.push({
+                    countryCode,
+                    values: yearData
+                });
+            }
+            
+            return { headers, data };
+        }
+
+        function parseCSVLine(line) {
+            const result = [];
+            let current = '';
+            let inQuotes = false;
+            
+            for (let i = 0; i < line.length; i++) {
+                const char = line[i];
+                
+                if (char === '"') {
+                    inQuotes = !inQuotes;
+                } else if (char === ',' && !inQuotes) {
+                    result.push(current.trim());
+                    current = '';
+                } else {
+                    current += char;
+                }
+            }
+            result.push(current.trim());
+            
+            return result;
+        }
+
+        function getCountryData(datasetData) {
+            const country = datasetData.find(d => d.countryCode === 'NGA');
+            if (!country) return [];
+            
+            return Object.entries(country.values)
+                .map(([year, value]) => ({
+                    year: parseInt(year),
+                    value: value
+                }))
+                .filter(d => d.value !== null)
+                .sort((a, b) => a.year - b.year);
+        }
+
+        async function loadAllData() {
+            const container = document.getElementById('charts-container');
+            
+            try {
+                const loadPromises = CONFIG.datasets.map(async (dataset) => {
+                    const response = await fetch(dataset.file);
+                    const text = await response.text();
+                    const parsed = parseWorldBankCSV(text);
+                    return { name: dataset.name, data: parsed.data };
+                });
+                
+                const results = await Promise.all(loadPromises);
+                
+                results.forEach(result => {
+                    allData[result.name] = result.data;
+                });
+                
+                container.innerHTML = '';
+                createAllCharts();
+                
+            } catch (error) {
+                console.error('Error loading data:', error);
+                container.innerHTML = `
+                    <div class="loading">
+                        <span style="color: #e91e63;">Error loading data. Please ensure the CSV files are in the Datasets folder and you're running a local server.</span>
+                    </div>
+                `;
+            }
+        }
+
+        function createAllCharts() {
+            const container = document.getElementById('charts-container');
+            charts = [];
+            
+            CONFIG.datasets.forEach((dataset, index) => {
+                const chartCard = createChartCard(dataset, index);
+                container.appendChild(chartCard);
+                
+                const chartData = getCountryData(allData[dataset.name]);
+                const chart = createChart(dataset, chartData, index);
+                charts.push(chart);
+            });
+            
+            setupSynchronizedHover();
+        }
+
+        function createChartCard(dataset, index) {
+            const card = document.createElement('div');
+            card.className = dataset.highlight ? 'chart-card chart-highlight' : 'chart-card';
+            card.id = `chart-card-${index}`;
+            
+            card.innerHTML = `
+                <div class="chart-header">
+                    <div class="chart-title-group">
+                        <div class="chart-indicator" style="background: ${dataset.color}"></div>
+                        <div>
+                            <div class="chart-title">${dataset.title}</div>
+                            <div class="chart-subtitle">${dataset.subtitle}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="chart-body" id="chart-${index}"></div>
+            `;
+            
+            return card;
+        }
+
+        function createChart(dataset, data, index) {
+            const container = document.getElementById(`chart-${index}`);
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+            
+            const svg = d3.select(`#chart-${index}`)
+                .append('svg')
+                .attr('class', 'chart-svg')
+                .attr('viewBox', `0 0 ${width} ${height}`)
+                .attr('preserveAspectRatio', 'xMidYMid meet');
+            
+            const margin = CONFIG.margin;
+            const innerWidth = width - margin.left - margin.right;
+            const innerHeight = height - margin.top - margin.bottom;
+            
+            const g = svg.append('g')
+                .attr('transform', `translate(${margin.left},${margin.top})`);
+            
+            const xScale = d3.scaleLinear()
+                .domain([CONFIG.yearRange.start, CONFIG.yearRange.end])
+                .range([0, innerWidth]);
+            
+            const yExtent = d3.extent(data, d => d.value);
+            const yPadding = (yExtent[1] - yExtent[0]) * 0.1 || 1;
+            const yScale = d3.scaleLinear()
+                .domain([yExtent[0] - yPadding, yExtent[1] + yPadding])
+                .range([innerHeight, 0]);
+            
+            g.append('g')
+                .attr('class', 'grid')
+                .selectAll('line')
+                .data(yScale.ticks(5))
+                .enter()
+                .append('line')
+                .attr('class', 'grid-line')
+                .attr('x1', 0)
+                .attr('x2', innerWidth)
+                .attr('y1', d => yScale(d))
+                .attr('y2', d => yScale(d));
+            
+            g.append('g')
+                .attr('class', 'axis-x')
+                .attr('transform', `translate(0,${innerHeight})`)
+                .call(d3.axisBottom(xScale)
+                    .tickFormat(d3.format('d'))
+                    .ticks(10));
+            
+            g.append('g')
+                .attr('class', 'axis-y')
+                .call(d3.axisLeft(yScale)
+                    .ticks(5)
+                    .tickFormat(d => formatLargeNumber(d)));
+            
+            const gradientId = `gradient-${index}`;
+            const defs = svg.append('defs');
+            const gradient = defs.append('linearGradient')
+                .attr('id', gradientId)
+                .attr('x1', '0%')
+                .attr('y1', '0%')
+                .attr('x2', '0%')
+                .attr('y2', '100%');
+            
+            gradient.append('stop')
+                .attr('offset', '0%')
+                .attr('stop-color', dataset.color)
+                .attr('stop-opacity', 0.3);
+            
+            gradient.append('stop')
+                .attr('offset', '100%')
+                .attr('stop-color', dataset.color)
+                .attr('stop-opacity', 0);
+            
+            const area = d3.area()
+                .x(d => xScale(d.year))
+                .y0(innerHeight)
+                .y1(d => yScale(d.value))
+                .curve(d3.curveMonotoneX);
+            
+            g.append('path')
+                .datum(data)
+                .attr('class', 'area-gradient')
+                .attr('fill', `url(#${gradientId})`)
+                .attr('d', area);
+            
+            const line = d3.line()
+                .x(d => xScale(d.year))
+                .y(d => yScale(d.value))
+                .curve(d3.curveMonotoneX);
+            
+            g.append('path')
+                .datum(data)
+                .attr('class', 'data-line')
+                .attr('stroke', dataset.color)
+                .attr('d', line);
+            
+            CONFIG.keyEvents.forEach(event => {
+                const eventX = xScale(event.year);
+                
+                g.append('line')
+                    .attr('class', 'event-line')
+                    .attr('x1', eventX)
+                    .attr('x2', eventX)
+                    .attr('y1', 0)
+                    .attr('y2', innerHeight)
+                    .attr('stroke', event.color)
+                    .attr('stroke-width', 2)
+                    .attr('stroke-dasharray', '6 4');
+                
+                g.append('rect')
+                    .attr('class', 'event-label-bg')
+                    .attr('x', eventX - 45)
+                    .attr('y', -15)
+                    .attr('width', 90)
+                    .attr('height', 18)
+                    .attr('rx', 4)
+                    .attr('fill', event.color);
+                
+                g.append('text')
+                    .attr('class', 'event-label')
+                    .attr('x', eventX)
+                    .attr('y', -3)
+                    .attr('text-anchor', 'middle')
+                    .attr('fill', 'white')
+                    .attr('font-size', '10px')
+                    .attr('font-weight', '600')
+                    .text(event.label);
+                
+                const eventData = data.find(d => d.year === event.year);
+                if (eventData && eventData.value !== null) {
+                    g.append('circle')
+                        .attr('class', 'event-point')
+                        .attr('cx', eventX)
+                        .attr('cy', yScale(eventData.value))
+                        .attr('r', 6)
+                        .attr('fill', event.color)
+                        .attr('stroke', 'white')
+                        .attr('stroke-width', 2);
+                }
+            });
+            
+            drawUserPins(g, xScale, yScale, innerHeight, data);
+            
+            const crosshair = g.append('line')
+                .attr('class', 'crosshair-line')
+                .attr('y1', 0)
+                .attr('y2', innerHeight)
+                .style('opacity', 0);
+            
+            const dataPoint = g.append('circle')
+                .attr('class', 'data-point')
+                .attr('r', 6)
+                .attr('stroke', dataset.color);
+            
+            const tooltipGroup = g.append('g')
+                .attr('class', 'chart-tooltip')
+                .style('opacity', 0);
+            
+            tooltipGroup.append('rect')
+                .attr('class', 'chart-tooltip-bg')
+                .attr('rx', 4)
+                .attr('ry', 4)
+                .attr('fill', dataset.color);
+            
+            tooltipGroup.append('text')
+                .attr('class', 'chart-tooltip-text')
+                .attr('fill', 'white')
+                .attr('text-anchor', 'middle')
+                .attr('dominant-baseline', 'middle')
+                .attr('font-size', '11px')
+                .attr('font-weight', '600');
+            
+            const hoverArea = g.append('rect')
+                .attr('class', 'hover-area')
+                .attr('width', innerWidth)
+                .attr('height', innerHeight)
+                .attr('fill', 'transparent')
+                .attr('data-index', index)
+                .on('click', function(event) {
+                    if (pinMode) {
+                        const [mouseX] = d3.pointer(event);
+                        const year = Math.round(xScale.invert(mouseX));
+                        if (year >= CONFIG.yearRange.start && year <= CONFIG.yearRange.end) {
+                            addPin(year);
+                            togglePinMode();
+                        }
+                    }
+                });
+            
+            return {
+                svg,
+                g,
+                xScale,
+                yScale,
+                crosshair,
+                dataPoint,
+                tooltipGroup,
+                hoverArea,
+                data,
+                dataset,
+                innerWidth,
+                innerHeight,
+                line,
+                area
+            };
+        }
+
+        function setupSynchronizedHover() {
+            const yearDisplay = document.getElementById('current-year');
+            
+            charts.forEach((chart, index) => {
+                chart.hoverArea
+                    .on('mousemove', function(event) {
+                        const [mouseX] = d3.pointer(event);
+                        const year = Math.round(chart.xScale.invert(mouseX));
+                        
+                        yearDisplay.textContent = year;
+                        highlightAllCharts(year);
+                    })
+                    .on('mouseleave', function() {
+                        yearDisplay.textContent = '—';
+                        clearAllHighlights();
+                    });
+            });
+        }
+
+        function highlightAllCharts(year) {
+            charts.forEach((chart, index) => {
+                const x = chart.xScale(year);
+                
+                chart.crosshair
+                    .attr('x1', x)
+                    .attr('x2', x)
+                    .style('opacity', 1);
+                
+                const dataPoint = chart.data.find(d => d.year === year);
+                
+                if (dataPoint && dataPoint.value !== null) {
+                    const y = chart.yScale(dataPoint.value);
+                    
+                    chart.dataPoint
+                        .attr('cx', x)
+                        .attr('cy', y)
+                        .attr('class', 'data-point active');
+                    
+                    const formattedValue = chart.dataset.format(dataPoint.value);
+                    const tooltipText = chart.tooltipGroup.select('text');
+                    const tooltipBg = chart.tooltipGroup.select('rect');
+                    
+                    tooltipText.text(formattedValue);
+                    
+                    const textBBox = tooltipText.node().getBBox();
+                    const padding = 8;
+                    const tooltipWidth = textBBox.width + padding * 2;
+                    const tooltipHeight = textBBox.height + padding;
+                    
+                    let tooltipX = x;
+                    let tooltipY = y - 25;
+                    
+                    if (tooltipX - tooltipWidth / 2 < 0) {
+                        tooltipX = tooltipWidth / 2;
+                    } else if (tooltipX + tooltipWidth / 2 > chart.innerWidth) {
+                        tooltipX = chart.innerWidth - tooltipWidth / 2;
+                    }
+                    
+                    if (tooltipY - tooltipHeight / 2 < 0) {
+                        tooltipY = y + 25;
+                    }
+                    
+                    tooltipBg
+                        .attr('x', -tooltipWidth / 2)
+                        .attr('y', -tooltipHeight / 2)
+                        .attr('width', tooltipWidth)
+                        .attr('height', tooltipHeight);
+                    
+                    chart.tooltipGroup
+                        .attr('transform', `translate(${tooltipX}, ${tooltipY})`)
+                        .style('opacity', 1);
+                } else {
+                    chart.dataPoint.attr('class', 'data-point');
+                    chart.tooltipGroup.style('opacity', 0);
+                }
+            });
+        }
+
+        function clearAllHighlights() {
+            charts.forEach((chart, index) => {
+                chart.crosshair.style('opacity', 0);
+                chart.dataPoint.attr('class', 'data-point');
+                chart.tooltipGroup.style('opacity', 0);
+            });
+        }
+
+        function loadPins() {
+            const saved = localStorage.getItem('nigeriaTimelinePins');
+            if (saved) {
+                userPins = JSON.parse(saved);
+            }
+        }
+
+        function savePins() {
+            localStorage.setItem('nigeriaTimelinePins', JSON.stringify(userPins));
+        }
+
+        function addPin(year) {
+            const label = prompt(`Enter a label for year ${year}:`, `Event ${year}`);
+            if (label === null) return;
+            
+            const color = PIN_COLORS[userPins.length % PIN_COLORS.length];
+            const pin = {
+                id: Date.now(),
+                year: year,
+                label: label || `Pin ${year}`,
+                color: color
+            };
+            
+            userPins.push(pin);
+            savePins();
+            redrawAllCharts();
+        }
+
+        function clearAllPins() {
+            if (userPins.length === 0) return;
+            if (confirm('Remove all pins?')) {
+                userPins = [];
+                savePins();
+                redrawAllCharts();
+            }
+        }
+
+        function togglePinMode() {
+            pinMode = !pinMode;
+            const btn = document.getElementById('toggle-pin-mode');
+            const text = document.getElementById('pin-mode-text');
+            
+            if (pinMode) {
+                btn.classList.add('pin-btn-active');
+                text.textContent = 'Click Chart...';
+                document.body.style.cursor = 'crosshair';
+            } else {
+                btn.classList.remove('pin-btn-active');
+                text.textContent = 'Add Pin';
+                document.body.style.cursor = 'default';
+            }
+        }
+
+        function redrawAllCharts() {
+            document.getElementById('charts-container').innerHTML = '';
+            createAllCharts();
+        }
+
+        function drawUserPins(g, xScale, yScale, innerHeight, data) {
+            userPins.forEach(pin => {
+                const pinX = xScale(pin.year);
+                
+                g.append('line')
+                    .attr('class', 'user-pin-line')
+                    .attr('x1', pinX)
+                    .attr('x2', pinX)
+                    .attr('y1', 0)
+                    .attr('y2', innerHeight)
+                    .attr('stroke', pin.color)
+                    .attr('stroke-width', 2)
+                    .attr('stroke-dasharray', '4 2');
+                
+                const labelWidth = Math.max(pin.label.length * 6 + 16, 50);
+                g.append('rect')
+                    .attr('class', 'user-pin-label-bg')
+                    .attr('x', pinX - labelWidth / 2)
+                    .attr('y', innerHeight - 18)
+                    .attr('width', labelWidth)
+                    .attr('height', 16)
+                    .attr('rx', 3)
+                    .attr('fill', pin.color);
+                
+                g.append('text')
+                    .attr('class', 'user-pin-label')
+                    .attr('x', pinX)
+                    .attr('y', innerHeight - 6)
+                    .attr('text-anchor', 'middle')
+                    .attr('fill', 'white')
+                    .attr('font-size', '9px')
+                    .attr('font-weight', '500')
+                    .text(pin.label);
+                
+                const pinData = data.find(d => d.year === pin.year);
+                if (pinData && pinData.value !== null) {
+                    g.append('circle')
+                        .attr('class', 'user-pin-point')
+                        .attr('cx', pinX)
+                        .attr('cy', yScale(pinData.value))
+                        .attr('r', 5)
+                        .attr('fill', pin.color)
+                        .attr('stroke', 'white')
+                        .attr('stroke-width', 2);
+                }
+            });
+        }
+
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                document.getElementById('charts-container').innerHTML = '';
+                createAllCharts();
+            }, 250);
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadPins();
+            document.getElementById('toggle-pin-mode').addEventListener('click', togglePinMode);
+            document.getElementById('clear-pins').addEventListener('click', clearAllPins);
+            loadAllData();
+        });
+    </script>
+</body>
+</html>
