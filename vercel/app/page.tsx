@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic";
 import { useState } from "react";
 import { Modal } from "@/components/Modal";
+import { ProfilePhoto } from "@/components/ProfilePhoto";
 import { StaticInteractiveFrame } from "@/components/StaticInteractiveFrame";
 
 const CarAnalysisVega = dynamic(
@@ -133,27 +134,32 @@ export default function Home() {
       <div className="portfolio-blob portfolio-blob-2" aria-hidden />
 
       <main className="relative z-0 mx-auto max-w-[650px] px-4 pb-20 pt-16 text-[#1A1A1A]">
-        <h1 className="portfolio-title-gradient mb-0 text-[2.5rem] font-semibold leading-tight tracking-tight">
-          Chibuike &apos;Chib&apos; Odibeli
-        </h1>
-        <p className="mt-0 text-base text-[#718096]">
-          Data Science Master&apos;s Student &amp; Software Engineer
-        </p>
-        <div className="mb-8 mt-2.5 flex gap-[15px] text-[0.9rem]">
-          <a
-            href="https://www.linkedin.com/in/chibuike-odibeli-862319220/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[#718096] no-underline hover:text-[#1A1A1A]"
-          >
-            LinkedIn
-          </a>
-          <a
-            href="mailto:chibuikeodibeli@gmail.com"
-            className="text-[#718096] no-underline hover:text-[#1A1A1A]"
-          >
-            Email
-          </a>
+        <div className="flex flex-row items-start gap-5">
+          <ProfilePhoto />
+          <div className="min-w-0 flex-1">
+            <h1 className="portfolio-title-gradient mb-0 text-[2.5rem] font-semibold leading-tight tracking-tight">
+              Chibuike &apos;Chib&apos; Odibeli
+            </h1>
+            <p className="mt-0 text-base text-[#718096]">
+              Data Science Master&apos;s Student &amp; Software Engineer
+            </p>
+            <div className="mb-8 mt-2.5 flex gap-[15px] text-[0.9rem]">
+              <a
+                href="https://www.linkedin.com/in/chibuike-odibeli-862319220/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#718096] no-underline hover:text-[#1A1A1A]"
+              >
+                LinkedIn
+              </a>
+              <a
+                href="mailto:chibuikeodibeli@gmail.com"
+                className="text-[#718096] no-underline hover:text-[#1A1A1A]"
+              >
+                Email
+              </a>
+            </div>
+          </div>
         </div>
 
         <h2 className="mb-2 mt-10 text-[1.4rem] font-semibold text-[#6A1B9A]">
