@@ -83,8 +83,8 @@ body {
     rgba(122, 0, 255, 0.2) 60%,
     rgba(255, 255, 255, 0) 80%
   );
-  opacity: 0.9;
-  filter: blur(60px);
+  opacity: 0.22;
+  filter: blur(90px);
   animation: portfolio-float 20s infinite alternate ease-in-out;
 }
 
@@ -99,8 +99,8 @@ body {
     rgba(255, 0, 85, 0.3) 40%,
     rgba(255, 255, 255, 0) 70%
   );
-  opacity: 0.8;
-  filter: blur(55px);
+  opacity: 0.18;
+  filter: blur(85px);
   animation: portfolio-float2 18s infinite alternate ease-in-out;
   z-index: -11;
 }
