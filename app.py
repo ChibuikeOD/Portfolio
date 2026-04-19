@@ -10,9 +10,9 @@ _APP_DIR = os.path.dirname(os.path.abspath(__file__))
 
 def _resolve_profile_pic_path():
     for name in (
-        "ProfilePic.png",
-        "ProfilePic.jpg",
         "ProfilePic.jpeg",
+        "ProfilePic.jpg",
+        "ProfilePic.png",
         "ProfilePic.webp",
     ):
         p = os.path.join(_APP_DIR, name)
@@ -127,16 +127,15 @@ st.markdown("""
         color: #1A1A1A !important;
     }
 
-    .header-forma-line {
-        color: #4A4A4A;
-        font-size: 0.95rem;
-        margin-top: 0.5rem;
-        margin-bottom: 0;
-        line-height: 1.5;
+    .header-btn-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+        margin-top: 12px;
     }
     a.header-forma-btn {
         display: inline-block;
-        margin-top: 12px;
         padding: 10px 20px;
         background-color: #0a2342 !important;
         color: #9ecfff !important;
@@ -290,7 +289,7 @@ if _profile_pic:
             unsafe_allow_html=True,
         )
         st.markdown(
-            "<p class='header-forma-line'>Solo Developer of Forma. Check it out below!</p>",
+            "<p style='color: #718096; font-size: 1rem; margin-top: 0;'>Solo Developer of Forma. Check it out below!</p>",
             unsafe_allow_html=True,
         )
         st.markdown(
@@ -299,7 +298,10 @@ if _profile_pic:
     <a href="https://www.linkedin.com/in/chibuike-odibeli-862319220/" target="_blank">LinkedIn</a>
     <a href="mailto:chibuikeodibeli@gmail.com">Email</a>
 </div>
-<a class="header-forma-btn" href="https://forma-app.net" target="_blank" rel="noopener noreferrer">Forma</a>
+<div class="header-btn-row">
+    <a class="header-forma-btn" href="https://forma-app.net" target="_blank" rel="noopener noreferrer">Forma</a>
+    <a class="header-forma-btn" href="https://app.powerbi.com/groups/me/reports/f5913147-8b04-400f-aeff-c7ec8b8d2f3c/c6b98fd0669ce666ceb2?experience=power-bi&amp;bookmarkGuid=5150cceadc0962d771a3" target="_blank" rel="noopener noreferrer">Daily Stock Price Prediction</a>
+</div>
 """,
             unsafe_allow_html=True,
         )
@@ -310,7 +312,7 @@ else:
         unsafe_allow_html=True,
     )
     st.markdown(
-        "<p class='header-forma-line'>Solo Developer of Forma. Check it out below!</p>",
+        "<p style='color: #718096; font-size: 1rem; margin-top: 0;'>Solo Developer of Forma. Check it out below!</p>",
         unsafe_allow_html=True,
     )
     st.markdown(
@@ -319,7 +321,10 @@ else:
     <a href="https://www.linkedin.com/in/chibuike-odibeli-862319220/" target="_blank">LinkedIn</a>
     <a href="mailto:chibuikeodibeli@gmail.com">Email</a>
 </div>
-<a class="header-forma-btn" href="https://forma-app.net" target="_blank" rel="noopener noreferrer">Forma</a>
+<div class="header-btn-row">
+    <a class="header-forma-btn" href="https://forma-app.net" target="_blank" rel="noopener noreferrer">Forma</a>
+    <a class="header-forma-btn" href="https://app.powerbi.com/groups/me/reports/f5913147-8b04-400f-aeff-c7ec8b8d2f3c/c6b98fd0669ce666ceb2?experience=power-bi&amp;bookmarkGuid=5150cceadc0962d771a3" target="_blank" rel="noopener noreferrer">Daily Stock Price Prediction</a>
+</div>
 """,
         unsafe_allow_html=True,
     )

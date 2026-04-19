@@ -143,7 +143,7 @@ export default function Home() {
             <p className="mt-0 text-base text-[#718096]">
               Data Science Master&apos;s Student &amp; Software Engineer
             </p>
-            <p className="mt-2 text-[0.95rem] leading-relaxed text-[#4A4A4A]">
+            <p className="mt-0 text-base text-[#718096]">
               Solo Developer of Forma. Check it out below!
             </p>
             <div className="mt-2.5 flex gap-[15px] text-[0.9rem]">
@@ -162,14 +162,24 @@ export default function Home() {
                 Email
               </a>
             </div>
-            <a
-              href="https://forma-app.net"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-3 mb-8 inline-block rounded-md bg-[#0a2342] px-5 py-2.5 text-[0.95rem] font-semibold text-[#9ecfff] no-underline hover:opacity-92 hover:text-[#c5e5ff]"
-            >
-              Forma
-            </a>
+            <div className="mt-3 mb-8 flex flex-wrap items-center gap-2.5">
+              <a
+                href="https://forma-app.net"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block rounded-md bg-[#0a2342] px-5 py-2.5 text-[0.95rem] font-semibold text-[#9ecfff] no-underline hover:opacity-92 hover:text-[#c5e5ff]"
+              >
+                Forma
+              </a>
+              <a
+                href="https://app.powerbi.com/groups/me/reports/f5913147-8b04-400f-aeff-c7ec8b8d2f3c/c6b98fd0669ce666ceb2?experience=power-bi&bookmarkGuid=5150cceadc0962d771a3"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block rounded-md bg-[#0a2342] px-5 py-2.5 text-[0.95rem] font-semibold text-[#9ecfff] no-underline hover:opacity-92 hover:text-[#c5e5ff]"
+              >
+                Daily Stock Price Prediction
+              </a>
+            </div>
           </div>
         </div>
 
