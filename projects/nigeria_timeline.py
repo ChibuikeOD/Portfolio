@@ -25,7 +25,6 @@ def app():
     try:
         html_content = load_file(os.path.join(base_path, 'index.html'))
         css_content = load_file(os.path.join(base_path, 'styles.css'))
-        js_content = load_file(os.path.join(base_path, 'app.js'))
     except FileNotFoundError as e:
         st.error(f"Error loading project files: {e}")
         return
@@ -70,10 +69,7 @@ def app():
     # 2. Inject CSS
     css_injection = f"<style>{css_content}</style>"
 
-    # 3. Inject JS
-    js_injection = f"<script>{js_content}</script>"
-
-    # 4. Construct final HTML
+    # 3. Construct final HTML
     # We strip out external script references (d3 is already in index.html, we keep it)
     # We remove the local script src="app.js" link and inject the content directly
     

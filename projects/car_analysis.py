@@ -107,4 +107,3 @@ def app():
         - **Premium Performance**: Selecting the highest price bracket reveals a strong correlation with high Horsepower, but outliers exist—users can spot expensive cars with modest specs, pointing to luxury branding over raw performance.
         """)
 
-

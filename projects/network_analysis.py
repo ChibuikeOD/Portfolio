@@ -40,9 +40,6 @@ def app():
         # Inject JSON data into HTML
         json_str = json.dumps(network_data)
         
-        # Script to inject data
-        # replacement logic remains the same
-        
         # We need to replace `d3.json('author_network.json')` with `Promise.resolve(JSON_DATA)`
         replacement_call = f"Promise.resolve({json_str})"
         
@@ -74,4 +71,3 @@ def app():
         - **Country Grouping**: The visualization colors nodes/authors by their affiliated country, allowing users to spot international clusters.
         - **Hover & Click**: Tooltips provide detailed statistics (number of publications, citations) for each author.
         """)
-

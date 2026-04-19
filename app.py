@@ -1,7 +1,37 @@
+import os
+
 import streamlit as st
-from projects import car_analysis, network_analysis, contour_analysis, price_prediction, nigeria_timeline
+from projects import car_analysis, network_analysis, contour_analysis, nigeria_timeline
 
 st.set_page_config(page_title="Chib Odibeli - Portfolio", layout="centered", initial_sidebar_state="collapsed")
+
+_APP_DIR = os.path.dirname(os.path.abspath(__file__))
+
+
+def _resolve_profile_pic_path():
+    for name in (
+        "ProfilePic.png",
+        "ProfilePic.jpg",
+        "ProfilePic.jpeg",
+        "ProfilePic.webp",
+    ):
+        p = os.path.join(_APP_DIR, name)
+        if os.path.isfile(p):
+            return p
+    return None
+
+
+def _portfolio_view_param() -> str:
+    """Read `view` from the URL for deep-linking (e.g. Vercel iframe embeds)."""
+    raw = st.query_params.get("view")
+    if raw is None:
+        return ""
+    if isinstance(raw, list):
+        return (raw[0] or "").strip() if raw else ""
+    return str(raw).strip()
+
+
+VIEW = _portfolio_view_param()
 
 # --- CSS Styling for nickzuber.com aesthetic ---
 st.markdown("""
@@ -97,6 +127,39 @@ st.markdown("""
         color: #1A1A1A !important;
     }
 
+    .header-forma-line {
+        color: #4A4A4A;
+        font-size: 0.95rem;
+        margin-top: 0.5rem;
+        margin-bottom: 0;
+        line-height: 1.5;
+    }
+    a.header-forma-btn {
+        display: inline-block;
+        margin-top: 12px;
+        padding: 10px 20px;
+        background-color: #0a2342 !important;
+        color: #9ecfff !important;
+        text-decoration: none !important;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 0.95rem;
+    }
+    a.header-forma-btn:hover {
+        opacity: 0.92;
+        color: #c5e5ff !important;
+    }
+
+    /* Profile photo (top-left with header); only st.image() uses this in the app */
+    [data-testid="stImage"] img {
+        border-radius: 50%;
+        border: 1px solid #E2E8F0;
+        object-fit: cover;
+        width: 112px !important;
+        height: 112px !important;
+        max-width: 112px !important;
+    }
+
     /* Timeline & Projects */
     .timeline-item, .project-item {
         margin-bottom: 1.2rem;
@@ -163,8 +226,8 @@ st.markdown("""
         background: radial-gradient(circle at 40% 40%, rgba(255, 0, 122, 0.4) 0%, rgba(0, 255, 209, 0.3) 35%, rgba(122, 0, 255, 0.2) 60%, rgba(255, 255, 255, 0) 80%);
         border-radius: 50%;
         z-index: -10;
-        opacity: 0.9;
-        filter: blur(60px);
+        opacity: 0.22;
+        filter: blur(90px);
         animation: float 20s infinite alternate ease-in-out;
         pointer-events: none;
     }
@@ -178,8 +241,8 @@ st.markdown("""
         background: radial-gradient(circle at 50% 50%, rgba(255, 170, 0, 0.4) 0%, rgba(255, 0, 85, 0.3) 40%, rgba(255, 255, 255, 0) 70%);
         border-radius: 50%;
         z-index: -11;
-        opacity: 0.8;
-        filter: blur(55px);
+        opacity: 0.18;
+        filter: blur(85px);
         animation: float2 18s infinite alternate ease-in-out;
         pointer-events: none;
     }
@@ -214,16 +277,52 @@ st.markdown("""
 <div class="bg-blob2"></div>
 """, unsafe_allow_html=True)
 
-# --- Header Section ---
-st.markdown("<h1>Chibuike 'Chib' Odibeli</h1>", unsafe_allow_html=True)
-st.markdown("<p style='color: #718096; font-size: 1rem; margin-top: 0;'>Data Science Master's Student & Software Engineer</p>", unsafe_allow_html=True)
-
-st.markdown("""
+# --- Header Section (profile top-left) ---
+_profile_pic = _resolve_profile_pic_path()
+if _profile_pic:
+    _hc1, _hc2 = st.columns([0.22, 0.78], gap="medium")
+    with _hc1:
+        st.image(_profile_pic, width=112)
+    with _hc2:
+        st.markdown("<h1>Chibuike 'Chib' Odibeli</h1>", unsafe_allow_html=True)
+        st.markdown(
+            "<p style='color: #718096; font-size: 1rem; margin-top: 0;'>Data Science Master's Student & Software Engineer</p>",
+            unsafe_allow_html=True,
+        )
+        st.markdown(
+            "<p class='header-forma-line'>Solo Developer of Forma. Check it out below!</p>",
+            unsafe_allow_html=True,
+        )
+        st.markdown(
+            """
 <div class="header-links">
     <a href="https://www.linkedin.com/in/chibuike-odibeli-862319220/" target="_blank">LinkedIn</a>
     <a href="mailto:chibuikeodibeli@gmail.com">Email</a>
 </div>
-""", unsafe_allow_html=True)
+<a class="header-forma-btn" href="https://forma-app.net" target="_blank" rel="noopener noreferrer">Forma</a>
+""",
+            unsafe_allow_html=True,
+        )
+else:
+    st.markdown("<h1>Chibuike 'Chib' Odibeli</h1>", unsafe_allow_html=True)
+    st.markdown(
+        "<p style='color: #718096; font-size: 1rem; margin-top: 0;'>Data Science Master's Student & Software Engineer</p>",
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        "<p class='header-forma-line'>Solo Developer of Forma. Check it out below!</p>",
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        """
+<div class="header-links">
+    <a href="https://www.linkedin.com/in/chibuike-odibeli-862319220/" target="_blank">LinkedIn</a>
+    <a href="mailto:chibuikeodibeli@gmail.com">Email</a>
+</div>
+<a class="header-forma-btn" href="https://forma-app.net" target="_blank" rel="noopener noreferrer">Forma</a>
+""",
+        unsafe_allow_html=True,
+    )
 
 # --- About Myself ---
 st.markdown("## About Myself")
@@ -311,22 +410,37 @@ st.markdown("<div class='item-title' style='margin-bottom: 0.8rem;'>Interactive 
 def show_car_analysis_dialog():
     car_analysis.app()
 
-with st.expander("Car Data Analysis ⊇ Altair interactive dashboard"):
+with st.expander(
+    "Car Data Analysis ⊇ Altair interactive dashboard",
+    expanded=(VIEW == "car_analysis"),
+):
     st.markdown("This visualization is optimized for a larger view to prevent charts from spilling over.")
     if st.button("Open Dashboard", key="car_analysis_btn"):
         show_car_analysis_dialog()
 
-with st.expander("Co-Authorship Network ⊇ D3.js force-directed graph"):
+with st.expander(
+    "Co-Authorship Network ⊇ D3.js force-directed graph",
+    expanded=(VIEW == "network_analysis"),
+):
     network_analysis.app()
 
-with st.expander("Contour Analysis ⊇ Medical imaging density contours"):
+with st.expander(
+    "Contour Analysis ⊇ Medical imaging density contours",
+    expanded=(VIEW == "contour_analysis"),
+):
     contour_analysis.app()
 
-with st.expander("Nigeria Economic Timeline ⊇ Historical data visualization"):
+with st.expander(
+    "Nigeria Economic Timeline ⊇ Historical data visualization",
+    expanded=(VIEW == "nigeria_timeline"),
+):
     nigeria_timeline.app()
 
-with st.expander("Used Car Price Prediction ⊇ Interactive Streamlit predictor"):
-    price_prediction.app()
+if VIEW == "car_analysis" and not st.session_state.get(
+    "_portfolio_auto_car_dialog_shown", False
+):
+    st.session_state._portfolio_auto_car_dialog_shown = True
+    show_car_analysis_dialog()
 
 # --- Interests / Readings ---
 st.markdown("## Interests / Readings")

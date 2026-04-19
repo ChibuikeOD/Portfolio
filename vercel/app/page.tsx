@@ -143,7 +143,10 @@ export default function Home() {
             <p className="mt-0 text-base text-[#718096]">
               Data Science Master&apos;s Student &amp; Software Engineer
             </p>
-            <div className="mb-8 mt-2.5 flex gap-[15px] text-[0.9rem]">
+            <p className="mt-2 text-[0.95rem] leading-relaxed text-[#4A4A4A]">
+              Solo Developer of Forma. Check it out below!
+            </p>
+            <div className="mt-2.5 flex gap-[15px] text-[0.9rem]">
               <a
                 href="https://www.linkedin.com/in/chibuike-odibeli-862319220/"
                 target="_blank"
@@ -159,6 +162,14 @@ export default function Home() {
                 Email
               </a>
             </div>
+            <a
+              href="https://forma-app.net"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-3 mb-8 inline-block rounded-md bg-[#0a2342] px-5 py-2.5 text-[0.95rem] font-semibold text-[#9ecfff] no-underline hover:opacity-92 hover:text-[#c5e5ff]"
+            >
+              Forma
+            </a>
           </div>
         </div>
 
