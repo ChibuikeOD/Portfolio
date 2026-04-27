@@ -76,6 +76,17 @@ const research: BuiltProject[] = [
   },
 ];
 
+const workExperience = [
+  { date: "Jun 2025", title: "Linux Server Admin", company: "UMass Dartmouth" },
+  {
+    date: "May 2024",
+    title: "Data-Driven Software Engineer",
+    company: "Jordan Brooke Estates",
+  },
+  { date: "May 2023", title: "Software Engineer", company: "Erie Insurance" },
+  { date: "Aug 2020", title: "Research Assistant", company: "Penn State Erie" },
+] as const;
+
 const FORMA_TITLE = "Real Estate Pro Forma Investment Analyzer";
 const FORMA_PAGES = [
   {
@@ -1157,6 +1168,26 @@ export default function Home() {
            implementing safeguards to mitigate some of the inherent risks associated with this powerful technology
           </p>
         </div>
+
+        <h2 className="mb-2 mt-10 text-[1.55rem] font-semibold text-[#6A1B9A]">
+          Work Experience
+        </h2>
+        <ul className="list-none space-y-5 p-0">
+          {workExperience.map((item) => (
+            <li key={`${item.date}-${item.title}`} className="mb-5">
+              <span className="inline-block min-w-[80px] text-[0.85rem] text-[#A0AEC0]">
+                {item.date}
+              </span>
+              <span className="mx-2 text-[1.1rem] font-bold text-[#FF007F]">
+                ⊇
+              </span>
+              <span className="text-[0.95rem] font-semibold text-[#1A1A1A]">
+                {item.title}
+              </span>{" "}
+              <span className="text-[#A0AEC0]">@ {item.company}</span>
+            </li>
+          ))}
+        </ul>
 
         <h2 className="mb-2 mt-10 text-[1.55rem] font-semibold text-[#6A1B9A]">
           Projects
