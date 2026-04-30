@@ -1157,7 +1157,7 @@ export default function Home() {
         <div className="space-y-4 text-[0.95rem] leading-relaxed text-[#4A4A4A]">
           <p>
             I am a Software Engineer with a strong background in Data Science and Machine Learning. 
-            I combine meticulous research methods witn the speed of industry to create architecturally robust products
+            I combine meticulous research methods with the speed of industry to create architecturally robust products
             that satisfy user needs.
           </p>
           <p>
