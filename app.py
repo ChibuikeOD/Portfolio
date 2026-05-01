@@ -149,6 +149,22 @@ st.markdown("""
         color: #c5e5ff !important;
     }
 
+    a.header-genresense-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #1DB954 !important;
+        color: #ffffff !important;
+        text-decoration: none !important;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 0.95rem;
+    }
+    a.header-genresense-btn:hover {
+        opacity: 0.92;
+        color: #ffffff !important;
+        background-color: #1ed760 !important;
+    }
+
     /* Profile photo (top-left with header); only st.image() uses this in the app */
     [data-testid="stImage"] img {
         border-radius: 50%;
@@ -300,6 +316,7 @@ if _profile_pic:
 </div>
 <div class="header-btn-row">
     <a class="header-forma-btn" href="https://forma-app.net" target="_blank" rel="noopener noreferrer">Forma</a>
+    <a class="header-genresense-btn" href="https://genre-sense.vercel.app/" target="_blank" rel="noopener noreferrer">GenreSense</a>
     <a class="header-forma-btn" href="https://app.powerbi.com/view?r=eyJrIjoiYTJjZmYxNDQtODRmNC00YmZjLWI0ZDQtZTYwMGVmNzMzZTFhIiwidCI6IjA1YjVmMDhmLTdkZWQtNDNjNS1iZTNmLWFmMDQyMDcwNzQxNCJ9" target="_blank" rel="noopener noreferrer">Daily Stock Price Prediction</a>
 </div>
 """,
@@ -323,6 +340,7 @@ else:
 </div>
 <div class="header-btn-row">
     <a class="header-forma-btn" href="https://forma-app.net" target="_blank" rel="noopener noreferrer">Forma</a>
+    <a class="header-genresense-btn" href="https://genre-sense.vercel.app/" target="_blank" rel="noopener noreferrer">GenreSense</a>
     <a class="header-forma-btn" href="https://app.powerbi.com/view?r=eyJrIjoiYTJjZmYxNDQtODRmNC00YmZjLWI0ZDQtZTYwMGVmNzMzZTFhIiwidCI6IjA1YjVmMDhmLTdkZWQtNDNjNS1iZTNmLWFmMDQyMDcwNzQxNCJ9" target="_blank" rel="noopener noreferrer">Daily Stock Price Prediction</a>
 </div>
 """,
@@ -356,6 +374,40 @@ def show_project_details(proj):
         st.link_button("View Live Project", proj['link'])
 
 project_projects = [
+    {
+        "title": "GenreSense | ML-Powered Music Recommendation Engine",
+        "subtitle": "Python (Flask), Scikit-Learn, Pandas, Spotify API, PostgreSQL.",
+        "details": "Engineered a full-stack recommendation system that uses K-Means Clustering to discover 'Mathematical Genres' based on high-fidelity audio features (energy, valence, tempo).",
+        "pages": [
+            {
+                "title": "Overview",
+                "content": """
+<div style="color:#4A4A4A; font-size:0.95rem; line-height:1.6;">
+<p><strong>Project:</strong> GenreSense</p>
+<p><strong>Core outcome:</strong> Engineered a full-stack recommendation system that uses K-Means Clustering to discover "Mathematical Genres" based on high-fidelity audio features (energy, valence, tempo).</p>
+<p><strong>Tech Stack:</strong> Python (Flask), Scikit-Learn, Pandas, Spotify API, PostgreSQL.</p>
+</div>
+""",
+            },
+            {
+                "title": "Clustering & Discovery",
+                "content": """
+<div style="color:#4A4A4A; font-size:0.95rem; line-height:1.6;">
+<p>Optimized cluster accuracy using Silhouette Scores and implemented a semantic labeling engine to translate abstract data into human-readable moods.</p>
+</div>
+""",
+            },
+            {
+                "title": "Hybrid Recommendation",
+                "content": """
+<div style="color:#4A4A4A; font-size:0.95rem; line-height:1.6;">
+<p>Developed a Hybrid Playlist Generator using Cosine Similarity to create seamless transitions between distinct musical styles.</p>
+</div>
+""",
+            },
+        ],
+        "link": "https://genre-sense.vercel.app/",
+    },
     {
         "title": "Real Estate Pro Forma Investment Analyzer",
         "subtitle": "Solo Full-Stack Developer • Mobile-first underwriting engine for commercial real estate.",
