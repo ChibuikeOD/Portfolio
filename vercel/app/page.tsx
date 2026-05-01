@@ -23,6 +23,13 @@ type BuiltProject = {
 
 const projects: BuiltProject[] = [
   {
+    title: "GenreSense | ML-Powered Music Recommendation Engine",
+    subtitle: "Python (Flask), Scikit-Learn, Pandas, Spotify API, PostgreSQL.",
+    details:
+      "Engineered a full-stack recommendation system that uses K-Means Clustering to discover 'Mathematical Genres' based on high-fidelity audio features (energy, valence, tempo).",
+    link: "https://genre-sense.vercel.app/",
+  },
+  {
     title: "Real Estate Pro Forma Investment Analyzer",
     subtitle:
       "Solo Full-Stack Developer • Mobile-first underwriting engine for commercial real estate.",
@@ -85,6 +92,54 @@ const workExperience = [
   },
   { date: "May 2023", title: "Software Engineer", company: "Erie Insurance" },
   { date: "Aug 2020", title: "Research Assistant", company: "Penn State Erie" },
+] as const;
+
+const GENRESENSE_TITLE = "GenreSense | ML-Powered Music Recommendation Engine";
+const GENRESENSE_PAGES = [
+  {
+    title: "Overview",
+    content: (
+      <div className="space-y-2">
+        <p>
+          <span className="font-semibold text-[#1A1A1A]">Project:</span>{" "}
+          GenreSense
+        </p>
+        <p>
+          <span className="font-semibold text-[#1A1A1A]">Core outcome:</span>{" "}
+          Engineered a full-stack recommendation system that uses K-Means
+          Clustering to discover "Mathematical Genres" based on high-fidelity
+          audio features (energy, valence, tempo).
+        </p>
+        <p>
+          <span className="font-semibold text-[#1A1A1A]">Tech Stack:</span>{" "}
+          Python (Flask), Scikit-Learn, Pandas, Spotify API, PostgreSQL.
+        </p>
+      </div>
+    ),
+  },
+  {
+    title: "Clustering & Discovery",
+    content: (
+      <div className="space-y-2">
+        <p>
+          Optimized cluster accuracy using Silhouette Scores and implemented a
+          semantic labeling engine to translate abstract data into human-readable
+          moods.
+        </p>
+      </div>
+    ),
+  },
+  {
+    title: "Hybrid Recommendation",
+    content: (
+      <div className="space-y-2">
+        <p>
+          Developed a Hybrid Playlist Generator using Cosine Similarity to
+          create seamless transitions between distinct musical styles.
+        </p>
+      </div>
+    ),
+  },
 ] as const;
 
 const FORMA_TITLE = "Real Estate Pro Forma Investment Analyzer";
@@ -1082,9 +1137,11 @@ export default function Home() {
   }, [projectModal?.title]);
 
   const projectDetailPages =
-    projectModal?.title === FORMA_TITLE
-      ? FORMA_PAGES
-      : projectModal?.title === STOCK_TITLE
+    projectModal?.title === GENRESENSE_TITLE
+      ? GENRESENSE_PAGES
+      : projectModal?.title === FORMA_TITLE
+        ? FORMA_PAGES
+        : projectModal?.title === STOCK_TITLE
         ? STOCK_PAGES
         : projectModal?.title === PDF_TITLE
           ? PDF_PAGES
@@ -1138,6 +1195,14 @@ export default function Home() {
                 className="inline-block rounded-md bg-[#0a2342] px-5 py-2.5 text-[0.95rem] font-semibold text-[#9ecfff] no-underline hover:opacity-92 hover:text-[#c5e5ff]"
               >
                 Forma
+              </a>
+              <a
+                href="https://genre-sense.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block rounded-md bg-[#1DB954] px-5 py-2.5 text-[0.95rem] font-semibold text-white no-underline hover:opacity-92 hover:bg-[#1ed760]"
+              >
+                GenreSense
               </a>
               <a
                 href="https://app.powerbi.com/view?r=eyJrIjoiYTJjZmYxNDQtODRmNC00YmZjLWI0ZDQtZTYwMGVmNzMzZTFhIiwidCI6IjA1YjVmMDhmLTdkZWQtNDNjNS1iZTNmLWFmMDQyMDcwNzQxNCJ9"
