@@ -1698,6 +1698,34 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
+# --- Certifications ---
+st.markdown("## Certifications")
+st.markdown("""
+<div style="background-color: rgba(255,255,255,0.7); border: 1px solid #E2E8F0; border-radius: 12px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); margin-top: 15px; margin-bottom: 25px;">
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 15px;">
+        <div style="display: flex; align-items: flex-start; gap: 15px; flex: 1; min-width: 250px;">
+            <!-- Microsoft Logo Grid -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2px; width: 40px; height: 40px; margin-top: 4px; flex-shrink: 0;">
+                <div style="background-color: #F25022;"></div>
+                <div style="background-color: #7FBA00;"></div>
+                <div style="background-color: #00A4EF;"></div>
+                <div style="background-color: #FFB900;"></div>
+            </div>
+            <div>
+                <h4 style="margin: 0 0 4px 0; font-size: 1.05rem; font-weight: 700; color: #1A1A1A;">Microsoft Certified: Azure AI Engineer Associate</h4>
+                <p style="margin: 0 0 6px 0; font-size: 0.85rem; color: #718096; font-weight: 500;">Microsoft</p>
+                <div style="display: flex; flex-wrap: wrap; gap: 15px; font-size: 0.75rem; color: #718096;">
+                  <span><strong>Credential ID:</strong> 8FDC769C0A0CD6EB</span>
+                  <span><strong>Issued:</strong> March 16, 2026</span>
+                  <span><strong>Expires:</strong> March 17, 2027</span>
+                </div>
+            </div>
+        </div>
+        <a href="https://learn.microsoft.com/en-us/users/chibuikeodibeli-9487/credentials/8fdc769c0a0cd6eb?ref=https%3A%2F%2Fwww.linkedin.com%2F" target="_blank" style="display: inline-block; text-align: center; border: 1px solid #E2E8F0; background-color: #ffffff; color: #1A1A1A; font-size: 0.75rem; font-weight: 600; padding: 8px 16px; border-radius: 6px; text-decoration: none; transition: background-color 0.2s;" onmouseover="this.style.backgroundColor='#f7f2ee'" onmouseout="this.style.backgroundColor='#ffffff'">Verify Credential</a>
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
 st.markdown("## Interests / Readings")
 st.markdown(f"""
 <ul class="interests-list">

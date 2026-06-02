@@ -1734,6 +1734,44 @@ export default function Home() {
         </div>
 
         <h2 className="mb-2 mt-10 text-[1.55rem] font-semibold text-[#6A1B9A]">
+          Certifications
+        </h2>
+        <div className="mt-4 rounded-xl border border-[#E2E8F0] bg-white/70 p-5 shadow-sm hover:shadow-md transition-shadow duration-300">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <div className="flex items-start gap-4">
+              {/* Microsoft Logo Grid */}
+              <div className="grid grid-cols-2 gap-0.5 w-10 h-10 shrink-0 mt-1" aria-hidden="true">
+                <div className="bg-[#F25022] w-4.5 h-4.5"></div>
+                <div className="bg-[#7FBA00] w-4.5 h-4.5"></div>
+                <div className="bg-[#00A4EF] w-4.5 h-4.5"></div>
+                <div className="bg-[#FFB900] w-4.5 h-4.5"></div>
+              </div>
+              <div>
+                <h3 className="text-base font-bold text-[#1A1A1A]">
+                  Microsoft Certified: Azure AI Engineer Associate
+                </h3>
+                <p className="text-sm text-[#718096]">
+                  Microsoft
+                </p>
+                <div className="mt-1 flex flex-wrap gap-x-4 gap-y-1 text-xs text-[#718096]">
+                  <span><strong>Credential ID:</strong> 8FDC769C0A0CD6EB</span>
+                  <span><strong>Issued:</strong> March 16, 2026</span>
+                  <span><strong>Expires:</strong> March 17, 2027</span>
+                </div>
+              </div>
+            </div>
+            <a
+              href="https://learn.microsoft.com/en-us/users/chibuikeodibeli-9487/credentials/8fdc769c0a0cd6eb?ref=https%3A%2F%2Fwww.linkedin.com%2F"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto text-center shrink-0 rounded-md border border-[#E2E8F0] bg-white px-3.5 py-2 text-xs font-semibold text-[#1A1A1A] hover:bg-[#f7f2ee] transition-colors"
+            >
+              Verify Credential
+            </a>
+          </div>
+        </div>
+
+        <h2 className="mb-2 mt-10 text-[1.55rem] font-semibold text-[#6A1B9A]">
           Interests / Readings
         </h2>
         <ul className="interests-list mt-4 space-y-1 text-[0.95rem] leading-relaxed text-[#4A4A4A]">
