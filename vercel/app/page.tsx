@@ -21,6 +21,10 @@ type BuiltProject = {
   link: string | null;
 };
 
+const PATH_OF_THE_FIST_TITLE = "Path Of The Fist | AI-Powered Esports Commentator";
+const G_MCP_TITLE = "G-MCP | Model Context Protocol Server for Godot";
+const DELTABENCH2D_TITLE = "DeltaBench2D | 2D Game Development Benchmark Suite";
+
 const projects: BuiltProject[] = [
   {
     title: "GenreSense | ML-Powered Music Recommendation Engine",
@@ -62,6 +66,20 @@ const projects: BuiltProject[] = [
       "A hands-free, voice-driven VR tutor that simulates clinical scenarios and provides responsive conversational guidance through a cloud-hosted LLM pipeline.",
     link: null,
   },
+  {
+    title: PATH_OF_THE_FIST_TITLE,
+    subtitle: "FastAPI, Neo4j, GraphRAG, React, start.gg API, TailwindCSS.",
+    details:
+      "Designed an AI esports commentator and bracket analytics assistant that models competitive tournament data into a Neo4j graph database. The system uses a GraphRAG analytics engine to construct high-fidelity game contexts, translating abstract tournament logs (Combo Breaker 2022 - 2026 Street Fighter 6) into natural, high-energy commentary and real-time player ELO statistics.",
+    link: "https://github.com/ChibuikeOD/AI-Storyline-Engine",
+  },
+  {
+    title: G_MCP_TITLE,
+    subtitle: "TypeScript, Node.js, Godot 4 (GDScript), WebSockets, Mermaid, Vitest.",
+    details:
+      "Engineered a custom Model Context Protocol (MCP) server for the Godot 4.x game engine, empowering AI agents with runtime debugging, dynamic GDScript execution, automated playtesting via simulated inputs, base64 visual screenshot capturing, and web asset integration (Kenney.nl, OpenGameArt). Implemented dual-execution modes (Live WebSocket and Headless fallback) to bridge the gap between AI code generation and game state verification.",
+    link: "https://github.com/ChibuikeOD/gesso-mcp-server",
+  },
 ];
 
 const research: BuiltProject[] = [
@@ -80,6 +98,13 @@ const research: BuiltProject[] = [
     details:
       "End-to-end path from a Keras deep learning model to a quantized, HLS-simulated FPGA inference engine—optimizing fixed-point arithmetic for throughput and resource use while tracking numerical fidelity against the floating-point baseline.",
     link: null,
+  },
+  {
+    title: DELTABENCH2D_TITLE,
+    subtitle: "TypeScript, Node.js, Godot 4.x (GDScript), Git LFS, Python.",
+    details:
+      "Contributed to and rebranded a multimodal benchmarking suite containing 132 automated tasks to evaluate agentic software development capabilities in the Godot 4.x game engine. Configured a unified test runner, managed large asset files using Git LFS, and developed verification modules to test agent performance on Gameplay, 2D Graphics, and UI tasks.",
+    link: "https://github.com/ChibuikeOD/DeltaBench2D",
   },
 ];
 
@@ -1071,6 +1096,144 @@ const VR_PAGES = [
   },
 ] as const;
 
+
+const PATH_OF_THE_FIST_PAGES = [
+  {
+    title: "Overview",
+    content: (
+      <div className="space-y-2">
+        <p>
+          <span className="font-semibold text-[#1A1A1A]">Project:</span> Path of the Fist
+        </p>
+        <p>
+          <span className="font-semibold text-[#1A1A1A]">Core outcome:</span> Designed an AI-powered Esports commentator and bracket analytics assistant that models tournament data into a Neo4j graph database and generates real-time commentator response narratives.
+        </p>
+        <p>
+          <span className="font-semibold text-[#1A1A1A]">Tech Stack:</span> Python (FastAPI), Neo4j (Graph Database), GraphRAG, React, start.gg API.
+        </p>
+      </div>
+    ),
+  },
+  {
+    title: "GraphRAG & Context",
+    content: (
+      <div className="space-y-2">
+        <p>
+          <span className="font-semibold text-[#1A1A1A]">Neo4j Graph Database:</span> Models complex relationships between players, sets, tournaments, and events. Programmatically ingest and sync tournament brackets from the start.gg API across multiple years (2022 - 2026).
+        </p>
+        <p>
+          <span className="font-semibold text-[#1A1A1A]">GraphRAG Engine:</span> Resolves global and local tournament context dynamically to generate highly accurate ELO ratings, player progression summaries, and match details, preventing LLM hallucinations about complex bracket layouts.
+        </p>
+      </div>
+    ),
+  },
+  {
+    title: "Esports Commentary",
+    content: (
+      <div className="space-y-2">
+        <p>
+          <span className="font-semibold text-[#1A1A1A]">Voice of Combo Breaker:</span> Fine-tuned and prompted LLM models to adopt a high-energy, elite esports commentator persona. Generates engaging narratives of specific match run sequences and historical tournament stories using punchy, action-oriented verbs.
+        </p>
+      </div>
+    ),
+  },
+] as const;
+
+
+const G_MCP_PAGES = [
+  {
+    title: "Overview",
+    content: (
+      <div className="space-y-2">
+        <p>
+          <span className="font-semibold text-[#1A1A1A]">Project:</span> G-MCP (Gesso Model Context Protocol Server)
+        </p>
+        <p>
+          <span className="font-semibold text-[#1A1A1A]">Core outcome:</span> A bridge enabling AI agents to debug, inspect, and interact with running Godot 4.x game sessions and editor spaces in real-time.
+        </p>
+        <p>
+          <span className="font-semibold text-[#1A1A1A]">Tech Stack:</span> TypeScript, Node.js, Godot 4.x (GDScript/WebSocket), Vitest, MCP SDK.
+        </p>
+      </div>
+    ),
+  },
+  {
+    title: "Core Features",
+    content: (
+      <ul className="list-disc space-y-2 pl-5">
+        <li>
+          <span className="font-semibold text-[#1A1A1A]">Runtime Introspection:</span> Inspect live node trees, read/modify node properties, query signals, and monitor execution states.
+        </li>
+        <li>
+          <span className="font-semibold text-[#1A1A1A]">Input Emulation:</span> Programmatically dispatch simulated keyboard, mouse, gamepad, and touch input sequences.
+        </li>
+        <li>
+          <span className="font-semibold text-[#1A1A1A]">Dynamic Execution (eval):</span> Run arbitrary GDScript snippets on active game instances and fetch results.
+        </li>
+        <li>
+          <span className="font-semibold text-[#1A1A1A]">Visual Agent Vision:</span> Take screenshots of the game window, Godot editor, or screen monitor, converting them directly to base64 images for LLM vision models.
+        </li>
+      </ul>
+    ),
+  },
+  {
+    title: "Architecture",
+    content: (
+      <div className="space-y-2">
+        <p>
+          <span className="font-semibold text-[#1A1A1A]">Dual-Execution Modes:</span> Supports both WebSocket Live Mode (connecting to Godot Editor plugins and autoloaded game scripts at port 6505) and Headless Fallback Mode (spawning standalone headless GDScript runtimes via the Godot CLI executable).
+        </p>
+      </div>
+    ),
+  },
+] as const;
+
+
+const DELTABENCH2D_PAGES = [
+  {
+    title: "Overview",
+    content: (
+      <div className="space-y-2">
+        <p>
+          <span className="font-semibold text-[#1A1A1A]">Project:</span> DeltaBench2D (formerly GameDevBench / Gesso-2D)
+        </p>
+        <p>
+          <span className="font-semibold text-[#1A1A1A]">Core outcome:</span> A rigorous multimodal evaluation benchmark consisting of 132 game development tasks in the Godot 4 game engine.
+        </p>
+        <p>
+          <span className="font-semibold text-[#1A1A1A]">Tech Stack:</span> TypeScript, Node.js, Godot 4.x (GDScript/websocket client), Python, Git LFS.
+        </p>
+      </div>
+    ),
+  },
+  {
+    title: "Task Taxonomy",
+    content: (
+      <div className="space-y-2">
+        <p>
+          <span className="font-semibold text-[#1A1A1A]">Multi-Category Evaluation:</span> Tasks span four categories—3D Graphics, 2D Graphics, Gameplay, and UI—requiring agents to manipulate and reason about multimodal assets (shaders, sprites, animations, and visual scenes).
+        </p>
+        <p>
+          <span className="font-semibold text-[#1A1A1A]">Complexity:</span> Average solutions require 3x more lines of code and file changes compared to typical software engineering benchmarks (like SWE-bench), highlighting the complexity of real-world game development.
+        </p>
+      </div>
+    ),
+  },
+  {
+    title: "Engineering Details",
+    content: (
+      <ul className="list-disc space-y-2 pl-5">
+        <li>
+          <span className="font-semibold text-[#1A1A1A]">Unified Test Runner:</span> Configured a testing suite where agents execute solutions and run automated assertion checks inside the Godot runtime.
+        </li>
+        <li>
+          <span className="font-semibold text-[#1A1A1A]">Asset Management:</span> Set up Git LFS tracking for heavy zip packages (e.g. game project templates exceeding 100MB) to optimize repository size and resolve GitHub upload limitations.
+        </li>
+      </ul>
+    ),
+  },
+] as const;
+
 type InteractiveKind = "car" | "iframe";
 
 type InteractiveItem = {
@@ -1151,7 +1314,13 @@ export default function Home() {
               ? EDGE_PAGES
               : projectModal?.title === VR_TITLE
                 ? VR_PAGES
-                : null;
+                : projectModal?.title === PATH_OF_THE_FIST_TITLE
+                  ? PATH_OF_THE_FIST_PAGES
+                  : projectModal?.title === G_MCP_TITLE
+                    ? G_MCP_PAGES
+                    : projectModal?.title === DELTABENCH2D_TITLE
+                      ? DELTABENCH2D_PAGES
+                      : null;
 
   return (
     <>
@@ -1211,6 +1380,30 @@ export default function Home() {
                 className="inline-block rounded-md bg-[#0a2342] px-5 py-2.5 text-[0.95rem] font-semibold text-[#9ecfff] no-underline hover:opacity-92 hover:text-[#c5e5ff]"
               >
                 Daily Stock Price Prediction
+              </a>
+              <a
+                href="https://github.com/ChibuikeOD/AI-Storyline-Engine"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block rounded-md bg-[#5f0914] px-5 py-2.5 text-[0.95rem] font-semibold text-[#ffccd3] no-underline hover:opacity-92 hover:text-[#ffeaed]"
+              >
+                Path of the Fist
+              </a>
+              <a
+                href="https://github.com/ChibuikeOD/gesso-mcp-server"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block rounded-md bg-[#004d40] px-5 py-2.5 text-[0.95rem] font-semibold text-[#b2dfdb] no-underline hover:opacity-92 hover:text-[#e0f2f1]"
+              >
+                G-MCP
+              </a>
+              <a
+                href="https://github.com/ChibuikeOD/DeltaBench2D"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block rounded-md bg-[#1a237e] px-5 py-2.5 text-[0.95rem] font-semibold text-[#c5cae9] no-underline hover:opacity-92 hover:text-[#e8eaf6]"
+              >
+                DeltaBench2D
               </a>
             </div>
           </div>

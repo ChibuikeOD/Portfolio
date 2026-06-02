@@ -15,6 +15,9 @@ It currently features the following projects:
 - **Audio Deepfake Detection**: A multimodal system for detecting AI-generated audio artifacts.
 - **Edge-Deployed Neural Networks**: Research on deploying quantized neural networks to FPGAs.
 - **Voice-Automated AI Chatbot**: A VR-integrated AI assistant powered by fine-tuned LLMs.
+- **Path of the Fist**: An AI esports commentator and bracket analytics assistant using Neo4j and GraphRAG.
+- **G-MCP**: A Model Context Protocol (MCP) server for Godot 4.x runtime debugging and automated playtesting.
+- **DeltaBench2D**: A benchmark suite with 132 tasks for evaluating AI agent game development capabilities in Godot.
 
 ## Deploying the portfolio on Vercel
 

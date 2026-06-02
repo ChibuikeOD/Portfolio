@@ -165,6 +165,52 @@ st.markdown("""
         background-color: #1ed760 !important;
     }
 
+    a.header-fist-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #5f0914 !important;
+        color: #ffccd3 !important;
+        text-decoration: none !important;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 0.95rem;
+    }
+    a.header-fist-btn:hover {
+        opacity: 0.92;
+        color: #ffeaed !important;
+    }
+
+    a.header-gmcp-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #004d40 !important;
+        color: #b2dfdb !important;
+        text-decoration: none !important;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 0.95rem;
+    }
+    a.header-gmcp-btn:hover {
+        opacity: 0.92;
+        color: #e0f2f1 !important;
+    }
+
+    a.header-deltabench-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #1a237e !important;
+        color: #c5cae9 !important;
+        text-decoration: none !important;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 0.95rem;
+    }
+    a.header-deltabench-btn:hover {
+        opacity: 0.92;
+        color: #e8eaf6 !important;
+    }
+
+
     /* Profile photo (top-left with header); only st.image() uses this in the app */
     [data-testid="stImage"] img {
         border-radius: 50%;
@@ -318,6 +364,9 @@ if _profile_pic:
     <a class="header-forma-btn" href="https://forma-app.net" target="_blank" rel="noopener noreferrer">Forma</a>
     <a class="header-genresense-btn" href="https://genre-sense.vercel.app/" target="_blank" rel="noopener noreferrer">GenreSense</a>
     <a class="header-forma-btn" href="https://app.powerbi.com/view?r=eyJrIjoiYTJjZmYxNDQtODRmNC00YmZjLWI0ZDQtZTYwMGVmNzMzZTFhIiwidCI6IjA1YjVmMDhmLTdkZWQtNDNjNS1iZTNmLWFmMDQyMDcwNzQxNCJ9" target="_blank" rel="noopener noreferrer">Daily Stock Price Prediction</a>
+    <a class="header-fist-btn" href="https://github.com/ChibuikeOD/AI-Storyline-Engine" target="_blank" rel="noopener noreferrer">Path of the Fist</a>
+    <a class="header-gmcp-btn" href="https://github.com/ChibuikeOD/gesso-mcp-server" target="_blank" rel="noopener noreferrer">G-MCP</a>
+    <a class="header-deltabench-btn" href="https://github.com/ChibuikeOD/DeltaBench2D" target="_blank" rel="noopener noreferrer">DeltaBench2D</a>
 </div>
 """,
             unsafe_allow_html=True,
@@ -342,6 +391,9 @@ else:
     <a class="header-forma-btn" href="https://forma-app.net" target="_blank" rel="noopener noreferrer">Forma</a>
     <a class="header-genresense-btn" href="https://genre-sense.vercel.app/" target="_blank" rel="noopener noreferrer">GenreSense</a>
     <a class="header-forma-btn" href="https://app.powerbi.com/view?r=eyJrIjoiYTJjZmYxNDQtODRmNC00YmZjLWI0ZDQtZTYwMGVmNzMzZTFhIiwidCI6IjA1YjVmMDhmLTdkZWQtNDNjNS1iZTNmLWFmMDQyMDcwNzQxNCJ9" target="_blank" rel="noopener noreferrer">Daily Stock Price Prediction</a>
+    <a class="header-fist-btn" href="https://github.com/ChibuikeOD/AI-Storyline-Engine" target="_blank" rel="noopener noreferrer">Path of the Fist</a>
+    <a class="header-gmcp-btn" href="https://github.com/ChibuikeOD/gesso-mcp-server" target="_blank" rel="noopener noreferrer">G-MCP</a>
+    <a class="header-deltabench-btn" href="https://github.com/ChibuikeOD/DeltaBench2D" target="_blank" rel="noopener noreferrer">DeltaBench2D</a>
 </div>
 """,
         unsafe_allow_html=True,
@@ -714,7 +766,81 @@ project_projects = [
             },
         ],
         "link": None,
-    }
+    },
+    {
+        "title": "Path Of The Fist | AI-Powered Esports Commentator",
+        "subtitle": "FastAPI, Neo4j, GraphRAG, React, start.gg API, TailwindCSS.",
+        "details": "Designed an AI esports commentator and bracket analytics assistant that models competitive tournament data into a Neo4j graph database. The system uses a GraphRAG analytics engine to construct high-fidelity game contexts, translating abstract tournament logs (Combo Breaker 2022 - 2026 Street Fighter 6) into natural, high-energy commentary and real-time player ELO statistics.",
+        "pages": [
+            {
+                "title": "Overview",
+                "content": """
+<div style="color:#4A4A4A; font-size:0.95rem; line-height:1.6;">
+<p><strong>Project:</strong> Path of the Fist</p>
+<p><strong>Core outcome:</strong> Designed an AI-powered Esports commentator and bracket analytics assistant that models tournament data into a Neo4j graph database and generates real-time commentator response narratives.</p>
+<p><strong>Tech Stack:</strong> Python (FastAPI), Neo4j (Graph Database), GraphRAG, React, start.gg API.</p>
+</div>
+""",
+            },
+            {
+                "title": "GraphRAG & Context",
+                "content": """
+<div style="color:#4A4A4A; font-size:0.95rem; line-height:1.6;">
+<p><strong>Neo4j Graph Database:</strong> Models complex relationships between players, sets, tournaments, and events. Programmatically ingest and sync tournament brackets from the start.gg API across multiple years (2022 - 2026).</p>
+<p><strong>GraphRAG Engine:</strong> Resolves global and local tournament context dynamically to generate highly accurate ELO ratings, player progression summaries, and match details, preventing LLM hallucinations about complex bracket layouts.</p>
+</div>
+""",
+            },
+            {
+                "title": "Esports Commentary",
+                "content": """
+<div style="color:#4A4A4A; font-size:0.95rem; line-height:1.6;">
+<p><strong>Voice of Combo Breaker:</strong> Fine-tuned and prompted LLM models to adopt a high-energy, elite esports commentator persona. Generates engaging narratives of specific match run sequences and historical tournament stories using punchy, action-oriented verbs.</p>
+</div>
+""",
+            },
+        ],
+        "link": "https://github.com/ChibuikeOD/AI-Storyline-Engine",
+    },
+    {
+        "title": "G-MCP | Model Context Protocol Server for Godot",
+        "subtitle": "TypeScript, Node.js, Godot 4 (GDScript), WebSockets, Mermaid, Vitest.",
+        "details": "Engineered a custom Model Context Protocol (MCP) server for the Godot 4.x game engine, empowering AI agents with runtime debugging, dynamic GDScript execution, automated playtesting via simulated inputs, base64 visual screenshot capturing, and web asset integration (Kenney.nl, OpenGameArt). Implemented dual-execution modes (Live WebSocket and Headless fallback) to bridge the gap between AI code generation and game state verification.",
+        "pages": [
+            {
+                "title": "Overview",
+                "content": """
+<div style="color:#4A4A4A; font-size:0.95rem; line-height:1.6;">
+<p><strong>Project:</strong> G-MCP (Gesso Model Context Protocol Server)</p>
+<p><strong>Core outcome:</strong> A bridge enabling AI agents to debug, inspect, and interact with running Godot 4.x game sessions and editor spaces in real-time.</p>
+<p><strong>Tech Stack:</strong> TypeScript, Node.js, Godot 4.x (GDScript/WebSocket), Vitest, MCP SDK.</p>
+</div>
+""",
+            },
+            {
+                "title": "Core Features",
+                "content": """
+<div style="color:#4A4A4A; font-size:0.95rem; line-height:1.6;">
+<ul>
+  <li><strong>Runtime Debugging & Introspection:</strong> Inspect live node trees, read/modify node properties, query signals, and monitor execution states.</li>
+  <li><strong>Input Emulation & Playtesting:</strong> Programmatically dispatch simulated keyboard, mouse, gamepad, and touch input sequences.</li>
+  <li><strong>Dynamic Code Execution (eval):</strong> Run arbitrary GDScript snippets on active game instances and fetch results.</li>
+  <li><strong>Visual Agent Vision:</strong> Take screenshots of the game window, Godot editor, or screen monitor, converting them directly to base64 images for LLM vision models.</li>
+</ul>
+</div>
+""",
+            },
+            {
+                "title": "Architecture & Dual-Execution",
+                "content": """
+<div style="color:#4A4A4A; font-size:0.95rem; line-height:1.6;">
+<p><strong>Dual-Execution Modes:</strong> Supports both WebSocket Live Mode (connecting to Godot Editor plugins and autoloaded game scripts at port 6505) and Headless Fallback Mode (spawning standalone headless GDScript runtimes via the Godot CLI executable).</p>
+</div>
+""",
+            },
+        ],
+        "link": "https://github.com/ChibuikeOD/gesso-mcp-server",
+    },
 ]
 
 research_projects = [
@@ -903,6 +1029,44 @@ research_projects = [
             },
         ],
         "link": None,
+    },
+    {
+        "title": "DeltaBench2D | 2D Game Development Benchmark Suite",
+        "subtitle": "TypeScript, Node.js, Godot 4.x (GDScript), Git LFS, Python.",
+        "details": "Contributed to and rebranded a multimodal benchmarking suite containing 132 automated tasks to evaluate agentic software development capabilities in the Godot 4.x game engine. Configured a unified test runner, managed large asset files using Git LFS, and developed verification modules to test agent performance on Gameplay, 2D Graphics, and UI tasks.",
+        "pages": [
+            {
+                "title": "Overview",
+                "content": """
+<div style="color:#4A4A4A; font-size:0.95rem; line-height:1.6;">
+<p><strong>Project:</strong> DeltaBench2D (formerly GameDevBench / Gesso-2D)</p>
+<p><strong>Core outcome:</strong> A rigorous multimodal evaluation benchmark consisting of 132 game development tasks in the Godot 4 game engine.</p>
+<p><strong>Tech Stack:</strong> TypeScript, Node.js, Godot 4.x (GDScript/websocket client), Python, Git LFS.</p>
+</div>
+""",
+            },
+            {
+                "title": "Task Taxonomy",
+                "content": """
+<div style="color:#4A4A4A; font-size:0.95rem; line-height:1.6;">
+<p><strong>Multi-Category Evaluation:</strong> Tasks span four categories—3D Graphics, 2D Graphics, Gameplay, and UI—requiring agents to manipulate and reason about multimodal assets (shaders, sprites, animations, and visual scenes).</p>
+<p><strong>Complexity:</strong> Average solutions require 3x more lines of code and file changes compared to typical software engineering benchmarks (like SWE-bench), highlighting the complexity of real-world game development.</p>
+</div>
+""",
+            },
+            {
+                "title": "Engineering Details",
+                "content": """
+<div style="color:#4A4A4A; font-size:0.95rem; line-height:1.6;">
+<ul>
+  <li><strong>Unified Test Runner:</strong> Configured a testing suite where agents execute solutions and run automated assertion checks inside the Godot runtime.</li>
+  <li><strong>Asset Management:</strong> Set up Git LFS tracking for heavy zip packages (e.g. game project templates exceeding 100MB) to optimize repository size and resolve GitHub upload limitations.</li>
+</ul>
+</div>
+""",
+            },
+        ],
+        "link": "https://github.com/ChibuikeOD/DeltaBench2D",
     },
 ]
 
