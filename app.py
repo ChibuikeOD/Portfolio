@@ -376,6 +376,101 @@ st.markdown("""
         padding-left: 0 !important;
         font-weight: 500 !important;
     }
+
+    /* Photography Sidebars and Polaroid Styles */
+    .photo-sidebar-left {
+        position: fixed;
+        top: 120px;
+        left: calc(50vw - 325px - 220px);
+        width: 190px;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        z-index: 99;
+    }
+    .photo-sidebar-right {
+        position: fixed;
+        top: 120px;
+        right: calc(50vw - 325px - 220px);
+        width: 190px;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        z-index: 99;
+    }
+    .photo-sidebar-title {
+        text-align: center;
+        font-family: 'Georgia', serif;
+        font-size: 0.72rem;
+        font-weight: bold;
+        font-style: italic;
+        color: #6A1B9A;
+        border-bottom: 1px solid #E2E8F0;
+        padding-bottom: 8px;
+        margin-bottom: 4px;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        user-select: none;
+    }
+    .polaroid-card {
+        background-color: #ffffff;
+        padding: 10px 10px 24px 10px;
+        border: 1px solid #E2E8F0;
+        box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+        border-radius: 2px;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        cursor: pointer;
+        user-select: none;
+    }
+    .polaroid-card:hover {
+        transform: rotate(0deg) scale(1.08) !important;
+        box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        z-index: 100;
+    }
+    .polaroid-img-container {
+        width: 100%;
+        aspect-ratio: 1;
+        overflow: hidden;
+        background-color: #f7f5f2;
+        margin-bottom: 8px;
+    }
+    .polaroid-img-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+    .polaroid-card:hover .polaroid-img-container img {
+        transform: scale(1.05);
+    }
+    .polaroid-caption {
+        font-family: 'Georgia', serif;
+        font-size: 0.68rem;
+        text-align: center;
+        color: #718096;
+        font-style: italic;
+    }
+    
+    /* Inline Gallery (for smaller screens) */
+    .inline-photo-gallery {
+        margin-top: 1.5rem;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+        user-select: none;
+    }
+    
+    @media (min-width: 1101px) {
+        .inline-photo-gallery {
+            display: none !important;
+        }
+    }
+    
+    @media (max-width: 1100px) {
+        .photo-sidebar-left, .photo-sidebar-right {
+            display: none !important;
+        }
+    }
 </style>
 
 <!-- Background blob HTML -->
@@ -1551,13 +1646,93 @@ if VIEW == "car_analysis" and not st.session_state.get(
     show_car_analysis_dialog()
 
 # --- Interests / Readings ---
+import base64
+import os
+
+def get_img_base64(filename):
+    for folder in [".", "vercel/public"]:
+        full_path = os.path.join(folder, filename)
+        if os.path.exists(full_path):
+            with open(full_path, "rb") as f:
+                return "data:image/png;base64," + base64.b64encode(f.read()).decode("utf-8")
+    return ""
+
+img1 = get_img_base64("street_photo_1.png")
+img2 = get_img_base64("street_photo_2.png")
+img3 = get_img_base64("street_photo_3.png")
+img4 = get_img_base64("street_photo_4.png")
+
+# Sidebar markup for desktop
+st.markdown(f"""
+<div class="photo-sidebar-left">
+    <div class="photo-sidebar-title">📷 chibuiketakespictures</div>
+    <div class="polaroid-card" style="transform: rotate(-3deg);">
+        <div class="polaroid-img-container">
+            <img src="{img1}" alt="Golden Hour">
+        </div>
+        <div class="polaroid-caption">"Golden Hour"</div>
+    </div>
+    <div class="polaroid-card" style="transform: rotate(2deg);">
+        <div class="polaroid-img-container">
+            <img src="{img2}" alt="Concrete Geometry">
+        </div>
+        <div class="polaroid-caption">"Concrete Geometry"</div>
+    </div>
+</div>
+
+<div class="photo-sidebar-right">
+    <div class="photo-sidebar-title">📷 chibuiketakespictures</div>
+    <div class="polaroid-card" style="transform: rotate(3deg);">
+        <div class="polaroid-img-container">
+            <img src="{img3}" alt="Misty Ridges">
+        </div>
+        <div class="polaroid-caption">"Misty Ridges"</div>
+    </div>
+    <div class="polaroid-card" style="transform: rotate(-2deg);">
+        <div class="polaroid-img-container">
+            <img src="{img4}" alt="Neon Night">
+        </div>
+        <div class="polaroid-caption">"Neon Night"</div>
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
 st.markdown("## Interests / Readings")
-st.markdown("""
+st.markdown(f"""
 <ul class="interests-list">
     <li>Machine Learning Architecture</li>
     <li>Distributed Systems</li>
     <li>Science Fiction</li>
     <li>Community Technology Education</li>
+    <li>Photography (Instagram: <a href="https://instagram.com/chibuiketakespictures" target="_blank" style="color: #6A1B9A; font-weight: bold; text-decoration: underline;">@chibuiketakespictures</a>)</li>
 </ul>
+
+<div class="inline-photo-gallery">
+    <div class="polaroid-card" style="transform: rotate(1deg);">
+        <div class="polaroid-img-container">
+            <img src="{img1}" alt="Golden Hour">
+        </div>
+        <div class="polaroid-caption">"Golden Hour"</div>
+    </div>
+    <div class="polaroid-card" style="transform: rotate(-1deg);">
+        <div class="polaroid-img-container">
+            <img src="{img2}" alt="Concrete Geometry">
+        </div>
+        <div class="polaroid-caption">"Concrete Geometry"</div>
+    </div>
+    <div class="polaroid-card" style="transform: rotate(2deg);">
+        <div class="polaroid-img-container">
+            <img src="{img3}" alt="Misty Ridges">
+        </div>
+        <div class="polaroid-caption">"Misty Ridges"</div>
+    </div>
+    <div class="polaroid-card" style="transform: rotate(-2deg);">
+        <div class="polaroid-img-container">
+            <img src="{img4}" alt="Neon Night">
+        </div>
+        <div class="polaroid-caption">"Neon Night"</div>
+    </div>
+</div>
 <br>
 """, unsafe_allow_html=True)
+

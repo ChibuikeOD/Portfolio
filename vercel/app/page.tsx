@@ -1459,6 +1459,67 @@ export default function Home() {
       <div className="portfolio-blob portfolio-blob-2" aria-hidden />
 
       <main className="relative z-0 mx-auto max-w-[650px] px-4 pb-20 pt-16 text-[#1A1A1A]">
+        {/* Left Side Floating Photo Gallery (XL screens) */}
+        <div className="absolute top-28 -left-[240px] w-[200px] flex-col gap-6 hidden xl:flex select-none z-10">
+          <div className="text-center font-serif text-[0.75rem] font-semibold italic text-[#6A1B9A] border-b border-[#E2E8F0] pb-2 mb-1 tracking-wide uppercase">
+            📷 chibuiketakespictures
+          </div>
+          
+          <div 
+            style={{ transform: 'rotate(-3deg)' }}
+            className="bg-white p-2.5 pb-6 border border-[#E2E8F0] shadow-md rounded-sm hover:rotate-0 hover:scale-105 hover:shadow-xl transition-all duration-300 ease-in-out cursor-pointer group"
+          >
+            <div className="overflow-hidden bg-gray-100 aspect-square w-full mb-2">
+              <img src="/street_photo_1.png" alt="Street Photo 1" className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" />
+            </div>
+            <div className="font-serif text-[0.7rem] text-center text-[#718096] italic">
+              &quot;Golden Hour&quot;
+            </div>
+          </div>
+
+          <div 
+            style={{ transform: 'rotate(2deg)' }}
+            className="bg-white p-2.5 pb-6 border border-[#E2E8F0] shadow-md rounded-sm hover:rotate-0 hover:scale-105 hover:shadow-xl transition-all duration-300 ease-in-out cursor-pointer group"
+          >
+            <div className="overflow-hidden bg-gray-100 aspect-square w-full mb-2">
+              <img src="/street_photo_2.png" alt="Street Photo 2" className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" />
+            </div>
+            <div className="font-serif text-[0.7rem] text-center text-[#718096] italic">
+              &quot;Concrete Geometry&quot;
+            </div>
+          </div>
+        </div>
+
+        {/* Right Side Floating Photo Gallery (XL screens) */}
+        <div className="absolute top-28 -right-[240px] w-[200px] flex-col gap-6 hidden xl:flex select-none z-10">
+          <div className="text-center font-serif text-[0.75rem] font-semibold italic text-[#6A1B9A] border-b border-[#E2E8F0] pb-2 mb-1 tracking-wide uppercase">
+            📷 chibuiketakespictures
+          </div>
+          
+          <div 
+            style={{ transform: 'rotate(3deg)' }}
+            className="bg-white p-2.5 pb-6 border border-[#E2E8F0] shadow-md rounded-sm hover:rotate-0 hover:scale-105 hover:shadow-xl transition-all duration-300 ease-in-out cursor-pointer group"
+          >
+            <div className="overflow-hidden bg-gray-100 aspect-square w-full mb-2">
+              <img src="/street_photo_3.png" alt="Street Photo 3" className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" />
+            </div>
+            <div className="font-serif text-[0.7rem] text-center text-[#718096] italic">
+              &quot;Misty Ridges&quot;
+            </div>
+          </div>
+
+          <div 
+            style={{ transform: 'rotate(-2deg)' }}
+            className="bg-white p-2.5 pb-6 border border-[#E2E8F0] shadow-md rounded-sm hover:rotate-0 hover:scale-105 hover:shadow-xl transition-all duration-300 ease-in-out cursor-pointer group"
+          >
+            <div className="overflow-hidden bg-gray-100 aspect-square w-full mb-2">
+              <img src="/street_photo_4.png" alt="Street Photo 4" className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" />
+            </div>
+            <div className="font-serif text-[0.7rem] text-center text-[#718096] italic">
+              &quot;Neon Night&quot;
+            </div>
+          </div>
+        </div>
         <div className="flex flex-row items-start gap-5">
           <ProfilePhoto />
           <div className="min-w-0 flex-1">
@@ -1680,7 +1741,66 @@ export default function Home() {
           <li>Distributed Systems</li>
           <li>Science Fiction</li>
           <li>Community Technology Education</li>
+          <li>
+            Photography (Instagram:{" "}
+            <a 
+              href="https://instagram.com/chibuiketakespictures" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-[#6A1B9A] font-semibold underline hover:text-[#511579]"
+            >
+              @chibuiketakespictures
+            </a>)
+          </li>
         </ul>
+
+        {/* Inline Gallery for smaller viewports */}
+        <div className="mt-6 grid grid-cols-2 gap-4 xl:hidden select-none">
+          <div 
+            style={{ transform: 'rotate(1deg)' }}
+            className="bg-white p-2 border border-[#E2E8F0] shadow rounded-sm hover:rotate-0 hover:scale-102 transition-all duration-300"
+          >
+            <div className="overflow-hidden bg-gray-100 aspect-square w-full mb-1">
+              <img src="/street_photo_1.png" alt="Street Photo 1" className="object-cover w-full h-full" />
+            </div>
+            <div className="font-serif text-[0.65rem] text-center text-[#718096] italic">
+              &quot;Golden Hour&quot;
+            </div>
+          </div>
+          <div 
+            style={{ transform: 'rotate(-1deg)' }}
+            className="bg-white p-2 border border-[#E2E8F0] shadow rounded-sm hover:rotate-0 hover:scale-102 transition-all duration-300"
+          >
+            <div className="overflow-hidden bg-gray-100 aspect-square w-full mb-1">
+              <img src="/street_photo_2.png" alt="Street Photo 2" className="object-cover w-full h-full" />
+            </div>
+            <div className="font-serif text-[0.65rem] text-center text-[#718096] italic">
+              &quot;Concrete Geometry&quot;
+            </div>
+          </div>
+          <div 
+            style={{ transform: 'rotate(2deg)' }}
+            className="bg-white p-2 border border-[#E2E8F0] shadow rounded-sm hover:rotate-0 hover:scale-102 transition-all duration-300"
+          >
+            <div className="overflow-hidden bg-gray-100 aspect-square w-full mb-1">
+              <img src="/street_photo_3.png" alt="Street Photo 3" className="object-cover w-full h-full" />
+            </div>
+            <div className="font-serif text-[0.65rem] text-center text-[#718096] italic">
+              &quot;Misty Ridges&quot;
+            </div>
+          </div>
+          <div 
+            style={{ transform: 'rotate(-2deg)' }}
+            className="bg-white p-2 border border-[#E2E8F0] shadow rounded-sm hover:rotate-0 hover:scale-102 transition-all duration-300"
+          >
+            <div className="overflow-hidden bg-gray-100 aspect-square w-full mb-1">
+              <img src="/street_photo_4.png" alt="Street Photo 4" className="object-cover w-full h-full" />
+            </div>
+            <div className="font-serif text-[0.65rem] text-center text-[#718096] italic">
+              &quot;Neon Night&quot;
+            </div>
+          </div>
+        </div>
       </main>
 
       <Modal
