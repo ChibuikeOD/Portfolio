@@ -53,6 +53,7 @@ st.markdown("""
     
     /* Center and constrain maximum width */
     .block-container {
+        position: relative;
         max-width: 650px;
         padding-top: 4rem;
         padding-bottom: 5rem;
@@ -379,9 +380,9 @@ st.markdown("""
 
     /* Photography Sidebars and Polaroid Styles */
     .photo-sidebar-left {
-        position: fixed;
-        top: 120px;
-        left: calc(50vw - 325px - 220px);
+        position: absolute;
+        bottom: 80px;
+        left: -220px;
         width: 190px;
         display: flex;
         flex-direction: column;
@@ -389,9 +390,9 @@ st.markdown("""
         z-index: 99;
     }
     .photo-sidebar-right {
-        position: fixed;
-        top: 120px;
-        right: calc(50vw - 325px - 220px);
+        position: absolute;
+        bottom: 80px;
+        right: -220px;
         width: 190px;
         display: flex;
         flex-direction: column;

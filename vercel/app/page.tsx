@@ -1460,7 +1460,7 @@ export default function Home() {
 
       <main className="relative z-0 mx-auto max-w-[650px] px-4 pb-20 pt-16 text-[#1A1A1A]">
         {/* Left Side Floating Photo Gallery (XL screens) */}
-        <div className="absolute top-28 -left-[240px] w-[200px] flex-col gap-6 hidden xl:flex select-none z-10">
+        <div className="absolute bottom-20 -left-[240px] w-[200px] flex-col gap-6 hidden xl:flex select-none z-10">
           <div className="text-center font-serif text-[0.75rem] font-semibold italic text-[#6A1B9A] border-b border-[#E2E8F0] pb-2 mb-1 tracking-wide uppercase">
             📷 chibuiketakespictures
           </div>
@@ -1491,7 +1491,7 @@ export default function Home() {
         </div>
 
         {/* Right Side Floating Photo Gallery (XL screens) */}
-        <div className="absolute top-28 -right-[240px] w-[200px] flex-col gap-6 hidden xl:flex select-none z-10">
+        <div className="absolute bottom-20 -right-[240px] w-[200px] flex-col gap-6 hidden xl:flex select-none z-10">
           <div className="text-center font-serif text-[0.75rem] font-semibold italic text-[#6A1B9A] border-b border-[#E2E8F0] pb-2 mb-1 tracking-wide uppercase">
             📷 chibuiketakespictures
           </div>
