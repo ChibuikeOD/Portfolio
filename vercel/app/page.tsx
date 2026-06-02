@@ -1101,16 +1101,147 @@ const PATH_OF_THE_FIST_PAGES = [
   {
     title: "Overview",
     content: (
-      <div className="space-y-2">
-        <p>
-          <span className="font-semibold text-[#1A1A1A]">Project:</span> Path of the Fist
-        </p>
-        <p>
-          <span className="font-semibold text-[#1A1A1A]">Core outcome:</span> Designed an AI-powered Esports commentator and bracket analytics assistant that models tournament data into a Neo4j graph database and generates real-time commentator response narratives.
-        </p>
-        <p>
-          <span className="font-semibold text-[#1A1A1A]">Tech Stack:</span> Python (FastAPI), Neo4j (Graph Database), GraphRAG, React, start.gg API.
-        </p>
+      <div className="space-y-4">
+        {/* Mockup Container */}
+        <div className="rounded-xl border border-[#1a1e24] bg-[#030303] p-6 font-sans text-white shadow-2xl overflow-hidden">
+          {/* Header */}
+          <div className="flex items-center justify-between border-b-2 border-[#00ffcc] pb-3 mb-6">
+            <div className="flex items-baseline gap-4">
+              <span className="text-[1.6rem] font-black italic uppercase tracking-tight text-[#00ffcc] [text-shadow:0_0_10px_rgba(0,255,204,0.3)]">
+                PATH OF THE FIST
+              </span>
+              <span className="text-[0.7rem] font-bold uppercase tracking-wider text-[#00ffcc] opacity-80 hidden sm:inline">
+                YOUR COMBO BREAKER ANALYTICS ASSISTANT
+              </span>
+            </div>
+            <div className="flex gap-4 text-[#00ffcc] text-lg">
+              <span className="cursor-pointer hover:scale-110 transition-transform hover:[text-shadow:0_0_8px_rgba(0,255,204,0.8)]">🔔</span>
+              <span className="cursor-pointer hover:scale-110 transition-transform hover:[text-shadow:0_0_8px_rgba(0,255,204,0.8)]">👤</span>
+            </div>
+          </div>
+
+          {/* Body Layout */}
+          <div className="flex flex-col md:flex-row gap-6 items-start mb-6">
+            {/* Ad Box */}
+            <div 
+              style={{ transform: 'skewX(-8deg)' }}
+              className="bg-white border border-gray-300 p-5 w-full md:w-[150px] h-[170px] shadow-lg flex flex-col justify-center items-center relative shrink-0 mx-auto md:mx-0"
+            >
+              <div 
+                style={{ transform: 'skewX(8deg)' }}
+                className="absolute top-1.5 right-1.5 text-[0.55rem] text-gray-500 border border-gray-400 rounded-full w-3.5 h-3.5 flex items-center justify-center font-bold"
+              >
+                A
+              </div>
+              <div 
+                style={{ transform: 'skewX(8deg)' }}
+                className="text-center font-sans flex flex-col gap-3"
+              >
+                <a 
+                  href="https://aads.com" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-[#0066cc] text-[0.8rem] font-bold hover:underline leading-tight text-blue-600 block text-center"
+                >
+                  Advertise in this ad space
+                </a>
+                <span className="text-gray-700 text-[0.65rem] leading-snug text-center block">
+                  Create a campaign in just 5 minutes
+                </span>
+                <a 
+                  href="https://aads.com" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-[#0066cc] text-[0.75rem] underline font-medium text-blue-600 block text-center"
+                >
+                  aads.com
+                </a>
+              </div>
+            </div>
+
+            {/* Center Content Column */}
+            <div className="flex-1 flex flex-col items-center w-full">
+              {/* Arena Card */}
+              <div 
+                style={{ transform: 'skewX(-8deg)' }}
+                className="bg-[#16181c] border-2 border-dashed border-[#00ffcc]/25 rounded-lg p-6 text-center shadow-lg w-full max-w-[500px]"
+              >
+                <div style={{ transform: 'skewX(8deg)' }}>
+                  <div className="mb-3">
+                    <svg viewBox="0 0 100 100" className="w-[54px] h-[54px] fill-[#00ffcc] mx-auto">
+                      <circle cx="34" cy="30" r="5" />
+                      <path d="M34 37h-3.5l-6.5 9v14h4v-11l3.5-5v16h4V45l3.5 7h3.5L34 37z" />
+                      <circle cx="66" cy="30" r="5" />
+                      <path d="M66 37h3.5l6.5 9v14h-4v-11l-3.5-5v16h-4V45l-3.5 7h-3.5L66 37z" />
+                      <path d="M50 25l2.5 7.5 7.5 2.5-7.5 2.5-2.5 7.5-2.5-7.5-7.5-2.5 7.5-2.5z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-2xl font-black italic uppercase tracking-tight text-[#00ffcc] mb-2 [text-shadow:0_0_8px_rgba(0,255,204,0.2)]">
+                    ENTER THE ARENA
+                  </h3>
+                  <p className="text-[0.8rem] leading-relaxed text-[#a0aec0] mb-6">
+                    Ask me anything about Combo Breaker from 2022 through 2026, including brackets, matchups, player runs, and standout performances.
+                  </p>
+
+                  {/* Suggestions Grid */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {[
+                      "Who won the Street Fighter 6 bracket?",
+                      "Were there any upsets?",
+                      "Who had the most wins?",
+                      "Who performed best in each game?"
+                    ].map((text, idx) => (
+                      <button 
+                        key={idx}
+                        style={{ transform: 'skewX(-8deg)' }}
+                        className="border border-[#00ffcc] bg-transparent text-white text-[0.75rem] font-bold italic py-2.5 px-3 hover:bg-[#00ffcc] hover:text-black transition-all duration-300 hover:shadow-[0_0_15px_rgba(0,255,204,0.4)]"
+                      >
+                        <span style={{ transform: 'skewX(8deg)' }} className="inline-block">
+                          {text}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Controls Column */}
+              <div className="flex flex-col items-center w-full mt-4">
+                {/* Chat Bar */}
+                <div 
+                  style={{ transform: 'skewX(-8deg)' }}
+                  className="flex border-2 border-[#e5b323] bg-[#111317] w-full max-w-[500px] items-center shadow-lg h-12 mb-2"
+                >
+                  <div 
+                    style={{ transform: 'skewX(8deg)' }}
+                    className="flex-1 pl-4 text-left text-[0.8rem] font-bold uppercase text-[#718096] select-none"
+                  >
+                    ENTER THE ARENA...
+                  </div>
+                  <button 
+                    className="h-full bg-[#0f7e8a] hover:bg-[#00ffcc] text-black font-black text-[0.8rem] uppercase tracking-wider px-6 flex items-center justify-center transition-colors duration-200 border-l-2 border-[#e5b323]"
+                  >
+                    <span style={{ transform: 'skewX(8deg)' }}>
+                      SEND
+                    </span>
+                  </button>
+                </div>
+
+                {/* Footer Text */}
+                <div className="text-[0.65rem] text-[#555e6b] mt-1.5 text-center tracking-wide">
+                  Powered by DeepSeek via GraphRAG - Answers stream live with full tournament context
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Text Description */}
+        <div className="text-sm leading-relaxed text-[#4A4A4A] mt-4">
+          <p>
+            <strong>Project Overview:</strong> Designed an AI-powered Esports commentator and bracket analytics assistant that models competitive gaming data from start.gg into a Neo4j graph database. The system uses a GraphRAG analytics engine to construct high-fidelity game contexts, translating abstract tournament logs (Combo Breaker 2022 - 2026 Street Fighter 6) into natural, high-energy commentary and real-time player ELO statistics.
+          </p>
+        </div>
       </div>
     ),
   },

@@ -840,10 +840,356 @@ project_projects = [
             {
                 "title": "Overview",
                 "content": """
-<div style="color:#4A4A4A; font-size:0.95rem; line-height:1.6;">
-<p><strong>Project:</strong> Path of the Fist</p>
-<p><strong>Core outcome:</strong> Designed an AI-powered Esports commentator and bracket analytics assistant that models tournament data into a Neo4j graph database and generates real-time commentator response narratives.</p>
-<p><strong>Tech Stack:</strong> Python (FastAPI), Neo4j (Graph Database), GraphRAG, React, start.gg API.</p>
+<style>
+  .fist-container {
+    background-color: #030303;
+    border-radius: 12px;
+    padding: 24px;
+    font-family: 'Outfit', 'Inter', -apple-system, sans-serif;
+    color: #ffffff;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    margin-bottom: 20px;
+    border: 1px solid #1a1e24;
+    overflow: hidden;
+  }
+  .fist-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #00ffcc;
+    padding-bottom: 12px;
+    margin-bottom: 24px;
+  }
+  .fist-header-title-group {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+  }
+  .fist-header-title {
+    font-size: 1.6rem;
+    font-weight: 900;
+    font-style: italic;
+    color: #00ffcc;
+    letter-spacing: -0.05em;
+    text-transform: uppercase;
+    text-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
+  }
+  .fist-header-subtitle {
+    font-size: 0.7rem;
+    color: #00ffcc;
+    opacity: 0.8;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .fist-header-icons {
+    display: flex;
+    gap: 16px;
+    color: #00ffcc;
+    font-size: 1.1rem;
+    cursor: pointer;
+  }
+  .fist-header-icons span:hover {
+    text-shadow: 0 0 8px rgba(0, 255, 204, 0.8);
+    transform: scale(1.1);
+    transition: all 0.2s;
+  }
+  .fist-body-layout {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+    margin-bottom: 24px;
+  }
+  /* Advertisement Box */
+  .fist-ad-box {
+    transform: skewX(-8deg);
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    padding: 20px 15px;
+    width: 150px;
+    height: 170px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .fist-ad-indicator {
+    transform: skewX(8deg);
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    font-size: 0.55rem;
+    color: #999;
+    border: 1.2px solid #ccc;
+    border-radius: 50%;
+    width: 14px;
+    height: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+  }
+  .fist-ad-content {
+    transform: skewX(8deg);
+    text-align: center;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .fist-ad-title-link {
+    color: #0066cc;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-decoration: none;
+    line-height: 1.2;
+  }
+  .fist-ad-title-link:hover {
+    text-decoration: underline;
+  }
+  .fist-ad-text {
+    color: #333333;
+    font-size: 0.65rem;
+    line-height: 1.3;
+  }
+  .fist-ad-domain-link {
+    color: #0066cc;
+    font-size: 0.75rem;
+    text-decoration: underline;
+    font-weight: 500;
+  }
+  
+  /* Arena Card */
+  .fist-arena-card {
+    flex: 1;
+    background-color: #16181c;
+    border: 2px dashed rgba(0, 255, 204, 0.25);
+    border-radius: 8px;
+    padding: 30px;
+    text-align: center;
+    transform: skewX(-8deg);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    position: relative;
+    max-width: 500px;
+  }
+  .fist-arena-inner {
+    transform: skewX(8deg);
+  }
+  .fist-arena-icon {
+    margin-bottom: 12px;
+  }
+  .fist-arena-title {
+    font-size: 1.8rem;
+    font-weight: 900;
+    font-style: italic;
+    color: #00ffcc;
+    margin: 0 0 10px 0;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    text-shadow: 0 0 8px rgba(0, 255, 204, 0.2);
+  }
+  .fist-arena-desc {
+    font-size: 0.8rem;
+    color: #a0aec0;
+    line-height: 1.5;
+    margin: 0 0 24px 0;
+  }
+  
+  /* Suggestion Buttons Grid */
+  .fist-suggestions-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .fist-suggestion-btn {
+    transform: skewX(-8deg);
+    border: 1.5px solid #00ffcc;
+    background-color: transparent;
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-style: italic;
+    font-weight: 700;
+    padding: 10px 12px;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  }
+  .fist-suggestion-btn-text {
+    transform: skewX(8deg);
+    display: inline-block;
+  }
+  .fist-suggestion-btn:hover {
+    background-color: #00ffcc;
+    color: #000000;
+    box-shadow: 0 0 15px rgba(0, 255, 204, 0.5);
+  }
+  
+  /* Bottom Controls Column */
+  .fist-controls-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  /* Chat Bar */
+  .fist-chat-bar {
+    transform: skewX(-8deg);
+    display: flex;
+    border: 2px solid #e5b323; /* gold/yellow */
+    background-color: #111317;
+    width: 100%;
+    max-width: 500px;
+    align-items: center;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+    height: 48px;
+    margin-bottom: 10px;
+  }
+  .fist-chat-input-placeholder {
+    transform: skewX(8deg);
+    flex: 1;
+    font-size: 0.8rem;
+    color: #718096;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding-left: 16px;
+    text-align: left;
+    user-select: none;
+  }
+  .fist-chat-send-btn {
+    height: 100%;
+    background-color: #0f7e8a;
+    color: #ffffff;
+    font-size: 0.8rem;
+    font-weight: 900;
+    padding: 0 24px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-left: 2px solid #e5b323;
+  }
+  .fist-chat-send-btn-text {
+    transform: skewX(8deg);
+    color: #000000;
+  }
+  .fist-chat-send-btn:hover {
+    background-color: #00ffcc;
+    box-shadow: -5px 0 15px rgba(0, 255, 204, 0.4);
+  }
+  .fist-chat-send-btn:hover .fist-chat-send-btn-text {
+    font-weight: 900;
+  }
+  
+  .fist-footer-text {
+    font-size: 0.65rem;
+    color: #555e6b;
+    margin-top: 6px;
+    text-align: center;
+    letter-spacing: 0.02em;
+  }
+
+  @media (max-width: 600px) {
+    .fist-body-layout {
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+    .fist-ad-box {
+      width: 100%;
+      max-width: 280px;
+      height: auto;
+      padding: 15px;
+    }
+    .fist-suggestions-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<div class="fist-container">
+  <!-- Header -->
+  <div class="fist-header">
+    <div class="fist-header-title-group">
+      <span class="fist-header-title">PATH OF THE FIST</span>
+      <span class="fist-header-subtitle">YOUR COMBO BREAKER ANALYTICS ASSISTANT</span>
+    </div>
+    <div class="fist-header-icons">
+      <span>🔔</span>
+      <span>👤</span>
+    </div>
+  </div>
+  
+  <!-- Body Layout -->
+  <div class="fist-body-layout">
+    <!-- Ad Box (Left) -->
+    <div class="fist-ad-box">
+      <div class="fist-ad-indicator">A</div>
+      <div class="fist-ad-content">
+        <a href="https://aads.com" target="_blank" class="fist-ad-title-link">Advertise in this ad space</a>
+        <span class="fist-ad-text">Create a campaign in just 5 minutes</span>
+        <a href="https://aads.com" target="_blank" class="fist-ad-domain-link">aads.com</a>
+      </div>
+    </div>
+    
+    <!-- Center Column -->
+    <div style="flex: 1; display: flex; flex-direction: column; align-items: center; width: 100%;">
+      <!-- Arena Card -->
+      <div class="fist-arena-card">
+        <div class="fist-arena-inner">
+          <div class="fist-arena-icon">
+            <svg viewBox="0 0 100 100" style="width: 54px; height: 54px; fill: #00ffcc; margin: 0 auto;">
+              <!-- Two clashing fighters -->
+              <circle cx="34" cy="30" r="5" />
+              <path d="M34 37h-3.5l-6.5 9v14h4v-11l3.5-5v16h4V45l3.5 7h3.5L34 37z" />
+              <circle cx="66" cy="30" r="5" />
+              <path d="M66 37h3.5l6.5 9v14h-4v-11l-3.5-5v16h-4V45l-3.5 7h-3.5L66 37z" />
+              <path d="M50 25l2.5 7.5 7.5 2.5-7.5 2.5-2.5 7.5-2.5-7.5-7.5-2.5 7.5-2.5z" fill="#00ffcc" />
+            </svg>
+          </div>
+          <h3 class="fist-arena-title">ENTER THE ARENA</h3>
+          <p class="fist-arena-desc">
+            Ask me anything about Combo Breaker from 2022 through 2026, including brackets, matchups, player runs, and standout performances.
+          </p>
+          
+          <!-- Suggestions Grid -->
+          <div class="fist-suggestions-grid">
+            <button class="fist-suggestion-btn"><span class="fist-suggestion-btn-text">Who won the Street Fighter 6 bracket?</span></button>
+            <button class="fist-suggestion-btn"><span class="fist-suggestion-btn-text">Were there any upsets?</span></button>
+            <button class="fist-suggestion-btn"><span class="fist-suggestion-btn-text">Who had the most wins?</span></button>
+            <button class="fist-suggestion-btn"><span class="fist-suggestion-btn-text">Who performed best in each game?</span></button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Controls Column (Input & Footer) -->
+      <div class="fist-controls-col">
+        <!-- Chat Bar -->
+        <div class="fist-chat-bar">
+          <div class="fist-chat-input-placeholder">ENTER THE ARENA...</div>
+          <div class="fist-chat-send-btn">
+            <span class="fist-chat-send-btn-text">SEND</span>
+          </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="fist-footer-text">
+          Powered by DeepSeek via GraphRAG - Answers stream live with full tournament context
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="color:#4A4A4A; font-size:0.95rem; line-height:1.6; margin-top: 15px;">
+<p><strong>Project Overview:</strong> Designed an AI-powered Esports commentator and bracket analytics assistant that models competitive gaming data from start.gg into a Neo4j graph database. The system uses a GraphRAG analytics engine to construct high-fidelity game contexts, translating abstract tournament logs (Combo Breaker 2022 - 2026 Street Fighter 6) into natural, high-energy commentary and real-time player ELO statistics.</p>
 </div>
 """,
             },
