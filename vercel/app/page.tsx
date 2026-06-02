@@ -71,7 +71,7 @@ const projects: BuiltProject[] = [
     subtitle: "FastAPI, Neo4j, GraphRAG, React, start.gg API, TailwindCSS.",
     details:
       "Designed an AI esports commentator and bracket analytics assistant that models competitive tournament data into a Neo4j graph database. The system uses a GraphRAG analytics engine to construct high-fidelity game contexts, translating abstract tournament logs (Combo Breaker 2022 - 2026 Street Fighter 6) into natural, high-energy commentary and real-time player ELO statistics.",
-    link: "https://github.com/ChibuikeOD/AI-Storyline-Engine",
+    link: "https://path-of-the-fist.com",
   },
   {
     title: G_MCP_TITLE,
@@ -1356,7 +1356,17 @@ export default function Home() {
                 Email
               </a>
             </div>
-            <div className="mt-3 mb-8 flex flex-wrap items-center gap-2.5">
+            <div className="projects-badge-container">
+              <div className="projects-badge">
+                <span className="projects-pulse-dot"></span>
+                <span className="badge-text">✨ CLICK TO EXPLORE MY LIVE APPS:</span>
+              </div>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FF0055" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" className="projects-arrow-svg">
+                <line x1="7" y1="7" x2="17" y2="17"></line>
+                <polyline points="17 7 17 17 7 17"></polyline>
+              </svg>
+            </div>
+            <div className="mt-1 mb-8 flex flex-wrap items-center gap-2.5">
               <a
                 href="https://forma-app.net"
                 target="_blank"
@@ -1382,7 +1392,7 @@ export default function Home() {
                 Daily Stock Price Prediction
               </a>
               <a
-                href="https://github.com/ChibuikeOD/AI-Storyline-Engine"
+                href="https://path-of-the-fist.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block rounded-md bg-[#5f0914] px-5 py-2.5 text-[0.95rem] font-semibold text-[#ffccd3] no-underline hover:opacity-92 hover:text-[#ffeaed]"

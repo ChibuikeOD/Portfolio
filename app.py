@@ -210,6 +210,51 @@ st.markdown("""
         color: #e8eaf6 !important;
     }
 
+    /* Projects Badge Styles */
+    .projects-badge-container {
+        display: inline-flex;
+        align-items: center;
+        margin-top: 15px;
+        margin-bottom: 5px;
+    }
+    .projects-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: linear-gradient(135deg, #FFF5F5 0%, #FFF 100%);
+        border: 1px solid #FFE3E3;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: #E53E3E;
+        letter-spacing: 0.05em;
+        box-shadow: 0 2px 4px rgba(229, 62, 62, 0.05);
+        animation: bounce 2.2s infinite ease-in-out;
+    }
+    .pulse-dot {
+        width: 6px;
+        height: 6px;
+        background-color: #E53E3E;
+        border-radius: 50%;
+        box-shadow: 0 0 0 0 rgba(229, 62, 62, 0.7);
+        animation: pulse 1.2s infinite cubic-bezier(0.66, 0, 0, 1);
+    }
+    @keyframes pulse {
+        to {
+            box-shadow: 0 0 0 6px rgba(229, 62, 62, 0);
+        }
+    }
+    @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-3px); }
+    }
+    @keyframes floatArrow {
+        0%, 100% { transform: translate(0, 0); }
+        50% { transform: translate(2px, 2px); }
+    }
+
+
 
     /* Profile photo (top-left with header); only st.image() uses this in the app */
     [data-testid="stImage"] img {
@@ -360,11 +405,21 @@ if _profile_pic:
     <a href="https://www.linkedin.com/in/chibuike-odibeli-862319220/" target="_blank">LinkedIn</a>
     <a href="mailto:chibuikeodibeli@gmail.com">Email</a>
 </div>
+<div class="projects-badge-container">
+    <div class="projects-badge">
+      <span class="pulse-dot"></span>
+      <span class="badge-text">✨ CLICK TO EXPLORE MY LIVE APPS:</span>
+    </div>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FF0055" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 8px; animation: floatArrow 1.2s infinite ease-in-out;">
+        <line x1="7" y1="7" x2="17" y2="17"></line>
+        <polyline points="17 7 17 17 7 17"></polyline>
+    </svg>
+</div>
 <div class="header-btn-row">
     <a class="header-forma-btn" href="https://forma-app.net" target="_blank" rel="noopener noreferrer">Forma</a>
     <a class="header-genresense-btn" href="https://genre-sense.vercel.app/" target="_blank" rel="noopener noreferrer">GenreSense</a>
     <a class="header-forma-btn" href="https://app.powerbi.com/view?r=eyJrIjoiYTJjZmYxNDQtODRmNC00YmZjLWI0ZDQtZTYwMGVmNzMzZTFhIiwidCI6IjA1YjVmMDhmLTdkZWQtNDNjNS1iZTNmLWFmMDQyMDcwNzQxNCJ9" target="_blank" rel="noopener noreferrer">Daily Stock Price Prediction</a>
-    <a class="header-fist-btn" href="https://github.com/ChibuikeOD/AI-Storyline-Engine" target="_blank" rel="noopener noreferrer">Path of the Fist</a>
+    <a class="header-fist-btn" href="https://path-of-the-fist.com" target="_blank" rel="noopener noreferrer">Path of the Fist</a>
     <a class="header-gmcp-btn" href="https://github.com/ChibuikeOD/gesso-mcp-server" target="_blank" rel="noopener noreferrer">G-MCP</a>
     <a class="header-deltabench-btn" href="https://github.com/ChibuikeOD/DeltaBench2D" target="_blank" rel="noopener noreferrer">DeltaBench2D</a>
 </div>
@@ -387,11 +442,21 @@ else:
     <a href="https://www.linkedin.com/in/chibuike-odibeli-862319220/" target="_blank">LinkedIn</a>
     <a href="mailto:chibuikeodibeli@gmail.com">Email</a>
 </div>
+<div class="projects-badge-container">
+    <div class="projects-badge">
+      <span class="pulse-dot"></span>
+      <span class="badge-text">✨ CLICK TO EXPLORE MY LIVE APPS:</span>
+    </div>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FF0055" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 8px; animation: floatArrow 1.2s infinite ease-in-out;">
+        <line x1="7" y1="7" x2="17" y2="17"></line>
+        <polyline points="17 7 17 17 7 17"></polyline>
+    </svg>
+</div>
 <div class="header-btn-row">
     <a class="header-forma-btn" href="https://forma-app.net" target="_blank" rel="noopener noreferrer">Forma</a>
     <a class="header-genresense-btn" href="https://genre-sense.vercel.app/" target="_blank" rel="noopener noreferrer">GenreSense</a>
     <a class="header-forma-btn" href="https://app.powerbi.com/view?r=eyJrIjoiYTJjZmYxNDQtODRmNC00YmZjLWI0ZDQtZTYwMGVmNzMzZTFhIiwidCI6IjA1YjVmMDhmLTdkZWQtNDNjNS1iZTNmLWFmMDQyMDcwNzQxNCJ9" target="_blank" rel="noopener noreferrer">Daily Stock Price Prediction</a>
-    <a class="header-fist-btn" href="https://github.com/ChibuikeOD/AI-Storyline-Engine" target="_blank" rel="noopener noreferrer">Path of the Fist</a>
+    <a class="header-fist-btn" href="https://path-of-the-fist.com" target="_blank" rel="noopener noreferrer">Path of the Fist</a>
     <a class="header-gmcp-btn" href="https://github.com/ChibuikeOD/gesso-mcp-server" target="_blank" rel="noopener noreferrer">G-MCP</a>
     <a class="header-deltabench-btn" href="https://github.com/ChibuikeOD/DeltaBench2D" target="_blank" rel="noopener noreferrer">DeltaBench2D</a>
 </div>
@@ -800,7 +865,7 @@ project_projects = [
 """,
             },
         ],
-        "link": "https://github.com/ChibuikeOD/AI-Storyline-Engine",
+        "link": "https://path-of-the-fist.com",
     },
     {
         "title": "G-MCP | Model Context Protocol Server for Godot",
