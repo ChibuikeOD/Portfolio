@@ -1697,15 +1697,15 @@ st.markdown(f"""
     <div class="photo-sidebar-title">📷 chibuiketakespictures</div>
     <div class="polaroid-card" style="transform: rotate(-3deg);">
         <div class="polaroid-img-container">
-            <img src="{img1}" alt="Golden Hour">
+            <img src="{img1}" alt="Gallery Opening">
         </div>
-        <div class="polaroid-caption">"Golden Hour"</div>
+        <div class="polaroid-caption">"Gallery Opening"</div>
     </div>
     <div class="polaroid-card" style="transform: rotate(2deg);">
         <div class="polaroid-img-container">
-            <img src="{img2}" alt="Concrete Geometry">
+            <img src="{img2}" alt="Plaza at Night">
         </div>
-        <div class="polaroid-caption">"Concrete Geometry"</div>
+        <div class="polaroid-caption">"Plaza at Night"</div>
     </div>
 </div>
 
@@ -1713,15 +1713,15 @@ st.markdown(f"""
     <div class="photo-sidebar-title">📷 chibuiketakespictures</div>
     <div class="polaroid-card" style="transform: rotate(3deg);">
         <div class="polaroid-img-container">
-            <img src="{img3}" alt="Misty Ridges">
+            <img src="{img3}" alt="Skyward Leaves">
         </div>
-        <div class="polaroid-caption">"Misty Ridges"</div>
+        <div class="polaroid-caption">"Skyward Leaves"</div>
     </div>
     <div class="polaroid-card" style="transform: rotate(-2deg);">
         <div class="polaroid-img-container">
-            <img src="{img4}" alt="Neon Night">
+            <img src="{img4}" alt="Spotlight Bloom">
         </div>
-        <div class="polaroid-caption">"Neon Night"</div>
+        <div class="polaroid-caption">"Spotlight Bloom"</div>
     </div>
 </div>
 """, unsafe_allow_html=True)
@@ -1739,27 +1739,27 @@ st.markdown(f"""
 <div class="inline-photo-gallery">
     <div class="polaroid-card" style="transform: rotate(1deg);">
         <div class="polaroid-img-container">
-            <img src="{img1}" alt="Golden Hour">
+            <img src="{img1}" alt="Gallery Opening">
         </div>
-        <div class="polaroid-caption">"Golden Hour"</div>
+        <div class="polaroid-caption">"Gallery Opening"</div>
     </div>
     <div class="polaroid-card" style="transform: rotate(-1deg);">
         <div class="polaroid-img-container">
-            <img src="{img2}" alt="Concrete Geometry">
+            <img src="{img2}" alt="Plaza at Night">
         </div>
-        <div class="polaroid-caption">"Concrete Geometry"</div>
+        <div class="polaroid-caption">"Plaza at Night"</div>
     </div>
     <div class="polaroid-card" style="transform: rotate(2deg);">
         <div class="polaroid-img-container">
-            <img src="{img3}" alt="Misty Ridges">
+            <img src="{img3}" alt="Skyward Leaves">
         </div>
-        <div class="polaroid-caption">"Misty Ridges"</div>
+        <div class="polaroid-caption">"Skyward Leaves"</div>
     </div>
     <div class="polaroid-card" style="transform: rotate(-2deg);">
         <div class="polaroid-img-container">
-            <img src="{img4}" alt="Neon Night">
+            <img src="{img4}" alt="Spotlight Bloom">
         </div>
-        <div class="polaroid-caption">"Neon Night"</div>
+        <div class="polaroid-caption">"Spotlight Bloom"</div>
     </div>
 </div>
 <br>

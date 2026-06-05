@@ -1470,10 +1470,10 @@ export default function Home() {
             className="bg-white p-2.5 pb-6 border border-[#E2E8F0] shadow-md rounded-sm hover:rotate-0 hover:scale-105 hover:shadow-xl transition-all duration-300 ease-in-out cursor-pointer group"
           >
             <div className="overflow-hidden bg-gray-100 aspect-square w-full mb-2">
-              <img src="/street_photo_1.png" alt="Street Photo 1" className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" />
+              <img src="/street_photo_1.png" alt="Gallery Opening" className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" />
             </div>
             <div className="font-serif text-[0.7rem] text-center text-[#718096] italic">
-              &quot;Golden Hour&quot;
+              &quot;Gallery Opening&quot;
             </div>
           </div>
 
@@ -1482,10 +1482,10 @@ export default function Home() {
             className="bg-white p-2.5 pb-6 border border-[#E2E8F0] shadow-md rounded-sm hover:rotate-0 hover:scale-105 hover:shadow-xl transition-all duration-300 ease-in-out cursor-pointer group"
           >
             <div className="overflow-hidden bg-gray-100 aspect-square w-full mb-2">
-              <img src="/street_photo_2.png" alt="Street Photo 2" className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" />
+              <img src="/street_photo_2.png" alt="Plaza at Night" className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" />
             </div>
             <div className="font-serif text-[0.7rem] text-center text-[#718096] italic">
-              &quot;Concrete Geometry&quot;
+              &quot;Plaza at Night&quot;
             </div>
           </div>
         </div>
@@ -1501,10 +1501,10 @@ export default function Home() {
             className="bg-white p-2.5 pb-6 border border-[#E2E8F0] shadow-md rounded-sm hover:rotate-0 hover:scale-105 hover:shadow-xl transition-all duration-300 ease-in-out cursor-pointer group"
           >
             <div className="overflow-hidden bg-gray-100 aspect-square w-full mb-2">
-              <img src="/street_photo_3.png" alt="Street Photo 3" className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" />
+              <img src="/street_photo_3.png" alt="Skyward Leaves" className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" />
             </div>
             <div className="font-serif text-[0.7rem] text-center text-[#718096] italic">
-              &quot;Misty Ridges&quot;
+              &quot;Skyward Leaves&quot;
             </div>
           </div>
 
@@ -1513,10 +1513,10 @@ export default function Home() {
             className="bg-white p-2.5 pb-6 border border-[#E2E8F0] shadow-md rounded-sm hover:rotate-0 hover:scale-105 hover:shadow-xl transition-all duration-300 ease-in-out cursor-pointer group"
           >
             <div className="overflow-hidden bg-gray-100 aspect-square w-full mb-2">
-              <img src="/street_photo_4.png" alt="Street Photo 4" className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" />
+              <img src="/street_photo_4.png" alt="Spotlight Bloom" className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" />
             </div>
             <div className="font-serif text-[0.7rem] text-center text-[#718096] italic">
-              &quot;Neon Night&quot;
+              &quot;Spotlight Bloom&quot;
             </div>
           </div>
         </div>
@@ -1799,10 +1799,10 @@ export default function Home() {
             className="bg-white p-2 border border-[#E2E8F0] shadow rounded-sm hover:rotate-0 hover:scale-102 transition-all duration-300"
           >
             <div className="overflow-hidden bg-gray-100 aspect-square w-full mb-1">
-              <img src="/street_photo_1.png" alt="Street Photo 1" className="object-cover w-full h-full" />
+              <img src="/street_photo_1.png" alt="Gallery Opening" className="object-cover w-full h-full" />
             </div>
             <div className="font-serif text-[0.65rem] text-center text-[#718096] italic">
-              &quot;Golden Hour&quot;
+              &quot;Gallery Opening&quot;
             </div>
           </div>
           <div 
@@ -1810,10 +1810,10 @@ export default function Home() {
             className="bg-white p-2 border border-[#E2E8F0] shadow rounded-sm hover:rotate-0 hover:scale-102 transition-all duration-300"
           >
             <div className="overflow-hidden bg-gray-100 aspect-square w-full mb-1">
-              <img src="/street_photo_2.png" alt="Street Photo 2" className="object-cover w-full h-full" />
+              <img src="/street_photo_2.png" alt="Plaza at Night" className="object-cover w-full h-full" />
             </div>
             <div className="font-serif text-[0.65rem] text-center text-[#718096] italic">
-              &quot;Concrete Geometry&quot;
+              &quot;Plaza at Night&quot;
             </div>
           </div>
           <div 
@@ -1821,10 +1821,10 @@ export default function Home() {
             className="bg-white p-2 border border-[#E2E8F0] shadow rounded-sm hover:rotate-0 hover:scale-102 transition-all duration-300"
           >
             <div className="overflow-hidden bg-gray-100 aspect-square w-full mb-1">
-              <img src="/street_photo_3.png" alt="Street Photo 3" className="object-cover w-full h-full" />
+              <img src="/street_photo_3.png" alt="Skyward Leaves" className="object-cover w-full h-full" />
             </div>
             <div className="font-serif text-[0.65rem] text-center text-[#718096] italic">
-              &quot;Misty Ridges&quot;
+              &quot;Skyward Leaves&quot;
             </div>
           </div>
           <div 
@@ -1832,10 +1832,10 @@ export default function Home() {
             className="bg-white p-2 border border-[#E2E8F0] shadow rounded-sm hover:rotate-0 hover:scale-102 transition-all duration-300"
           >
             <div className="overflow-hidden bg-gray-100 aspect-square w-full mb-1">
-              <img src="/street_photo_4.png" alt="Street Photo 4" className="object-cover w-full h-full" />
+              <img src="/street_photo_4.png" alt="Spotlight Bloom" className="object-cover w-full h-full" />
             </div>
             <div className="font-serif text-[0.65rem] text-center text-[#718096] italic">
-              &quot;Neon Night&quot;
+              &quot;Spotlight Bloom&quot;
             </div>
           </div>
         </div>
